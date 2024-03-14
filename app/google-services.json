@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "27929412681",
+    "project_id": "zowaod",
+    "storage_bucket": "zowaod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27929412681:android:15b8cf0273fd7c50ae6b98",
+        "android_client_info": {
+          "package_name": "com.example.budgetbuddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFs7vFoOeORVJmaAdZ0r4IeIhQVy_hfAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
