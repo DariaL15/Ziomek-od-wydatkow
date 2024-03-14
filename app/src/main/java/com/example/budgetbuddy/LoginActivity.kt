@@ -19,6 +19,11 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.signup.setOnClickListener {
+            val intent = Intent(this, RegistrationActivity::class.java)
+            startActivity(intent)
+        }
+
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.logbutton.setOnClickListener{
