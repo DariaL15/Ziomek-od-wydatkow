@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center"
+android:background="@color/l_green"
+tools:context=".LoginActivity">
+
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp"
+        android:background="@drawable/edittext">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zarejestruj się"
+            android:textColor="@color/m_green"
+            android:id="@+id/textregist"
+            android:textSize="25sp"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/imie"
+            android:background="@drawable/edittext"
+            android:layout_marginTop="35dp"
+            android:padding="15dp"
+            android:hint="Podaj imię"
+            android:textColorHint="@color/textgreen"
+            android:textStyle="italic"
+            android:textSize="13dp"
+            android:drawablePadding="10dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/nazwisko"
+            android:background="@drawable/edittext"
+            android:layout_marginTop="10dp"
+            android:padding="15dp"
+            android:hint="Podaj nazwisko"
+            android:textColorHint="@color/textgreen"
+            android:textStyle="italic"
+            android:textSize="13dp"
+            android:drawablePadding="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/email1"
+            android:background="@drawable/edittext"
+            android:layout_marginTop="35dp"
+            android:padding="15dp"
+            android:hint="Podaj e-mail"
+            android:textColorHint="@color/textgreen"
+            android:textStyle="italic"
+            android:textSize="13dp"
+            android:drawablePadding="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/passw1"
+            android:background="@drawable/edittext"
+            android:layout_marginTop="35dp"
+            android:padding="15dp"
+            android:inputType="textPassword"
+            android:hint="Podaj hasło"
+            android:textStyle="italic"
+            android:textColorHint="@color/textgreen"
+            android:textSize="13dp"
+            android:drawablePadding="10dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/passw2"
+            android:background="@drawable/edittext"
+            android:layout_marginTop="10dp"
+            android:padding="15dp"
+            android:inputType="textPassword"
+            android:hint="Powtórz hasło"
+            android:textStyle="italic"
+            android:textColorHint="@color/textgreen"
+            android:textSize="13dp"
+            android:drawablePadding="10dp"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="40dp"
+            android:id="@+id/logbutton"
+            android:text="Zarejestruj się"
+            android:textSize="14dp"
+            android:textStyle="italic"
+            android:backgroundTint="@color/m_green"
+            app:cornerRadius = "30dp"/>
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masz już konto?"
+            android:textColor="@color/m_green"
+            android:id="@+id/haveaccount"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            />
+
+        <Button
+            android:id="@+id/signin"
+            android:layout_width="200dp"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:text="Zaloguj się"
+            android:textColor="@color/textgreen"
+            android:textSize="10dp"
+            android:textStyle="bold|italic"
+
+            />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+
+
+
+
+</LinearLayout>
