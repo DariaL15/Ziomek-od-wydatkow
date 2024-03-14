@@ -39,11 +39,11 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/username"
+                android:id="@+id/email"
                 android:background="@drawable/edittext"
                 android:layout_marginTop="35dp"
                 android:padding="15dp"
-                android:hint="nazwa użytkownika"
+                android:hint="e-mail"
                 android:textColorHint="@color/textgreen"
                 android:textStyle="italic"
                 android:textSize="13dp"
