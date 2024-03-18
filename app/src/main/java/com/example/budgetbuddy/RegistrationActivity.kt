@@ -44,7 +44,7 @@ class RegistrationActivity : AppCompatActivity() {
                         if(it.isSuccessful)
                         {
                             Toast.makeText(this, "Your account is created", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, Home::class.java)
+                            val intent = Intent(this, BudgeActivity::class.java)
                             startActivity(intent)
                         }
                         else

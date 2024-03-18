@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="195dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/money"
+    tools:context=".BudgeActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:layout_gravity="center_horizontal"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/budgetT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Podaj swój miesięczny budżet"
+                android:textAlignment="center"
+                android:textColor="@color/m_green"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/budget"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittext"
+                android:drawableLeft="@drawable/moneyicon"
+                android:drawablePadding="15dp"
+                android:hint="00,00 zł"
+                android:padding="10dp"
+                android:textColorHint="@color/textgreen"
+                android:textSize="13dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/savingsT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:text="Podaj swoje oszczędności"
+                android:textAlignment="center"
+                android:textColor="@color/m_green"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/savings"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittext"
+                android:drawableLeft="@drawable/savingsicon"
+                android:drawablePadding="10dp"
+                android:hint="00,00 zł"
+                android:padding="10dp"
+                android:textColorHint="@color/textgreen"
+                android:textSize="13dp"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/budgetbutton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="35dp"
+                android:backgroundTint="@color/m_green"
+                android:text="Zatwierdź"
+                android:textSize="14dp"
+                android:textStyle="italic"
+                app:cornerRadius="30dp" />
+
+
+</LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
