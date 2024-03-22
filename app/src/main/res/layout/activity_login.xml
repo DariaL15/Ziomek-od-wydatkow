@@ -32,7 +32,7 @@
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Zaloguj się"
+                android:text="@string/login"
                 android:textAlignment="center"
                 android:textColor="@color/m_green"
                 android:textSize="25sp"
@@ -46,10 +46,10 @@
                 android:background="@drawable/edittext"
                 android:drawableLeft="@drawable/osoba"
                 android:drawablePadding="10dp"
-                android:hint="e-mail"
+                android:hint="@string/email"
                 android:padding="15dp"
                 android:textColorHint="@color/textgreen"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 android:textStyle="italic" />
 
             <EditText
@@ -60,11 +60,11 @@
                 android:background="@drawable/edittext"
                 android:drawableLeft="@drawable/zamek"
                 android:drawablePadding="10dp"
-                android:hint="hasło"
+                android:hint="@string/passw"
                 android:inputType="textPassword"
                 android:padding="15dp"
                 android:textColorHint="@color/textgreen"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 android:textStyle="italic" />
 
             <Button
@@ -75,9 +75,9 @@
                 android:background="@android:color/transparent"
                 android:gravity="right"
                 android:paddingRight="7dp"
-                android:text="Nie pamiętam hasła"
+                android:text="@string/notpassw"
                 android:textColor="@color/textgreen"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textStyle="bold|italic"
 
                 />
@@ -88,8 +88,8 @@
                 android:layout_height="55dp"
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@color/m_green"
-                android:text="Zaloguj się"
-                android:textSize="14dp"
+                android:text="@string/login"
+                android:textSize="14sp"
                 android:textStyle="italic"
                 app:cornerRadius="30dp" />
 
@@ -98,20 +98,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Nie masz jeszcze konta?"
+                android:text="@string/notsignup"
                 android:textAlignment="center"
                 android:textColor="@color/m_green"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/signup"
                 android:layout_width="200dp"
-                android:layout_height="36dp"
+                android:layout_height="33dp"
                 android:background="@android:color/transparent"
                 android:gravity="center"
-                android:text="Zarejestruj się"
+                android:text="@string/signup"
                 android:textColor="@color/textgreen"
-                android:textSize="12dp"
+                android:textSize="11sp"
                 android:textStyle="bold|italic"
 
                 />

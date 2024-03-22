@@ -1,3 +1,41 @@
 <resources>
+
     <string name="app_name">BudgetBuddy</string>
+
+
+
+    <string name="login">Zaloguj się</string>
+    <string name="passw">hasło</string>
+    <string name="notpassw">Nie pamiętam hasła</string>
+    <string name="email">e-mail</string>
+    <string name="notsignup">Nie masz jeszcze konta?</string>
+    <string name="signup">Zarejestruj się</string>
+
+    <string name="ok">Zatwierdź</string>
+
+
+    <string name="budgetT">Podaj swój miesięczny budżet</string>
+    <string name="budgetP">0,00 zł</string>
+    <string name="savingsT">Podaj swoje oszczędności</string>
+    <string name="savingsP">0,00 zł</string>
+
+    <string name="getimie">Podaj imię</string>
+    <string name="getnazwisko">Podaj nazwisko</string>
+    <string name="getemail">Podaj e-mail</string>
+    <string name="getpassw1">Podaj hasło</string>
+    <string name="getpassw2">Powtórz hasło</string>
+    <string name="haveaccount">Masz już konto?</string>
+
+
+
+    <string name="nameofpageHP">STRONA GŁÓWNA</string>
+    <string name="restofmoney">Pozostało</string>
+    <string name="expenses">Wydatki</string>
+
+
+
+
+
+
+
 </resources>
