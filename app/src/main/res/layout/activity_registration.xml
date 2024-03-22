@@ -29,7 +29,7 @@ tools:context=".LoginActivity">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Zarejestruj się"
+            android:text="@string/signup"
             android:textColor="@color/m_green"
             android:id="@+id/textregist"
             android:textSize="25sp"
@@ -43,10 +43,10 @@ tools:context=".LoginActivity">
             android:background="@drawable/edittext"
             android:layout_marginTop="35dp"
             android:padding="15dp"
-            android:hint="Podaj imię"
+            android:hint="@string/getimie"
             android:textColorHint="@color/textgreen"
             android:textStyle="italic"
-            android:textSize="13dp"
+            android:textSize="13sp"
             android:drawablePadding="10dp"/>
         <EditText
             android:layout_width="match_parent"
@@ -55,10 +55,10 @@ tools:context=".LoginActivity">
             android:background="@drawable/edittext"
             android:layout_marginTop="10dp"
             android:padding="15dp"
-            android:hint="Podaj nazwisko"
+            android:hint="@string/getnazwisko"
             android:textColorHint="@color/textgreen"
             android:textStyle="italic"
-            android:textSize="13dp"
+            android:textSize="13sp"
             android:drawablePadding="10dp"/>
 
         <EditText
@@ -68,10 +68,10 @@ tools:context=".LoginActivity">
             android:background="@drawable/edittext"
             android:layout_marginTop="35dp"
             android:padding="15dp"
-            android:hint="Podaj e-mail"
+            android:hint="@string/getemail"
             android:textColorHint="@color/textgreen"
             android:textStyle="italic"
-            android:textSize="13dp"
+            android:textSize="13sp"
             android:drawablePadding="10dp"/>
 
         <EditText
@@ -82,10 +82,10 @@ tools:context=".LoginActivity">
             android:layout_marginTop="35dp"
             android:padding="15dp"
             android:inputType="textPassword"
-            android:hint="Podaj hasło"
+            android:hint="@string/getpassw1"
             android:textStyle="italic"
             android:textColorHint="@color/textgreen"
-            android:textSize="13dp"
+            android:textSize="13sp"
             android:drawablePadding="10dp"/>
         <EditText
             android:layout_width="match_parent"
@@ -95,10 +95,10 @@ tools:context=".LoginActivity">
             android:layout_marginTop="10dp"
             android:padding="15dp"
             android:inputType="textPassword"
-            android:hint="Powtórz hasło"
+            android:hint="@string/getpassw2"
             android:textStyle="italic"
             android:textColorHint="@color/textgreen"
-            android:textSize="13dp"
+            android:textSize="13sp"
             android:drawablePadding="10dp"/>
 
 
@@ -107,8 +107,8 @@ tools:context=".LoginActivity">
             android:layout_height="55dp"
             android:layout_marginTop="40dp"
             android:id="@+id/regbutton"
-            android:text="Zarejestruj się"
-            android:textSize="14dp"
+            android:text="@string/signup"
+            android:textSize="14sp"
             android:textStyle="italic"
             android:backgroundTint="@color/m_green"
             app:cornerRadius = "30dp"/>
@@ -117,7 +117,7 @@ tools:context=".LoginActivity">
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Masz już konto?"
+            android:text="@string/haveaccount"
             android:textColor="@color/m_green"
             android:id="@+id/haveaccount"
             android:textSize="12sp"
@@ -130,9 +130,9 @@ tools:context=".LoginActivity">
             android:layout_height="36dp"
             android:gravity="center"
             android:background="@android:color/transparent"
-            android:text="Zaloguj się"
+            android:text="@string/login"
             android:textColor="@color/textgreen"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:textStyle="bold|italic"
 
             />

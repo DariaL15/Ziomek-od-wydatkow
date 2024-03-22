@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="195dp"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/money"
@@ -18,6 +17,7 @@
         android:layout_gravity="center_horizontal"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                 android:id="@+id/budgetT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Podaj swój miesięczny budżet"
+                android:text="@string/budgetT"
                 android:textAlignment="center"
                 android:textColor="@color/m_green"
                 android:textSize="25sp"
@@ -44,10 +44,10 @@
                 android:background="@drawable/edittext"
                 android:drawableLeft="@drawable/moneyicon"
                 android:drawablePadding="15dp"
-                android:hint="00,00 zł"
+                android:hint="@string/budgetP"
                 android:padding="10dp"
                 android:textColorHint="@color/textgreen"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 android:textStyle="italic" />
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="45dp"
-                android:text="Podaj swoje oszczędności"
+                android:text="@string/savingsT"
                 android:textAlignment="center"
                 android:textColor="@color/m_green"
                 android:textSize="25sp"
@@ -68,10 +68,10 @@
                 android:background="@drawable/edittext"
                 android:drawableLeft="@drawable/savingsicon"
                 android:drawablePadding="10dp"
-                android:hint="00,00 zł"
+                android:hint="@string/savingsP"
                 android:padding="10dp"
                 android:textColorHint="@color/textgreen"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 android:textStyle="italic" />
 
             <Button
@@ -80,8 +80,8 @@
                 android:layout_height="55dp"
                 android:layout_marginTop="35dp"
                 android:backgroundTint="@color/m_green"
-                android:text="Zatwierdź"
-                android:textSize="14dp"
+                android:text="@string/ok"
+                android:textSize="14sp"
                 android:textStyle="italic"
                 app:cornerRadius="30dp" />
 
