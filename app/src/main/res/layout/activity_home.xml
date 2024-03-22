@@ -2,22 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/home"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-
     tools:openDrawer="start"
     tools:context=".Home">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/toolbar"
+        android:elevation="4dp"
+        android:layout_gravity="center"
+        app:buttonGravity="center_vertical"
+        android:gravity="center"
+        android:background="@color/textgreen"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/intoolbar"
+            >
+
+            <Button
+                android:id="@+id/menubutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/menu1"
+                android:layout_gravity="center_vertical"/>
+
+
+            <TextView
+                android:id="@+id/nameofpageHP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="@string/nameofpageHP"
+                android:textColor="@color/white"
+                android:layout_marginLeft="50dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+
+    </androidx.appcompat.widget.Toolbar>
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_gravity="center_vertical"
-        android:id="@+id/homefragment">
+        android:id="@+id/homefragment1">
 
         <LinearLayout
             android:id="@+id/homepage_category_up"
@@ -46,12 +89,14 @@
 
         <LinearLayout
             android:layout_marginTop="105dp"
+            android:id="@+id/homepage_centerpart"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:gravity="center"
             android:layout_gravity="center_horizontal">
 
             <LinearLayout
+                android:id="@+id/homepage_centerpart_left"
                 android:layout_marginLeft="2dp"
                 android:layout_width="90dp"
                 android:layout_height="300dp"
@@ -75,35 +120,79 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/homepage_center"
+                android:id="@+id/homepage_centerpart_center"
                 android:layout_marginLeft="14dp"
                 android:layout_width="200dp"
-                android:layout_height="195dp">
+                android:layout_height="195dp"
+                android:gravity="center"
+                android:background="@drawable/circle">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/viewbudget"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
 
-                    <TextView
-                        android:id="@+id/viewexpenses"
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/frame_budgetmonth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/restofmoney"
-                        android:textColor="@color/darkgreen"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="10dp"
+                        >
 
-                    <TextView
-                        android:id="@+id/viewrest"
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/budgetmonth"
+                            android:textColor="@color/m_green"
+                            android:textSize="27sp"
+                            android:textStyle="bold">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/zloty1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="7dp"
+                            android:text="@string/zloty"
+                            android:textColor="@color/m_green"
+                            android:textSize="27sp"
+                            android:textStyle="bold">
+                        </TextView>
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/frame_expenses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        >
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/expenses"
+                            android:textColor="@color/red"
+                            android:textSize="18sp"
+                            android:textStyle="bold">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/zloty2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="7dp"
+                            android:text="@string/zloty"
+                            android:textColor="@color/red"
+                            android:textSize="18sp"
+                            android:textStyle="bold">
+                        </TextView>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -111,6 +200,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/homepage_centerpart_right"
                 android:layout_marginLeft="14dp"
                 android:layout_width="90dp"
                 android:layout_height="300dp"
@@ -182,6 +272,8 @@
 
 
 </LinearLayout>
+
+
 
 
 
