@@ -12,21 +12,39 @@
     <ImageView
         android:layout_width="94dp"
         android:layout_height="66dp"
-        android:src="@drawable/osoba" />
+        android:src="@drawable/osoba"/>
 
-    <TextView
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:gravity="center">
+
+       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Imie Nazwisko"
+        android:id="@+id/view_imie"
+           android:textSize="16sp"
         android:textColor="@color/white"
         android:textStyle="bold"/>
 
+
+       <TextView
+        android:id="@+id/view_nazwisko"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+           android:textSize="16sp"/>
+
+   </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ime_nazwisko@test.com"
+        android:id="@+id/view_email"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:layout_marginBottom="16dp"/>
 
 </LinearLayout>
