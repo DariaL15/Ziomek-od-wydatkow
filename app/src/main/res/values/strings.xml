@@ -3,7 +3,6 @@
     <string name="app_name">BudgetBuddy</string>
 
 
-
     <string name="login">Zaloguj się</string>
     <string name="passw">hasło</string>
     <string name="notpassw">Nie pamiętam hasła</string>
@@ -25,16 +24,14 @@
     <string name="getpassw1">Podaj hasło</string>
     <string name="getpassw2">Powtórz hasło</string>
     <string name="haveaccount">Masz już konto?</string>
-
+    <string name="open_menu">***</string>
+    <string name="closw_menu">***</string>
 
 
     <string name="nameofpageHP">STRONA GŁÓWNA</string>
     <string name="zloty">zł</string>
-
-
-
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
