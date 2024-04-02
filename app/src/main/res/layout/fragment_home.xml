@@ -159,7 +159,8 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="56"
                 app:layout_constraintCircleRadius="190dp"
-                app:layout_constraintTop_toTopOf="@id/circle" />
+                app:layout_constraintStart_toStartOf="@id/circle"
+                app:layout_constraintTop_toTopOf="@id/circle"/>
 
             <LinearLayout
                 android:id="@+id/cat_sport"
@@ -171,6 +172,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="84"
                 app:layout_constraintCircleRadius="160dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
@@ -183,6 +185,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="112"
                 app:layout_constraintCircleRadius="160dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
@@ -195,6 +198,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="140"
                 app:layout_constraintCircleRadius="190dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
@@ -219,6 +223,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="196"
                 app:layout_constraintCircleRadius="190dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
@@ -231,6 +236,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="224"
                 app:layout_constraintCircleRadius="190dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
@@ -243,6 +249,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="252"
                 app:layout_constraintCircleRadius="160dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
@@ -255,6 +262,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="280"
                 app:layout_constraintCircleRadius="160dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
@@ -267,6 +275,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="307"
                 app:layout_constraintCircleRadius="190dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
@@ -279,6 +288,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="332"
                 app:layout_constraintCircleRadius="190dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
 
