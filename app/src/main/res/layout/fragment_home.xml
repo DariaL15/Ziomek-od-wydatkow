@@ -211,6 +211,7 @@
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="168"
                 app:layout_constraintCircleRadius="190dp"
+                app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
