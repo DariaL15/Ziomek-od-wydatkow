@@ -9,9 +9,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.budgetbuddy.databinding.ActivityBudgeBinding
 import com.example.budgetbuddy.databinding.ActivityLoginBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 
 class BudgeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBudgeBinding
+
+    private var dbb = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,11 +25,23 @@ class BudgeActivity : AppCompatActivity() {
 
 
         binding.budgetbutton.setOnClickListener{
-            val savings = binding.savings.toString()
-            val budget = binding.budget.toString()
+            val savings = binding.savings.text.toString().toDoubleOrNull()
+            val budget = binding.budget.text.toString().toDoubleOrNull()
+            val userId = FirebaseAuth.getInstance().currentUser!!.uid
+            val budgetMap = hashMapOf(
+                "budgetV" to budget,
+                "savingsV" to savings,
+                "uid" to userId
+            )
 
-            if( savings.isNotEmpty() && budget.isNotEmpty() )
+            if( savings != null && budget != null )
             {
+                dbb.collection("budget").document(userId).set(budgetMap).addOnSuccessListener {
+                    Toast.makeText(this,"Budget added",Toast.LENGTH_SHORT).show()
+                }
+                    .addOnFailureListener {
+                        Toast.makeText(this,"Not added",Toast.LENGTH_SHORT).show()
+                    }
                 val intent = Intent(this, Home::class.java)
                 startActivity(intent)
             }

@@ -9,13 +9,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.budgetbuddy.databinding.ActivityLoginBinding
 import com.example.budgetbuddy.databinding.ActivityRegistrationBinding
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 
 class RegistrationActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityRegistrationBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    private var db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,26 +38,36 @@ class RegistrationActivity : AppCompatActivity() {
             val password2 = binding.passw2.text.toString()
             val imie = binding.imie.text.toString()
             val nazwisko = binding.nazwisko.text.toString()
+            val currentUser = firebaseAuth.currentUser
+            val userId = currentUser?.uid ?: ""
 
 
-            if( email1.isNotEmpty() && password1.isNotEmpty() && password2.isNotEmpty() && imie.isNotEmpty() && nazwisko.isNotEmpty() )
-            {
-                if( password1 == password2 ) {
-                    firebaseAuth.createUserWithEmailAndPassword(email1,password1).addOnCompleteListener {
-                        if(it.isSuccessful)
-                        {
-                            Toast.makeText(this, "Your account is created", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, BudgeActivity::class.java)
-                            startActivity(intent)
-                        }
-                        else
-                        {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+            if (email1.isNotEmpty() && password1.isNotEmpty() && password2.isNotEmpty() && imie.isNotEmpty() && nazwisko.isNotEmpty()) {
+                if (password1 == password2) {
+                    firebaseAuth.createUserWithEmailAndPassword(email1, password1).addOnCompleteListener { registrationTask ->
+                        if (registrationTask.isSuccessful) {
+                            val currentUser = firebaseAuth.currentUser
+                            val userId = currentUser?.uid ?: ""
+
+                            val userMap = hashMapOf(
+                                "name" to imie,
+                                "surename" to nazwisko,
+                                "uid" to userId
+                            )
+
+                            db.collection("user").document(userId).set(userMap).addOnSuccessListener {
+                                Toast.makeText(this, "Your account is created", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, BudgeActivity::class.java)
+                                startActivity(intent)
+                            }.addOnFailureListener { exception ->
+                                Toast.makeText(this, "Failed to add user data: ${exception.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(this, "Failed to register user: ${registrationTask.exception?.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
-                }
-                else {
-                    Toast.makeText(this, "Password is not matching", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 }
             }
             else
