@@ -15,7 +15,7 @@ import com.google.firebase.firestore.firestore
 
 class BudgeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBudgeBinding
-
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
     private var dbb = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,16 +27,16 @@ class BudgeActivity : AppCompatActivity() {
         binding.budgetbutton.setOnClickListener{
             val savings = binding.savings.text.toString().toDoubleOrNull()
             val budget = binding.budget.text.toString().toDoubleOrNull()
-            val userId = FirebaseAuth.getInstance().currentUser!!.uid
+
             val budgetMap = hashMapOf(
                 "budgetV" to budget,
-                "savingsV" to savings,
-                "uid" to userId
+                "savingsV" to savings
+
             )
 
             if( savings != null && budget != null )
             {
-                dbb.collection("budget").document(userId).set(budgetMap).addOnSuccessListener {
+                dbb.collection(userId).document("budget").set(budgetMap).addOnSuccessListener {
                     Toast.makeText(this,"Budget added",Toast.LENGTH_SHORT).show()
                 }
                     .addOnFailureListener {

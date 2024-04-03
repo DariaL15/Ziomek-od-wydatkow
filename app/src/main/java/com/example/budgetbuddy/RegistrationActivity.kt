@@ -38,8 +38,7 @@ class RegistrationActivity : AppCompatActivity() {
             val password2 = binding.passw2.text.toString()
             val imie = binding.imie.text.toString()
             val nazwisko = binding.nazwisko.text.toString()
-            val currentUser = firebaseAuth.currentUser
-            val userId = currentUser?.uid ?: ""
+
 
 
             if (email1.isNotEmpty() && password1.isNotEmpty() && password2.isNotEmpty() && imie.isNotEmpty() && nazwisko.isNotEmpty()) {
@@ -52,10 +51,10 @@ class RegistrationActivity : AppCompatActivity() {
                             val userMap = hashMapOf(
                                 "name" to imie,
                                 "surename" to nazwisko,
-                                "uid" to userId
+                                "email" to email1
                             )
 
-                            db.collection("user").document(userId).set(userMap).addOnSuccessListener {
+                            db.collection(userId).document("user").set(userMap).addOnSuccessListener {
                                 Toast.makeText(this, "Your account is created", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this, BudgeActivity::class.java)
                                 startActivity(intent)

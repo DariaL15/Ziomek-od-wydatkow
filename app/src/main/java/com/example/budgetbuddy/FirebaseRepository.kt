@@ -7,14 +7,14 @@ import android.content.Context
 
 class FirebaseRepository (private val context: Context){
     private val db = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
 
-    val userId = FirebaseAuth.getInstance().currentUser!!.uid
+
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
     fun getBudget(onSuccess: (Double) -> Unit, onFailure: (Exception) -> Unit)
     {
         if(userId != null)
         {
-            val budgetRef = db.collection("budget").document(userId)
+            val budgetRef = db.collection(userId).document("budget")
             budgetRef.get()
                 .addOnSuccessListener { document ->
                     if(document != null && document.exists() )
@@ -40,7 +40,7 @@ class FirebaseRepository (private val context: Context){
     {
         if(userId != null)
         {
-            val budgetRef = db.collection("budget").document(userId)
+            val budgetRef = db.collection(userId).document("budget")
             budgetRef.get()
                 .addOnSuccessListener { document ->
                     if(document != null && document.exists() )
