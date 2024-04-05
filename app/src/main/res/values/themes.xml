@@ -3,7 +3,7 @@
     <style name="Base.Theme.BudgetBuddy" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/textgreen</item>
-        <item name="colorPrimaryVariant">@color/green_light</item>
+        <item name="colorPrimaryVariant">@color/textgreen</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/m_green</item>
         <item name="colorSecondaryVariant">@color/m_green</item>

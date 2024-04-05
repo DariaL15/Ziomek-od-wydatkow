@@ -34,4 +34,21 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
+    <string name="plus">PRZYCHODY</string>
+    <string name="minus">WYDATKI</string>
+
+
+    <string name="amount">kwota</string>
+    <string name="add_transaction">Dodaj tranzakcję</string>
+    <string name="category">Kategoria:</string>
+    <string name="choose">WYBIERZ</string>
+    <string name="date">Data:</string>
+    <string name="today">dzisiaj</string>
+    <string name="yesterday">wczoraj</string>
+    <string name="notes">Notatki:</string>
+    <string name="notes_text">Wpisz, na co wydałeś pieniądze</string>
+    <string name="select_day_text">WYBIERZ DATĘ</string>
+    <string name="selected_day">wybrana data</string>
+
+
 </resources>

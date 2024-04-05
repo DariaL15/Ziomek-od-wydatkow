@@ -8,7 +8,11 @@
     <color name="l_green">#c0e1c0</color>
     <color name="textgreen">#94a894</color>
     <color name="red">#b25b5b</color>
-    <color name="green_light">#a7bca7</color>
+    <color name="green_light">#d1d9d1</color>
+    <color name="green_main_text">#607c60</color>
+    <color name="grey_dark">#767676</color>
+    <color name="grey_medium">#a1a1a1</color>
+    <color name="grey_light">#c0c0c0</color>
 
 
 
