@@ -18,7 +18,7 @@ import com.example.budgetbuddy.databinding.FragmentExpensesAddingBinding
 
 class CategorySelectFragment : Fragment() {
     private lateinit var binding: FragmentCategorySelectBinding
-
+    private val ARG_SELECTED_DATE = "selected_date"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -30,14 +30,16 @@ class CategorySelectFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         binding = FragmentCategorySelectBinding.inflate(inflater, container, false)
+
 
         val radioGroup: RadioGroup = binding.categoryList
         val confirmButton: Button = binding.confirmButton4
 
         val view = binding.root
         var selectedRadioButtonId: String ="WYBIERZ"
-
+        var dateV:String=""
         binding.house.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
@@ -119,10 +121,13 @@ class CategorySelectFragment : Fragment() {
 
         confirmButton.setOnClickListener {
 
+            arguments?.getString(ARG_SELECTED_DATE)?.let { selectedDate ->
+                dateV= selectedDate
+            }
 
-            if (selectedRadioButtonId != "?") {
+            if (selectedRadioButtonId != "WYBIERZ") {
 
-                val eaf = ExpensesAddingFragment.newInstance("", selectedRadioButtonId)
+                val eaf = ExpensesAddingFragment.newInstance( dateV, selectedRadioButtonId)
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, eaf)
                 transaction.addToBackStack(null)
@@ -136,10 +141,10 @@ class CategorySelectFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(selectedDate: String, param2: String) =
             CategorySelectFragment().apply {
                 arguments = Bundle().apply {
-                    putString("param1", param1)
+                    putString(ARG_SELECTED_DATE, selectedDate)
                     putString("param2", param2)
                 }
             }

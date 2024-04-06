@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.expenseButton.setOnClickListener {
-            val expensesAddingFragment = ExpensesAddingFragment.newInstance("?","?")
+            val expensesAddingFragment = ExpensesAddingFragment.newInstance("","")
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, expensesAddingFragment)
             transaction.addToBackStack(null)

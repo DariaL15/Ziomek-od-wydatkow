@@ -53,7 +53,7 @@ class ExpensesAddingFragment : Fragment() {
 
 
         binding.chooseCalendarButton.setOnClickListener {
-            val calendarFragment = CalendarFragment.newInstance("val1","val2")
+            val calendarFragment = CalendarFragment.newInstance("val1",binding.selectCategoryEnd.text.toString())
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, calendarFragment)
             transaction.addToBackStack(null)
@@ -84,7 +84,7 @@ class ExpensesAddingFragment : Fragment() {
         binding.chooseCategoryButton.setOnClickListener{
 
 
-            val categoryFragment = CategorySelectFragment.newInstance("val1","val2")
+            val categoryFragment = CategorySelectFragment.newInstance(binding.selectDateEnd.text.toString(),"val2")
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, categoryFragment)
             transaction.addToBackStack(null)
