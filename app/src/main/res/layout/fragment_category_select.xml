@@ -14,46 +14,557 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
+        android:background="@drawable/edittext"
         android:padding="300dp"
         app:cardCornerRadius="35dp"
         app:cardElevation="5dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="30dp">
 
             <TextView
-                android:id="@+id/select_date_text"
+                android:id="@+id/select_category_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_day_text"
+                android:text="@string/select_category"
                 android:textColor="@color/textgreen"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <CalendarView
-                android:id="@+id/calendar_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp" />
+            <ScrollView
+                android:id="@+id/scroll_category"
+                android:layout_width="match_parent"
+                android:layout_height="430dp"
+                android:layout_marginTop="15dp">
 
-            <TextView
-                android:id="@+id/selected_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:textColor="@color/textgreen"
-                android:textSize="25sp" />
+                <RadioGroup
+                    android:id="@+id/category_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/categ_house"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/house_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_dom"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/house_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/house_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/house"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/categ_car"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/car_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_auto"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/car_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/car_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/car"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/categ_shopping"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/shopping_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_zakupy2"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/shopping_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/shopping_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/shopping"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/categ_transport"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/transport_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_transport"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/transport_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/transport_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/transport"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/categ_sport"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/sport_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_sport"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/sport_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/sport_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/sport"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/categ_health"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/health_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_zdrowie"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/health_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/health_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/health"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/categ_entertaiment"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/entertaiment_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_rozrywka"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/entertaiment_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/entertaiment_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/entertaiment"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/categ_relax"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/relax_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_wypoczynek"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/relax_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/relax_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/relax"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/categ_restaurant"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/restaurant_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_restauracje"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/restaurant_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/restaurant_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/restaurant"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:id="@+id/categ_gift"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/gift_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_prezent2"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/gift_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/gift_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/gift"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/categ_clothes"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/clothes_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_ubrania"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/clothes_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/clothes_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/clothes"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/categ_education"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext3"
+                        >
+
+                        <ImageView
+                            android:layout_marginLeft="30dp"
+                            android:id="@+id/education_img"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_edukacja"
+                            />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/education_text_category"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:textColor="@color/textgreen"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="@string/education_text"/>
+
+
+                        <RadioButton
+                            android:id="@+id/education"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp" />
+
+                    </LinearLayout>
+
+                </RadioGroup>
+
+
+
+
+            </ScrollView>
 
             <Button
-                android:id="@+id/confirm_button3"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:background="@android:color/transparent"
+                android:text="@string/add_new_cat_text"
+                android:textSize="14sp"
+                android:drawableLeft="@drawable/add_icon"
+                android:textColor="@color/textgreen"/>
+
+
+            <Button
+                android:id="@+id/confirm_button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="@string/ok"
                 android:textSize="12sp"
                 android:textStyle="bold" />

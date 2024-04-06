@@ -49,6 +49,28 @@
     <string name="notes_text">Wpisz, na co wydałeś pieniądze</string>
     <string name="select_day_text">WYBIERZ DATĘ</string>
     <string name="selected_day">wybrana data</string>
+    <string name="select_category">WYBIERZ KATEGORIĘ</string>
+    <string name="selected_category">Wybrana kategoria:</string>
+    <string name="house_text">Dom</string>
+    <string name="car_text">Samochód</string>
+    <string name="transport_text">Transport</string>
+    <string name="sport_text">Sport</string>
+    <string name="health_text">Zdrowie</string>
+    <string name="entertaiment_text">Rozrywka</string>
+    <string name="relax_text">Wypoczynek</string>
+    <string name="restaurant_text">Restauracje</string>
+    <string name="gift_text">Prezenty</string>
+    <string name="clothes_text">Ubrania</string>
+    <string name="shopping_text">Zakupy</string>
+    <string name="education_text">Edukacja</string>
+    <string name="add_new_cat_text">Dodaj własną kategorię</string>
+
+
+
+
+
+
+
 
 
 </resources>
