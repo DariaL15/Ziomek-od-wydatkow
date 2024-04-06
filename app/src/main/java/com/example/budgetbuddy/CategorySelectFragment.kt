@@ -1,58 +1,146 @@
 package com.example.budgetbuddy
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
+import com.example.budgetbuddy.databinding.FragmentCalendarBinding
+import com.example.budgetbuddy.databinding.FragmentCategorySelectBinding
+import com.example.budgetbuddy.databinding.FragmentCategorySelectBinding.*
+import com.example.budgetbuddy.databinding.FragmentExpensesAddingBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CategorySelectFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CategorySelectFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentCategorySelectBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category_select, container, false)
+
+        binding = FragmentCategorySelectBinding.inflate(inflater, container, false)
+
+        val radioGroup: RadioGroup = binding.categoryList
+        val confirmButton: Button = binding.confirmButton4
+
+        val view = binding.root
+        var selectedRadioButtonId: String ="WYBIERZ"
+
+        binding.house.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.car.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.clothes.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+        binding.shopping.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.transport.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.sport.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.health.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.entertaiment.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.relax.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.restaurant.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+        binding.gift.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
+
+
+
+
+        confirmButton.setOnClickListener {
+
+
+            if (selectedRadioButtonId != "?") {
+
+                val eaf = ExpensesAddingFragment.newInstance("", selectedRadioButtonId)
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_container, eaf)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            } else {
+                Toast.makeText(requireContext(), "Proszę wybrać kategorię", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return view
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CategorySelectFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
+
         fun newInstance(param1: String, param2: String) =
             CategorySelectFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString("param1", param1)
+                    putString("param2", param2)
                 }
             }
     }

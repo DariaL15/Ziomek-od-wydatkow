@@ -62,4 +62,83 @@ class FirebaseRepository (private val context: Context){
         }
     }
 
+    fun getName(onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit)
+    {
+        if(userId != null)
+        {
+            val userRef = db.collection(userId).document("user")
+            userRef.get()
+                .addOnSuccessListener { document ->
+                    if(document != null && document.exists() )
+                    {
+                        val name = document.getString("name") ?: "Imię"
+                        onSuccess(name)
+                    }
+                    else
+                    {
+                        onFailure(Exception("Nie znaleziono danych z imieniem użytkownika"))
+                    }
+                }
+                .addOnFailureListener {
+                    onFailure(Exception("Błąd pobierania imienia"))
+                }
+        }
+        else {
+            onFailure(Exception("Użytkownik niezalogowany"))
+        }
+    }
+
+    fun getSurname(onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit)
+    {
+        if(userId != null)
+        {
+            val userRef = db.collection(userId).document("user")
+            userRef.get()
+                .addOnSuccessListener { document ->
+                    if(document != null && document.exists() )
+                    {
+                        val surname = document.getString("surname") ?: "Nazwisko"
+                        onSuccess(surname)
+                    }
+                    else
+                    {
+                        onFailure(Exception("Nie znaleziono danych z nazwiskiem użytkownika"))
+                    }
+                }
+                .addOnFailureListener {
+                    onFailure(Exception("Błąd pobierania nazwiska"))
+                }
+        }
+        else {
+            onFailure(Exception("Użytkownik niezalogowany"))
+        }
+    }
+
+
+    fun getEmail(onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit)
+    {
+        if(userId != null)
+        {
+            val userRef = db.collection(userId).document("user")
+            userRef.get()
+                .addOnSuccessListener { document ->
+                    if(document != null && document.exists() )
+                    {
+                        val email = document.getString("email") ?: "email"
+                        onSuccess(email)
+                    }
+                    else
+                    {
+                        onFailure(Exception("Nie znaleziono danych z emailem użytkownika"))
+                    }
+                }
+                .addOnFailureListener {
+                    onFailure(Exception("Błąd pobierania emaila"))
+                }
+        }
+        else {
+            onFailure(Exception("Użytkownik niezalogowany"))
+        }
+    }
+
 }

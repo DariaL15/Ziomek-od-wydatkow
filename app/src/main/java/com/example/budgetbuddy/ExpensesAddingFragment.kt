@@ -1,58 +1,147 @@
 package com.example.budgetbuddy
 
+import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.budgetbuddy.databinding.ActivityRegistrationBinding
+import com.example.budgetbuddy.databinding.FragmentExpensesAddingBinding
+import com.example.budgetbuddy.databinding.FragmentHomeBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
+import android.widget.LinearLayout;
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ExpensesAddingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
+private const val ARG_SELECTED_DATE = "selected_date"
+private const val ARG_SELECTED_CATEGORY = "selected_category"
 class ExpensesAddingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
+    private lateinit var binding: FragmentExpensesAddingBinding
+    private lateinit var firebaseAuth: FirebaseAuth
+    private var db = Firebase.firestore
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_expenses_adding, container, false)
+
+
+        binding = FragmentExpensesAddingBinding.inflate(inflater, container, false)
+        arguments?.getString(ARG_SELECTED_DATE)?.let { selectedDate ->
+            binding.selectDateEnd.text = selectedDate
+        }
+        arguments?.getString(ARG_SELECTED_CATEGORY)?.let { selectedCategory ->
+            binding.selectCategoryEnd.text = selectedCategory
+        }
+        binding.undo.setOnClickListener{
+            val home = HomeFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, home)
+            transaction.addToBackStack(null)
+            transaction.commit()
+
+        }
+
+
+
+        binding.chooseCalendarButton.setOnClickListener {
+            val calendarFragment = CalendarFragment.newInstance("val1","val2")
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, calendarFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        binding.today.setOnClickListener{
+            val currentDate = Calendar.getInstance()
+            val day = currentDate.get(Calendar.DAY_OF_MONTH)
+            val month = currentDate.get(Calendar.MONTH) + 1
+            val year = currentDate.get(Calendar.YEAR)
+
+            binding.selectDateEnd.text = String.format("%02d.%02d.%d", day, month, year)
+
+        }
+
+        binding.yesterday.setOnClickListener{
+            val yesterday = Calendar.getInstance()
+            yesterday.add(Calendar.DAY_OF_MONTH, -1)
+            val dayYesterday = yesterday.get(Calendar.DAY_OF_MONTH)
+            val month = yesterday.get(Calendar.MONTH) + 1
+            val year = yesterday.get(Calendar.YEAR)
+
+            binding.selectDateEnd.text = String.format("%02d.%02d.%d", dayYesterday, month, year)
+
+        }
+
+        binding.chooseCategoryButton.setOnClickListener{
+
+
+            val categoryFragment = CategorySelectFragment.newInstance("val1","val2")
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, categoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+
+        }
+
+
+        binding.confirmButton2.setOnClickListener {
+            val amount = binding.amount.text.toString().toDoubleOrNull()
+            val date = binding.selectDateEnd.text.toString()
+            val category = binding.selectCategoryEnd.text.toString()
+            val notes = binding.noteEditText.text.toString()
+
+            val budgetRef = db.collection(userId).document("budget")
+
+            if( amount != null && date.isNotEmpty() && category.isNotEmpty() && notes.isNotEmpty())
+            {
+                val expenseMap = hashMapOf(
+                    "amount" to amount,
+                    "date" to date,
+                    "notes" to notes
+                )
+                budgetRef.collection(category).document().set(expenseMap).addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Twój wydatek został dodany", Toast.LENGTH_SHORT).show()
+                    val home = HomeFragment.newInstance()
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragment_container, home)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Wystąpił błąd podaczas dodawania wydatku", Toast.LENGTH_SHORT).show()
+                    }
+
+            }
+            else
+            {
+                Toast.makeText(requireContext(), "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
+
+            }
+
+        }
+
+        val view=binding.root
+        return view
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ExpensesAddingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+
+        fun newInstance(selectedDate: String, selectedCategory:String) =
             ExpensesAddingFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_SELECTED_DATE, selectedDate)
+                    putString(ARG_SELECTED_CATEGORY, selectedCategory)
+
+
                 }
             }
     }
