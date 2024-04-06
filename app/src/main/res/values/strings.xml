@@ -48,9 +48,9 @@
     <string name="notes">Notatki:</string>
     <string name="notes_text">Wpisz, na co wydałeś pieniądze</string>
     <string name="select_day_text">WYBIERZ DATĘ</string>
-    <string name="selected_day">wybrana data</string>
+    <string name="selected_day">Wybrana data</string>
     <string name="select_category">WYBIERZ KATEGORIĘ</string>
-    <string name="selected_category">Wybrana kategoria:</string>
+    <string name="selected_category">Wybrana kategoria</string>
     <string name="house_text">Dom</string>
     <string name="car_text">Samochód</string>
     <string name="transport_text">Transport</string>
@@ -64,6 +64,7 @@
     <string name="shopping_text">Zakupy</string>
     <string name="education_text">Edukacja</string>
     <string name="add_new_cat_text">Dodaj własną kategorię</string>
+
 
 
 

@@ -46,8 +46,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:hint="@string/selected_day"
+                android:textColorHint="@color/textgreen"
                 android:textColor="@color/textgreen"
-                android:textSize="25sp" />
+                android:textSize="20sp"
+                android:textStyle="italic"/>
 
             <Button
                 android:id="@+id/confirm_button3"

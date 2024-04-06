@@ -14,8 +14,8 @@
         android:id="@+id/toolbar_addtransaction"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -82,8 +82,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                >
+                android:layout_gravity="center_horizontal">
 
                 <EditText
                     android:id="@+id/amount"
@@ -120,6 +119,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
@@ -140,9 +140,9 @@
                     android:hint="@string/selected_day"
                     android:paddingLeft="30dp"
                     android:textColorHint="@color/textgreen"
-                    android:textSize="11sp"
-                    android:visibility="visible"
-                    android:textStyle="italic"/>
+                    android:textSize="10sp"
+                    android:textStyle="italic"
+                    android:visibility="visible" />
 
 
             </LinearLayout>
@@ -204,18 +204,38 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp">
 
-
-            <TextView
-                android:id="@+id/choose_category_text"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
                 android:gravity="center_vertical"
-                android:paddingLeft="30dp"
-                android:text="@string/category"
-                android:textColor="@color/textgreen"
-                android:textSize="14sp"
-                android:visibility="visible" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/choose_category_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="30dp"
+                    android:text="@string/category"
+                    android:textColor="@color/textgreen"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/select_category_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:hint="@string/selected_category"
+                    android:paddingLeft="30dp"
+                    android:textColorHint="@color/textgreen"
+                    android:textSize="10sp"
+                    android:textStyle="italic"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="0dp"
