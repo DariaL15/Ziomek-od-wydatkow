@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.expenseButton.setOnClickListener {
-            val expensesAddingFragment = ExpensesAddingFragment.newInstance("","")
+            val expensesAddingFragment = ExpensesAddingFragment.newInstance(null,null,null, null)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, expensesAddingFragment)
             transaction.addToBackStack(null)
@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
 
             },
             onFailure = {errorMessage ->
-                budgetmonthV.text = "0.0"
+                budgetmonthV.text = "0.00"
             }
         )
 
@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
 
             },
             onFailure = {errorMessage ->
-                savingsV.text = "0.0"
+                savingsV.text = "0.00"
             }
         )
         return view

@@ -10,6 +10,7 @@ import android.widget.CalendarView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.budgetbuddy.databinding.FragmentCalendarBinding
+import com.google.protobuf.NullValue
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -19,6 +20,8 @@ import java.util.Locale
 class CalendarFragment : Fragment() {
 
     private val ARG_SELECTED_CATEGORY = "selected_category"
+    private  val ARG_AMOUNT = "selected_amount"
+    private  val ARG_NOTES = "selected_notes"
 
     private lateinit var binding: FragmentCalendarBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,8 @@ class CalendarFragment : Fragment() {
         val calendarView: CalendarView = binding.calendarView
         val confirmButton: Button = binding.confirmButton3
         var categoryV:String=""
+        var notesV:String=""
+        var amountV: Double = 0.00
 
         setCurrentDate(selectedDateText)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
@@ -48,9 +53,16 @@ class CalendarFragment : Fragment() {
             arguments?.getString(ARG_SELECTED_CATEGORY)?.let { selectedDate ->
                 categoryV= selectedDate
             }
+            arguments?.getString(ARG_NOTES)?.let { selectedNotes ->
+                notesV= selectedNotes
+            }
+
+            arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
+                amountV= selectedAmount
+            }
 
             val selectedDate = selectedDateText.text.toString()
-            val eaf = ExpensesAddingFragment.newInstance(selectedDate,categoryV)
+            val eaf = ExpensesAddingFragment.newInstance(selectedDate,categoryV,notesV,amountV)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, eaf)
             transaction.addToBackStack(null)
@@ -69,11 +81,12 @@ class CalendarFragment : Fragment() {
 
 
 
-        fun newInstance(param1: String, selectedCategory: String) =
+        fun newInstance(param1: String, selectedCategory: String, selectedNotes:String, selectedAmount:Double) =
             CalendarFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SELECTED_CATEGORY, selectedCategory)
-
+                    putString(ARG_NOTES,selectedNotes)
+                    putDouble(ARG_AMOUNT,selectedAmount)
                 }
             }
     }

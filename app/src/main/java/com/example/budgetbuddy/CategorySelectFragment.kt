@@ -19,6 +19,8 @@ import com.example.budgetbuddy.databinding.FragmentExpensesAddingBinding
 class CategorySelectFragment : Fragment() {
     private lateinit var binding: FragmentCategorySelectBinding
     private val ARG_SELECTED_DATE = "selected_date"
+    private  val ARG_AMOUNT = "selected_amount"
+    private  val ARG_NOTES = "selected_notes"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,6 +42,8 @@ class CategorySelectFragment : Fragment() {
         val view = binding.root
         var selectedRadioButtonId: String ="WYBIERZ"
         var dateV:String=""
+        var notesV:String=""
+        var amountV: Double = 0.00
         binding.house.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
@@ -125,9 +129,17 @@ class CategorySelectFragment : Fragment() {
                 dateV= selectedDate
             }
 
+            arguments?.getString(ARG_NOTES)?.let { selectedNotes ->
+                notesV= selectedNotes
+            }
+
+            arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
+                amountV= selectedAmount
+            }
+
             if (selectedRadioButtonId != "WYBIERZ") {
 
-                val eaf = ExpensesAddingFragment.newInstance( dateV, selectedRadioButtonId)
+                val eaf = ExpensesAddingFragment.newInstance( dateV, selectedRadioButtonId,notesV,amountV)
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, eaf)
                 transaction.addToBackStack(null)
@@ -141,11 +153,12 @@ class CategorySelectFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(selectedDate: String, param2: String) =
+        fun newInstance(selectedDate: String, param2: String, selectedNotes:String, selectedAmount:Double) =
             CategorySelectFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SELECTED_DATE, selectedDate)
-                    putString("param2", param2)
+                    putString(ARG_NOTES,selectedNotes)
+                    putDouble(ARG_AMOUNT,selectedAmount)
                 }
             }
     }
