@@ -50,6 +50,9 @@ class ExpensesAddingFragment : Fragment() {
             binding.noteEditText.text=  Factory.getInstance().newEditable(selectedNotes.toString())
         }
 
+
+
+
         arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
 
             if (selectedAmount != 0.0) {
@@ -70,7 +73,10 @@ class ExpensesAddingFragment : Fragment() {
 
 
         binding.chooseCalendarButton.setOnClickListener {
-            val calendarFragment = CalendarFragment.newInstance("val1",binding.selectCategoryEnd.text.toString(),binding.noteEditText.text.toString(), binding.amount.text.toString().toDouble())
+
+            val amountString = binding.amount.text.toString()
+            val amount = amountString.toDoubleOrNull() ?: 0.0
+            val calendarFragment = CalendarFragment.newInstance("val1",binding.chooseCategoryButton.text.toString(),binding.noteEditText.text.toString(),amount)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, calendarFragment)
             transaction.addToBackStack(null)
@@ -100,8 +106,10 @@ class ExpensesAddingFragment : Fragment() {
 
         binding.chooseCategoryButton.setOnClickListener{
 
+            val amountString = binding.amount.text.toString()
+            val amount = amountString.toDoubleOrNull() ?: 0.0
 
-            val categoryFragment = CategorySelectFragment.newInstance(binding.selectDateEnd.text.toString(),"val2",binding.noteEditText.text.toString(), binding.amount.text.toString().toDouble())
+            val categoryFragment = CategorySelectFragment.newInstance(binding.selectDateEnd.text.toString(),"val2",binding.noteEditText.text.toString(),amount)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, categoryFragment)
             transaction.addToBackStack(null)
@@ -127,6 +135,7 @@ class ExpensesAddingFragment : Fragment() {
                 )
                 budgetRef.collection(category).document().set(expenseMap).addOnSuccessListener {
                     Toast.makeText(requireContext(), "Twój wydatek został dodany", Toast.LENGTH_SHORT).show()
+
                     val home = HomeFragment.newInstance()
                     val transaction = requireActivity().supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.fragment_container, home)
@@ -152,7 +161,7 @@ class ExpensesAddingFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(selectedDate: String?=null, selectedCategory:String?=null, selectedNotes:String?=null, selectedAmount:Double?=null ) =
+        fun newInstance(selectedDate: String?=null, selectedCategory:String?=null, selectedNotes:String?=null, selectedAmount:Double?=0.0 ) =
             ExpensesAddingFragment().apply {
                 arguments = Bundle().apply {
 
@@ -165,9 +174,10 @@ class ExpensesAddingFragment : Fragment() {
                     if (selectedNotes != null ) {
                         putString(ARG_NOTES, selectedNotes)
                     }
-                    if (selectedAmount != null ) {
+                    if (selectedAmount != null) {
                         putDouble(ARG_AMOUNT, selectedAmount)
                     }
+
 
 
                 }

@@ -101,7 +101,8 @@ class HomeFragment : Fragment() {
         val budgetmonthV = view.findViewById<TextView>(R.id.budgetmonth)
         firebaseRepository.getBudget(
             onSuccess = {budget ->
-                budgetmonthV.text="$budget"
+                val formattedBudget = String.format("%.2f", budget).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
+                budgetmonthV.text = formattedBudget
 
             },
             onFailure = {errorMessage ->
@@ -112,7 +113,8 @@ class HomeFragment : Fragment() {
         val savingsV = view.findViewById<TextView>(R.id.expenses)
         firebaseRepository.getSavings(
             onSuccess = {savings ->
-                savingsV.text="$savings"
+                val formattedSavings = String.format("%.2f", savings).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
+                savingsV.text = formattedSavings
 
             },
             onFailure = {errorMessage ->
