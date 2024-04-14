@@ -11,7 +11,7 @@ import com.example.budgetbuddy.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityLoginBinding
+    private lateinit var binding:com.example.budgetbuddy.databinding.ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

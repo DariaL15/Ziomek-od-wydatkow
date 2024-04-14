@@ -4,9 +4,12 @@ package com.example.budgetbuddy
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.GravityCompat
 
 import com.example.budgetbuddy.databinding.FragmentHomeBinding
 
@@ -29,6 +32,64 @@ class HomeFragment : Fragment() {
             val expensesAddingFragment = ExpensesAddingFragment.newInstance(null,null,null, null)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, expensesAddingFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+
+        binding.catDom.setOnClickListener {
+            val homeHistoryFragment = HomeHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, homeHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        binding.catAuto.setOnClickListener {
+            val autoHistoryFragment = CarHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, autoHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        binding.catPrezent.setOnClickListener {
+            val prezentHistoryFragment = PrezentHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, prezentHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        binding.catEdukacja.setOnClickListener {
+            val edukacjaHistoryFragment = EdukacjaHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, edukacjaHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        binding.catRestauracje.setOnClickListener {
+            val restauracjaHistoryFragment = RestauracjaHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, restauracjaHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        binding.catRozrywka.setOnClickListener {
+            val rozrywkaHistoryFragment = RozrywkaHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, rozrywkaHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        binding.catZakupy.setOnClickListener {
+            val zakupyHistoryFragment = ZakupyHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, zakupyHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        binding.catWypoczynek.setOnClickListener {
+            val wypoczynekHistoryFragment = WypoczynekHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, wypoczynekHistoryFragment)
             transaction.addToBackStack(null)
             transaction.commit()
         }
@@ -60,6 +121,9 @@ class HomeFragment : Fragment() {
         )
         return view
     }
+
+
+
 
     companion object {
 
