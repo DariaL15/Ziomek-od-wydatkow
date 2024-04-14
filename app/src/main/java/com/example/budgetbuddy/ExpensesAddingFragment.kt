@@ -32,6 +32,7 @@ class ExpensesAddingFragment : Fragment() {
     private var db = Firebase.firestore
     private val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -117,6 +118,7 @@ class ExpensesAddingFragment : Fragment() {
 
         }
 
+        val budgetRef = db.collection(userId).document("budget")
 
         binding.confirmButton2.setOnClickListener {
             val amount = binding.amount.text.toString().toDoubleOrNull()
@@ -126,8 +128,7 @@ class ExpensesAddingFragment : Fragment() {
 
             val budgetRef = db.collection(userId).document("budget")
 
-            if( amount != null && date.isNotEmpty() && category.isNotEmpty() && notes.isNotEmpty())
-            {
+            if( amount != null && date.isNotEmpty() && category.isNotEmpty() && notes.isNotEmpty()) {
                 val expenseMap = hashMapOf(
                     "amount" to -amount,
                     "date" to date,
@@ -136,24 +137,33 @@ class ExpensesAddingFragment : Fragment() {
                 budgetRef.collection(category).document().set(expenseMap).addOnSuccessListener {
                     Toast.makeText(requireContext(), "Twój wydatek został dodany", Toast.LENGTH_SHORT).show()
 
-                    val home = HomeFragment.newInstance()
-                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fragment_container, home)
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-                }
-                    .addOnFailureListener {
-                        Toast.makeText(requireContext(), "Wystąpił błąd podaczas dodawania wydatku", Toast.LENGTH_SHORT).show()
+
+                    budgetRef.get().addOnSuccessListener { document ->
+                        val currentBudget = document.getDouble("budgetV") ?: 0.0
+                        val updatedBudget = currentBudget - amount
+
+                        budgetRef.update("budgetV", updatedBudget).addOnSuccessListener {
+                            Toast.makeText(requireContext(), "Budżet został zaktualizowany", Toast.LENGTH_SHORT).show()
+
+                            val home = HomeFragment.newInstance()
+                            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                            transaction.replace(R.id.fragment_container, home)
+                            transaction.addToBackStack(null)
+                            transaction.commit()
+                        }.addOnFailureListener {
+                            Toast.makeText(requireContext(), "Wystąpił błąd podczas aktualizacji budżetu", Toast.LENGTH_SHORT).show()
+                        }
+                    }.addOnFailureListener {
+                        Toast.makeText(requireContext(), "Wystąpił błąd podczas pobierania aktualnego budżetu", Toast.LENGTH_SHORT).show()
                     }
-
-            }
-            else
-            {
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(), "Wystąpił błąd podczas dodawania wydatku", Toast.LENGTH_SHORT).show()
+                }
+            } else {
                 Toast.makeText(requireContext(), "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
-
             }
-
         }
+
 
         val view=binding.root
         return view
