@@ -62,6 +62,32 @@ class FirebaseRepository (private val context: Context){
         }
     }
 
+    fun getExpensesVal(onSuccess: (Double) -> Unit, onFailure: (Exception) -> Unit)
+    {
+        if(userId != null)
+        {
+            val budgetRef = db.collection(userId).document("budget")
+            budgetRef.get()
+                .addOnSuccessListener { document ->
+                    if(document != null && document.exists() )
+                    {
+                        val budget = document.getDouble("expensesV") ?: 0.0
+                        onSuccess(budget)
+                    }
+                    else
+                    {
+                        onFailure(Exception("Nie znaleziono danych o wydatkach użytkownika"))
+                    }
+                }
+                .addOnFailureListener {
+                    onFailure(Exception("Błąd pobierania wydatkow"))
+                }
+        }
+        else {
+            onFailure(Exception("Użytkownik niezalogowany"))
+        }
+    }
+
     fun getName(onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit)
     {
         if(userId != null)

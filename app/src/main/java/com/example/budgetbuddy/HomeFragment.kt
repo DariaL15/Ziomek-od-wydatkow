@@ -110,15 +110,15 @@ class HomeFragment : Fragment() {
             }
         )
 
-        val savingsV = view.findViewById<TextView>(R.id.expenses)
-        firebaseRepository.getSavings(
-            onSuccess = {savings ->
-                val formattedSavings = String.format("%.2f", savings).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
-                savingsV.text = formattedSavings
+        val expensesV = view.findViewById<TextView>(R.id.expenses)
+        firebaseRepository.getExpensesVal(
+            onSuccess = {expenses ->
+                val formattedSavings = String.format("%.2f", expenses).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
+                expensesV.text = formattedSavings
 
             },
             onFailure = {errorMessage ->
-                savingsV.text = "0.00"
+                expensesV.text = "0.00"
             }
         )
         return view

@@ -141,8 +141,13 @@ class ExpensesAddingFragment : Fragment() {
                     budgetRef.get().addOnSuccessListener { document ->
                         val currentBudget = document.getDouble("budgetV") ?: 0.0
                         val updatedBudget = currentBudget - amount
+                        val currentExpenses = document.getDouble("expensesV") ?:0.0
+                        val updatedExpenses = currentExpenses + amount
 
-                        budgetRef.update("budgetV", updatedBudget).addOnSuccessListener {
+                        budgetRef.update(mapOf(
+                            "budgetV" to updatedBudget,
+                            "expensesV" to updatedExpenses
+                        )).addOnSuccessListener {
                             Toast.makeText(requireContext(), "Budżet został zaktualizowany", Toast.LENGTH_SHORT).show()
 
                             val home = HomeFragment.newInstance()

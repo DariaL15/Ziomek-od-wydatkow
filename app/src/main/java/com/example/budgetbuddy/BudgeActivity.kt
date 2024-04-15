@@ -27,10 +27,13 @@ class BudgeActivity : AppCompatActivity() {
         binding.budgetbutton.setOnClickListener{
             val savings = binding.savings.text.toString().toDoubleOrNull()
             val budget = binding.budget.text.toString().toDoubleOrNull()
+            val expenses = 0.00
 
             val budgetMap = hashMapOf(
                 "budgetV" to budget,
-                "savingsV" to savings
+                "budgetVCONST" to budget,
+                "savingsV" to savings,
+                "expensesV" to expenses
 
             )
 
