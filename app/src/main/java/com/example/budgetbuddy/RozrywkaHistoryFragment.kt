@@ -37,14 +37,14 @@ class RozrywkaHistoryFragment : Fragment() {
         adapter = MyAdapter(datalist)
         recview.adapter = adapter
         db=FirebaseFirestore.getInstance()
-        db.collection(userId).document("budget").collection("entertaiment").get()
+        db.collection(userId).document("budget").collection("entertainment").get()
             .addOnSuccessListener{querySnapshot->
                 val list = querySnapshot.documents
                 for(document in list)
                 {
                     val obj = document.toObject(Model::class.java)
                     obj?.let{
-                        it.collection="entertaiment"
+                        it.collection="entertainment"
                         datalist.add(it)}
                 }
                 datalist.reverse()
