@@ -34,7 +34,7 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
             "transport"->holder.imageView.setImageResource(R.drawable.icon_transport)
             "relax"->holder.imageView.setImageResource(R.drawable.icon_wypoczynek)
             "clothes"->holder.imageView.setImageResource(R.drawable.icon_ubrania)
-            "entertaiment"->holder.imageView.setImageResource(R.drawable.icon_rozrywka)
+            "entertainment"->holder.imageView.setImageResource(R.drawable.icon_rozrywka)
             else -> holder.imageView.setImageResource(R.drawable.circle)
         }
     }

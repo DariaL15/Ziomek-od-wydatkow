@@ -71,7 +71,7 @@ class IncomesAddingFragment : Fragment() {
 
         val categoriesEnglish = listOf(
             "choose", "car", "house", "clothes", "shopping", "transport",
-            "sport", "health", "entertaiment", "relax", "restaurant",
+            "sport", "health", "entertainment", "relax", "restaurant",
             "gift", "education"
         )
 
