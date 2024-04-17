@@ -10,7 +10,6 @@ import android.widget.CalendarView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.budgetbuddy.databinding.FragmentCalendarBinding
-import com.google.protobuf.NullValue
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -19,7 +18,7 @@ import java.util.Locale
 
 class CalendarFragment : Fragment() {
 
-    private val ARG_SELECTED_CATEGORY = "selected_category"
+    private  val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
     private  val ARG_AMOUNT = "selected_amount"
     private  val ARG_NOTES = "selected_notes"
 
@@ -34,14 +33,14 @@ class CalendarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
         val selectedDateText: TextView = binding.selectedDate
         val calendarView: CalendarView = binding.calendarView
         val confirmButton: Button = binding.confirmButton3
-        var categoryV:String=""
-        var notesV:String=""
-        var amountV: Double = 0.00
+        val categoryV = arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION, 0) ?: 0
+        var notesV = ""
+        var amountV = 0.00
 
         setCurrentDate(selectedDateText)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
@@ -50,41 +49,39 @@ class CalendarFragment : Fragment() {
 
         confirmButton.setOnClickListener {
 
-            arguments?.getString(ARG_SELECTED_CATEGORY)?.let { selectedDate ->
-                categoryV= selectedDate
-            }
+
             arguments?.getString(ARG_NOTES)?.let { selectedNotes ->
-                notesV= selectedNotes
+                notesV = selectedNotes
             }
 
             arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
-                amountV= selectedAmount
+                amountV = selectedAmount
             }
 
             val selectedDate = selectedDateText.text.toString()
-            val eaf = ExpensesAddingFragment.newInstance(selectedDate,categoryV,notesV,amountV)
+            val eaf = ExpensesAddingFragment.newInstance(selectedDate, categoryV, notesV, amountV)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, eaf)
             transaction.addToBackStack(null)
             transaction.commit()
-            }
+        }
 
 
-
-
-
-        val view=binding.root
-        return view
+        return binding.root
     }
 
     companion object {
 
 
 
-        fun newInstance(param1: String, selectedCategory: String, selectedNotes:String, selectedAmount:Double) =
+        fun newInstance(
+            selectedCategoryPosition: Int,
+            selectedNotes: String,
+            selectedAmount: Double
+        ) =
             CalendarFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_SELECTED_CATEGORY, selectedCategory)
+                    putInt(ARG_SELECTED_CATEGORY_POSITION, selectedCategoryPosition)
                     putString(ARG_NOTES,selectedNotes)
                     putDouble(ARG_AMOUNT,selectedAmount)
                 }
@@ -94,7 +91,7 @@ class CalendarFragment : Fragment() {
 
     private fun setCurrentDate(textView: TextView) {
         val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         val formattedDate = dateFormat.format(calendar.time)
         textView.text = formattedDate
     }
@@ -102,7 +99,7 @@ class CalendarFragment : Fragment() {
     private fun updateSelectedDate(year: Int, month: Int, dayOfMonth: Int, textView: TextView) {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth)
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         val formattedDate = dateFormat.format(calendar.time)
         textView.text = formattedDate
 }}

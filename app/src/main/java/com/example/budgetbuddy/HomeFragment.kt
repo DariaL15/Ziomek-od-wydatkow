@@ -4,12 +4,9 @@ package com.example.budgetbuddy
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.GravityCompat
 
 import com.example.budgetbuddy.databinding.FragmentHomeBinding
 
@@ -25,11 +22,11 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.expenseButton.setOnClickListener {
-            val expensesAddingFragment = ExpensesAddingFragment.newInstance(null,null,null, null)
+            val expensesAddingFragment = ExpensesAddingFragment.newInstance(null,0,null, null)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, expensesAddingFragment)
             transaction.addToBackStack(null)
@@ -113,7 +110,7 @@ class HomeFragment : Fragment() {
                 budgetmonthV.text = formattedBudget
 
             },
-            onFailure = {errorMessage ->
+            onFailure = {
                 budgetmonthV.text = "0.00"
             }
         )
@@ -125,7 +122,7 @@ class HomeFragment : Fragment() {
                 expensesV.text = formattedSavings
 
             },
-            onFailure = {errorMessage ->
+            onFailure = {
                 expensesV.text = "0.00"
             }
         )

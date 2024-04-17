@@ -7,8 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
-import com.example.budgetbuddy.databinding.FragmentExpensesAddingBinding
 import com.example.budgetbuddy.databinding.FragmentIncomesAddingBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -16,7 +17,7 @@ import com.google.firebase.firestore.firestore
 
 
 private const val ARG_SELECTED_DATE = "selected_date"
-private const val ARG_SELECTED_CATEGORY = "selected_category"
+private const val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
 private const val ARG_AMOUNT = "selected_amount"
 private const val ARG_NOTES = "selected_notes"
 
@@ -31,14 +32,13 @@ class IncomesAddingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
 
 
         binding = FragmentIncomesAddingBinding.inflate(inflater, container, false)
 
         binding.addExpensesButton1.setOnClickListener {
-            val expensesAddingFragment = ExpensesAddingFragment.newInstance(null,null,null, null)
+            val expensesAddingFragment = ExpensesAddingFragment.newInstance(null, 0, null, null)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, expensesAddingFragment)
             transaction.addToBackStack(null)
@@ -50,25 +50,70 @@ class IncomesAddingFragment : Fragment() {
             binding.selectDateEnd1.text = selectedDate
         }
 
-        var categoryVal = ""
-        arguments?.getString(ARG_SELECTED_CATEGORY)?.let { selectedCategory ->
+        val categorySpinner = binding.categorySpinner
 
-            categoryVal = selectedCategory
-            if(categoryVal == "car") {binding.chooseCategoryButton1.text="samochód"}
-            if(categoryVal == "house") {binding.chooseCategoryButton1.text="dom"}
-            if(categoryVal == "clothes") {binding.chooseCategoryButton1.text="ubrania"}
-            if(categoryVal == "shopping") {binding.chooseCategoryButton1.text="zakupy"}
-            if(categoryVal == "transport") {binding.chooseCategoryButton1.text="transport"}
-            if(categoryVal == "sport") {binding.chooseCategoryButton1.text="sport"}
-            if(categoryVal == "health") {binding.chooseCategoryButton1.text="zdrowie"}
-            if(categoryVal == "entertaiment") {binding.chooseCategoryButton1.text="rozrywka"}
-            if(categoryVal == "relax") {binding.chooseCategoryButton1.text="relax"}
-            if(categoryVal == "restaurant") {binding.chooseCategoryButton1.text="restauracje"}
-            if(categoryVal == "gift") {binding.chooseCategoryButton1.text="prezenty"}
+
+        val categoryTranslations = mapOf(
+            "choose" to "Wybierz",
+            "car" to "Samochód",
+            "house" to "Dom",
+            "clothes" to "Ubrania",
+            "shopping" to "Zakupy",
+            "transport" to "Transport",
+            "sport" to "Sport",
+            "health" to "Zdrowie",
+            "entertainment" to "Rozrywka",
+            "relax" to "Relax",
+            "restaurant" to "Restauracje",
+            "gift" to "Prezenty",
+            "education" to "Edukacja"
+        )
+
+        val categoriesEnglish = listOf(
+            "choose", "car", "house", "clothes", "shopping", "transport",
+            "sport", "health", "entertaiment", "relax", "restaurant",
+            "gift", "education"
+        )
+
+        val categoriesPolish = categoriesEnglish.map { categoryTranslations[it] ?: it }
+
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            categoriesPolish
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        categorySpinner.adapter = adapter
+
+        var selectedCategoryV = ""
+        var selectedCategoryPosition = 0
+
+
+        arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION)?.let { position ->
+            selectedCategoryPosition = position
+            categorySpinner.setSelection(selectedCategoryPosition)
         }
 
-        arguments?.getString(ARG_NOTES)?.let { selectedNotes->
-            binding.noteEditText1.text=  Editable.Factory.getInstance().newEditable(selectedNotes.toString())
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedCategoryPosition = position
+                selectedCategoryV = categoriesEnglish[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Toast.makeText(requireContext(), "Wybierz kategorie", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        arguments?.getString(ARG_NOTES)?.let { selectedNotes ->
+            binding.noteEditText1.text = Editable.Factory.getInstance().newEditable(selectedNotes)
         }
 
 
@@ -82,7 +127,7 @@ class IncomesAddingFragment : Fragment() {
             }
         }
 
-        binding.undo1.setOnClickListener{
+        binding.undo1.setOnClickListener {
             val home = HomeFragment.newInstance()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, home)
@@ -95,7 +140,11 @@ class IncomesAddingFragment : Fragment() {
 
             val amountString = binding.amount1.text.toString()
             val amount = amountString.toDoubleOrNull() ?: 0.0
-            val calendarIncomesFragment = CalendarIncomesFragment.newInstance("val1",categoryVal, binding.noteEditText1.text.toString() ,amount)
+            val calendarIncomesFragment = CalendarIncomesFragment.newInstance(
+                selectedCategoryPosition,
+                binding.noteEditText1.text.toString(),
+                amount
+            )
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, calendarIncomesFragment)
             transaction.addToBackStack(null)
@@ -103,7 +152,7 @@ class IncomesAddingFragment : Fragment() {
         }
 
 
-        binding.today1.setOnClickListener{
+        binding.today1.setOnClickListener {
             val currentDate = Calendar.getInstance()
             val day = currentDate.get(Calendar.DAY_OF_MONTH)
             val month = currentDate.get(Calendar.MONTH) + 1
@@ -113,7 +162,7 @@ class IncomesAddingFragment : Fragment() {
 
         }
 
-        binding.yesterday1.setOnClickListener{
+        binding.yesterday1.setOnClickListener {
             val yesterday = Calendar.getInstance()
             yesterday.add(Calendar.DAY_OF_MONTH, -1)
             val dayYesterday = yesterday.get(Calendar.DAY_OF_MONTH)
@@ -124,37 +173,29 @@ class IncomesAddingFragment : Fragment() {
 
         }
 
-        binding.chooseCategoryButton1.setOnClickListener{
-
-            val amountString = binding.amount1.text.toString()
-            val amount = amountString.toDoubleOrNull() ?: 0.0
-
-            val categoryFragment = CategorySelectIncomeFragment.newInstance(binding.selectDateEnd1.text.toString(),"val2",binding.noteEditText1.text.toString(),amount)
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, categoryFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
-        }
 
         val budgetRef = db.collection(userId).document("budget")
 
         binding.confirmButtonIncomes1.setOnClickListener {
             val amount = binding.amount1.text.toString().toDoubleOrNull()
             val date = binding.selectDateEnd1.text.toString()
-            val category = categoryVal
+            val category = selectedCategoryV
             val notes = binding.noteEditText1.text.toString()
 
             val budgetRef = db.collection(userId).document("budget")
 
-            if( amount != null && date.isNotEmpty() && category.isNotEmpty() && notes.isNotEmpty()) {
+            if (amount != null && date.isNotEmpty() && category.isNotEmpty() && notes.isNotEmpty() && category != "choose") {
                 val incomeMap = hashMapOf(
                     "amount" to amount,
                     "date" to date,
                     "notes" to notes
                 )
                 budgetRef.collection(category).document().set(incomeMap).addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Twój przychód został dodany", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Twój przychód został dodany",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
 
                     budgetRef.get().addOnSuccessListener { document ->
@@ -162,43 +203,60 @@ class IncomesAddingFragment : Fragment() {
                         val updatedBudget = currentBudget + amount
 
                         budgetRef.update("budgetV", updatedBudget).addOnSuccessListener {
-                            Toast.makeText(requireContext(), "Budżet został zaktualizowany", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Budżet został zaktualizowany",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
                             val home = HomeFragment.newInstance()
-                            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                            val transaction =
+                                requireActivity().supportFragmentManager.beginTransaction()
                             transaction.replace(R.id.fragment_container, home)
                             transaction.addToBackStack(null)
                             transaction.commit()
                         }.addOnFailureListener {
-                            Toast.makeText(requireContext(), "Wystąpił błąd podczas aktualizacji budżetu", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Wystąpił błąd podczas aktualizacji budżetu",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }.addOnFailureListener {
-                        Toast.makeText(requireContext(), "Wystąpił błąd podczas pobierania aktualnego budżetu", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Wystąpił błąd podczas pobierania aktualnego budżetu",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }.addOnFailureListener {
-                    Toast.makeText(requireContext(), "Wystąpił błąd podczas dodawania przychodu", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Wystąpił błąd podczas dodawania przychodu",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
-                Toast.makeText(requireContext(), "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Wypełnij wszystkie pola", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
-        val view=binding.root
-        return view
+        return binding.root
 
     }
 
     companion object {
 
-        fun newInstance(selectedDate: String?=null, selectedCategory:String?=null, selectedNotes:String?=null, selectedAmount:Double?=0.0) =
+        fun newInstance(selectedDate: String?=null, selectedCategoryPosition: Int? = 0, selectedNotes:String?=null, selectedAmount:Double?=0.0) =
             IncomesAddingFragment().apply {
                 arguments = Bundle().apply {
 
                     if (selectedDate != null ) {
                         putString(ARG_SELECTED_DATE, selectedDate)
                     }
-                    if (selectedCategory != null ) {
-                        putString(ARG_SELECTED_CATEGORY, selectedCategory)
+                    if (selectedCategoryPosition != null) {
+                        putInt(ARG_SELECTED_CATEGORY_POSITION, selectedCategoryPosition)
                     }
                     if (selectedNotes != null ) {
                         putString(ARG_NOTES, selectedNotes)
