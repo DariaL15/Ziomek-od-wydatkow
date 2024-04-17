@@ -39,12 +39,39 @@ class ExpensesAddingFragment : Fragment() {
     ): View? {
 
 
+
+
         binding = FragmentExpensesAddingBinding.inflate(inflater, container, false)
+
+        binding.addIncomeButton.setOnClickListener {
+            val incomesAddingFragment = IncomesAddingFragment.newInstance(null,null,null, null)
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, incomesAddingFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+
         arguments?.getString(ARG_SELECTED_DATE)?.let { selectedDate ->
             binding.selectDateEnd.text = selectedDate
         }
+
+        var categoryVal = ""
         arguments?.getString(ARG_SELECTED_CATEGORY)?.let { selectedCategory ->
-            binding.chooseCategoryButton.text = selectedCategory
+
+            categoryVal = selectedCategory
+            if(categoryVal == "car") {binding.chooseCategoryButton.text="samochód"}
+            if(categoryVal == "house") {binding.chooseCategoryButton.text="dom"}
+            if(categoryVal == "clothes") {binding.chooseCategoryButton.text="ubrania"}
+            if(categoryVal == "shopping") {binding.chooseCategoryButton.text="zakupy"}
+            if(categoryVal == "transport") {binding.chooseCategoryButton.text="transport"}
+            if(categoryVal == "sport") {binding.chooseCategoryButton.text="sport"}
+            if(categoryVal == "health") {binding.chooseCategoryButton.text="zdrowie"}
+            if(categoryVal == "entertaiment") {binding.chooseCategoryButton.text="rozrywka"}
+            if(categoryVal == "relax") {binding.chooseCategoryButton.text="relax"}
+            if(categoryVal == "restaurant") {binding.chooseCategoryButton.text="restauracje"}
+            if(categoryVal == "gift") {binding.chooseCategoryButton.text="prezenty"}
+            if(categoryVal == "education") {binding.chooseCategoryButton.text="edukacja"}
         }
 
         arguments?.getString(ARG_NOTES)?.let { selectedNotes->
@@ -77,7 +104,7 @@ class ExpensesAddingFragment : Fragment() {
 
             val amountString = binding.amount.text.toString()
             val amount = amountString.toDoubleOrNull() ?: 0.0
-            val calendarFragment = CalendarFragment.newInstance("val1",binding.chooseCategoryButton.text.toString(),binding.noteEditText.text.toString(),amount)
+            val calendarFragment = CalendarFragment.newInstance("val1",categoryVal,binding.noteEditText.text.toString(),amount)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, calendarFragment)
             transaction.addToBackStack(null)
@@ -123,7 +150,7 @@ class ExpensesAddingFragment : Fragment() {
         binding.confirmButton2.setOnClickListener {
             val amount = binding.amount.text.toString().toDoubleOrNull()
             val date = binding.selectDateEnd.text.toString()
-            val category = binding.chooseCategoryButton.text.toString()
+            val category = categoryVal
             val notes = binding.noteEditText.text.toString()
 
             val budgetRef = db.collection(userId).document("budget")

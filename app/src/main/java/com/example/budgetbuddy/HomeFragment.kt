@@ -36,6 +36,14 @@ class HomeFragment : Fragment() {
             transaction.commit()
         }
 
+        binding.incomeButton.setOnClickListener {
+            val incomesAddingFragment = IncomesAddingFragment.newInstance(null,null,null, null)
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, incomesAddingFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
 
         binding.catDom.setOnClickListener {
             val homeHistoryFragment = HomeHistoryFragment.newInstance()

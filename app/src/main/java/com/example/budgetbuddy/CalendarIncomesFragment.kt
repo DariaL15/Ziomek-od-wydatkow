@@ -5,27 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CalendarView
+import android.widget.TextView
+import com.example.budgetbuddy.databinding.FragmentCalendarBinding
+import com.example.budgetbuddy.databinding.FragmentCalendarIncomesBinding
+import android.icu.util.Calendar
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CalendarIncomesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CalendarIncomesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private val ARG_SELECTED_CATEGORY = "selected_category"
+    private  val ARG_AMOUNT = "selected_amount"
+    private  val ARG_NOTES = "selected_notes"
+
+    private lateinit var binding: FragmentCalendarIncomesBinding
+
+            override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -33,27 +33,75 @@ class CalendarIncomesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar_incomes, container, false)
+
+        binding = FragmentCalendarIncomesBinding.inflate(inflater, container, false)
+        val selectedDateText: TextView = binding.selectedDate1
+        val calendarView: CalendarView = binding.calendarView1
+        val confirmButton: Button = binding.confirmButtonIncomes2
+        var categoryV:String=""
+        var notesV:String=""
+        var amountV: Double = 0.00
+
+
+        setCurrentDate(selectedDateText)
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            updateSelectedDate(year, month, dayOfMonth, selectedDateText)
+        }
+
+        confirmButton.setOnClickListener {
+
+            arguments?.getString(ARG_SELECTED_CATEGORY)?.let { selectedDate ->
+                categoryV= selectedDate
+            }
+            arguments?.getString(ARG_NOTES)?.let { selectedNotes ->
+                notesV= selectedNotes
+            }
+
+            arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
+                amountV= selectedAmount
+            }
+
+            val selectedDate = selectedDateText.text.toString()
+            val iaf = IncomesAddingFragment.newInstance(selectedDate,categoryV,notesV,amountV)
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, iaf)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+
+
+
+
+        val view=binding.root
+        return view
+
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CalendarIncomesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+
+        fun newInstance(param1: String, selectedCategory: String, selectedNotes:String, selectedAmount:Double) =
             CalendarIncomesFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_SELECTED_CATEGORY, selectedCategory)
+                    putString(ARG_NOTES,selectedNotes)
+                    putDouble(ARG_AMOUNT,selectedAmount)
                 }
             }
+    }
+
+    private fun setCurrentDate(textView: TextView) {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+        textView.text = formattedDate
+    }
+
+    private fun updateSelectedDate(year: Int, month: Int, dayOfMonth: Int, textView: TextView) {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayOfMonth)
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+        textView.text = formattedDate
     }
 }

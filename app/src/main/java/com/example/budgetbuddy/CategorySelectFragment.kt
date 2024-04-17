@@ -120,7 +120,12 @@ class CategorySelectFragment : Fragment() {
             }
         }
 
-
+        binding.education.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val resourceName = buttonView.resources.getResourceEntryName(buttonView.id)
+                selectedRadioButtonId = resourceName.substringAfter('/')
+            }
+        }
 
 
         confirmButton.setOnClickListener {

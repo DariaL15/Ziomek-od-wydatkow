@@ -76,7 +76,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/house1"
+                            android:id="@+id/house"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -115,7 +115,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/car1"
+                            android:id="@+id/car"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -154,7 +154,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/shopping1"
+                            android:id="@+id/shopping"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -193,7 +193,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/transport1"
+                            android:id="@+id/transport"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -232,7 +232,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/sport1"
+                            android:id="@+id/sport"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -272,7 +272,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/health1"
+                            android:id="@+id/health"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -311,7 +311,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/entertaiment1"
+                            android:id="@+id/entertaiment"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -350,7 +350,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/relax1"
+                            android:id="@+id/relax"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -389,7 +389,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/restaurant1"
+                            android:id="@+id/restaurant"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -430,7 +430,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/gift1"
+                            android:id="@+id/gift"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -470,7 +470,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/clothes1"
+                            android:id="@+id/clothes"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -509,7 +509,7 @@
 
 
                         <RadioButton
-                            android:id="@+id/education1"
+                            android:id="@+id/education"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
