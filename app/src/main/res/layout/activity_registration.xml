@@ -7,7 +7,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:gravity="center"
-android:background="@drawable/moneyicon1"
+android:background="@drawable/money"
 tools:context=".LoginActivity">
 
 <androidx.cardview.widget.CardView
