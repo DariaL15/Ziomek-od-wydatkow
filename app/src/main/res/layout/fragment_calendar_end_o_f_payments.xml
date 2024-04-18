@@ -2,20 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/calendar_view_fragment_fixed_expenses"
+    android:id="@+id/calendar_end_of_payments"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/textgreen"
     android:padding="10dp"
-    tools:context=".CalendarFixedExpensesFragment">
+    tools:context=".CalendarEndOFPaymentsFragment">
 
     <FrameLayout
-        android:id="@+id/frameLayout2"
+        android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/undo3"
+            android:id="@+id/undo4"
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:drawableTop="@drawable/arrow_back"
@@ -29,7 +29,7 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frameLayout2">
+        android:layout_below="@+id/frameLayout3">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:padding="30dp">
 
                 <TextView
-                    android:id="@+id/select_date_text2"
+                    android:id="@+id/select_date_text3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/select_day_text"
@@ -56,13 +56,13 @@
                     android:textStyle="bold" />
 
                 <CalendarView
-                    android:id="@+id/calendar_view2"
+                    android:id="@+id/calendar_view3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp" />
 
                 <TextView
-                    android:id="@+id/selected_date2"
+                    android:id="@+id/selected_date3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -73,7 +73,7 @@
                     android:textStyle="italic"/>
 
                 <Button
-                    android:id="@+id/confirm_button_fix_2"
+                    android:id="@+id/confirm_button_fix_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"

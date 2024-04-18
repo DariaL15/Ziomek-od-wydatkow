@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="15dp">
+
+    <TextView
+            android:id="@+id/fixed_expense_enter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textgreen"
+            android:textSize="15sp"
+            android:text="@string/transactions_to_do"
+            />
+
+        <EditText
+            android:id="@+id/fixed_expense_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext2white"
+            android:textColorHint="@color/green_light"
+            android:textStyle="bold"
+            android:hint="@string/write"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:maxLines="1"
+            android:textColor="@color/textgreen"
+            android:textSize="13sp"
+            />
+
+</LinearLayout>

@@ -72,8 +72,13 @@
     <string name="amount_text">Kwota:</string>
     <string name="enter_amount">Wpisz kwotę</string>
     <string name="payment_date">Data najbliższej płatności:</string>
+    <string name="payment_end">Data zakończenia:</string>
     <string name="repeat_text">Powtarzaj:</string>
     <string name="end_text">Zakończ:</string>
+    <string name="transactions_to_do">Transfery do wykonania:</string>
+    <string name="write">Wpisz</string>
+    <string name="select_category1">Wybierz kategorię:</string>
+
 
     <string name="notification_text">PRZYPOMNIENIE</string>
     <string name="confirm_notification_text">OPŁACONE</string>
