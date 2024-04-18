@@ -13,12 +13,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+    android:layout_weight="0.7"
       >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="550dp"
+            android:layout_height="match_parent"
             tools:context=".Home">
 
             <View
@@ -296,8 +297,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
         android:layout_gravity="center_vertical">
 
 
