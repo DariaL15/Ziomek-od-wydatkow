@@ -46,6 +46,8 @@ class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
         {
             R.id.nav_home->supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, HomeFragment()).commit()
+            R.id.nav_fixed_epenses->supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, FixedExpenseFragment()).commit()
             R.id.nav_settings->supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SettingsFragment()).commit()
             R.id.nav_savings->supportFragmentManager.beginTransaction()

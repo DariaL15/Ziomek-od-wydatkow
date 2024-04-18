@@ -75,5 +75,8 @@
     <string name="repeat_text">Powtarzaj:</string>
     <string name="end_text">Zakończ:</string>
 
+    <string name="notification_text">PRZYPOMNIENIE</string>
+    <string name="confirm_notification_text">OPŁACONE</string>
+    <string name="no_confirm_notification_text">ANULUJ</string>
 
 </resources>

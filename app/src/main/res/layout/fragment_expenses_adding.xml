@@ -252,7 +252,7 @@
                     android:paddingLeft="15dp"
                     android:background="@drawable/edittextfullred"
                     android:gravity="center"
-                    android:textColor="@color/white"
+                    style="@style/SpinnerStyle1"
                     android:textSize="14sp" />
 
             </LinearLayout>

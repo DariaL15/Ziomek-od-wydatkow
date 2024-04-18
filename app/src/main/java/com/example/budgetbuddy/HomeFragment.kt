@@ -24,7 +24,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+
+
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        val paymentReminderDialog = PaymentReminderDialogFragment.newInstance()
+        fragmentManager?.let { paymentReminderDialog.show(it, "PaymentReminderDialog") }
+
         binding.expenseButton.setOnClickListener {
             val expensesAddingFragment = ExpensesAddingFragment.newInstance(null,0,null, null)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -32,6 +38,7 @@ class HomeFragment : Fragment() {
             transaction.addToBackStack(null)
             transaction.commit()
         }
+
 
         binding.incomeButton.setOnClickListener {
             val incomesAddingFragment = IncomesAddingFragment.newInstance(null,null,null, null)

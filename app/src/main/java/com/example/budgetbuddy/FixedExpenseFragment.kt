@@ -1,58 +1,165 @@
 package com.example.budgetbuddy
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import com.example.budgetbuddy.databinding.FragmentFixedExpenseBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FixedExpenseFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val ARG_NAME = "selected_name"
+private const val ARG_AMOUNT = "selected_amount"
+private const val ARG_SELECTED_DATE = "selected_date"
+//private const val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
+private const val ARG_SELECTED_REPEAT_POSITION = "selected_repeat_position"
+private const val ARG_SELECTED_END_PAYMENT_POSITION = "selected_end_payment_position"
+
 class FixedExpenseFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(
+    private lateinit var binding: FragmentFixedExpenseBinding
+    private var db = Firebase.firestore
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
+    private val repeat = listOf("codziennie","co tydzień","co dwa tygodnie", "co miesiąc" , "co trzy miesiące", "co sześć miesięcy", "co rok")
+    private val end_payment= listOf("bezterminowo", "po liczbie przelewów", "w dniu")
+            override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fixed_expense, container, false)
+    ): View {
+
+                binding = FragmentFixedExpenseBinding.inflate(inflater, container, false)
+
+        binding.undo.setOnClickListener {
+            val home = HomeFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, home)
+            transaction.addToBackStack(null)
+            transaction.commit()
+
+        }
+                val repaetSpiner=binding.repeatSpinner
+                val endPaymentSpiner=binding.endPaymentSpinner
+
+                val adapterR = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, repeat)
+                val adapterE = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, end_payment)
+
+                adapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                adapterE.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+                repaetSpiner.adapter = adapterR
+                endPaymentSpiner.adapter=adapterE
+
+                var selectedRepeatSpinerPosition = 0
+                var selectedEndPaymentSpinerPosition = 0
+
+                arguments?.getString(ARG_NAME)?.let { selectedName ->
+                        binding.fixedExpenseName.text = Editable.Factory.getInstance().newEditable(selectedName)
+
+
+                }
+
+                arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
+
+                    if (selectedAmount != 0.0) {
+                        val formattedAmount = String.format("%.2f", selectedAmount)
+                        binding.fixedExpenseEnterAmount.text = Editable.Factory.getInstance().newEditable(formattedAmount)
+                    }
+                }
+
+                arguments?.getString(ARG_SELECTED_DATE)?.let { selectedDate ->
+                    binding.dateOfPayment.text = selectedDate
+                }
+
+                arguments?.getInt(ARG_SELECTED_REPEAT_POSITION)?.let { position ->
+                    selectedRepeatSpinerPosition = position
+                    repaetSpiner.setSelection(selectedRepeatSpinerPosition)
+                }
+
+                arguments?.getInt(ARG_SELECTED_END_PAYMENT_POSITION)?.let { position ->
+                    selectedEndPaymentSpinerPosition = position
+                    endPaymentSpiner.setSelection(selectedEndPaymentSpinerPosition)
+                }
+
+                repaetSpiner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        val selectedRepeat = repeat[position]
+                        selectedRepeatSpinerPosition=position
+                        repaetSpiner.setSelection(selectedRepeatSpinerPosition)
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        Toast.makeText(requireContext(), "Wybierz co jaki czas powtarzać zlecenie", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+                        endPaymentSpiner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            val selectedEndPayment = end_payment[position]
+                            selectedEndPaymentSpinerPosition=position
+                            endPaymentSpiner.setSelection(selectedEndPaymentSpinerPosition)
+                        }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                Toast.makeText(requireContext(), "Wybierz kiedy zakończyć zlecenie", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+
+                binding.chooseCalendarButton1.setOnClickListener {
+                    val nameV = binding.fixedExpenseName.text.toString()
+                    val amountString = binding.fixedExpenseEnterAmount.text.toString()
+                    val amount = amountString.toDoubleOrNull() ?: 0.0
+
+
+
+                    val calendarFixedExpensesFragment = CalendarFixedExpensesFragment.newInstance(
+                        nameV,
+                        amount,
+                        selectedRepeatSpinerPosition,
+                        selectedEndPaymentSpinerPosition
+                    )
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragment_container, calendarFixedExpensesFragment)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }
+
+                return binding.root
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FixedExpenseFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+
+        fun newInstance(selectedName: String?=null, selectedAmount: Double?=0.0, selectedDate:String?=null, selectedRepeatPosition: Int? = 0, selectedEndPaymentPosition: Int? = 0) =
             FixedExpenseFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+                    if (selectedName != null ) {
+                        putString(ARG_NAME, selectedName)
+                    }
+                    if (selectedDate != null ) {
+                        putString(ARG_SELECTED_DATE, selectedDate)
+                    }
+                    if (selectedAmount != null ) {
+                        putDouble(ARG_AMOUNT, selectedAmount)
+                    }
+
+                    if (selectedRepeatPosition != null) {
+                        putInt(ARG_SELECTED_REPEAT_POSITION, selectedRepeatPosition)
+                    }
+
+                    if (selectedEndPaymentPosition != null) {
+                        putInt(ARG_SELECTED_END_PAYMENT_POSITION, selectedEndPaymentPosition)
+                    }
+
+
                 }
             }
     }
