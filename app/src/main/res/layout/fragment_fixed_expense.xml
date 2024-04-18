@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fixed_expense"
+    android:fitsSystemWindows="true"
+    android:background="@color/green_light_light"
+    android:orientation="vertical"
+    tools:context=".FixedExpenseFragment">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_fixedexpense"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textgreen"
+        android:elevation="4dp"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:buttonGravity="center_vertical">
+
+        <Button
+            android:id="@+id/undo"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:drawableTop="@drawable/arrow_back"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/fixed_expense_toolbar_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/name_fixed_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_fixed_expense"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fixed_expense_enter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textgreen"
+            android:textSize="15sp"
+            android:text="@string/name_of_fixed_expense"
+            />
+
+        <EditText
+            android:id="@+id/fixed_expense_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext2white"
+            android:textColorHint="@color/green_light"
+            android:textStyle="bold"
+            android:hint="@string/write_name"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:maxLines="1"
+            android:textColor="@color/textgreen"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fixed_expense_enter_amount_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textgreen"
+                android:textSize="15sp"
+                android:text="@string/amount_text"
+                />
+
+            <EditText
+                android:id="@+id/fixed_expense_enter_amount"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext2white"
+                android:textColorHint="@color/green_light"
+                android:hint="@string/enter_amount"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:maxLines="1"
+                android:textColor="@color/textgreen"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:inputType="numberDecimal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date_of_payment_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textgreen"
+                android:textSize="15sp"
+                android:text="@string/payment_date"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/date_of_payment"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/edittext2white"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/textgreen"
+                    android:textSize="13sp"
+                    android:visibility="visible" />
+
+                <Button
+
+                    android:id="@+id/choose_calendar_button1"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/edittext2"
+                    android:drawableTop="@drawable/calendar"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/repeat_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textgreen"
+                    android:textSize="15sp"
+                    android:text="@string/repeat_text"
+                    />
+
+                <Spinner
+                    android:id="@+id/repeat_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="20dp"
+                    android:background="@drawable/edittext2white"
+                    android:gravity="center"
+                    android:textColor="@color/textgreen"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/end_payment_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textgreen"
+                android:textSize="15sp"
+                android:text="@string/end_text"
+                />
+
+            <Spinner
+                android:id="@+id/end_payment_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/edittext2white"
+                android:gravity="center"
+                android:textColor="@color/textgreen"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/confirm_button_fix_1"
+            android:layout_width="120dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/edittextfullgreen"
+            android:text="@string/ok"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

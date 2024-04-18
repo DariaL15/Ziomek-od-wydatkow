@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Theme.expenses"
     android:id="@+id/add_expenses_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,29 +18,36 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/textgreen">
+            android:layout_height="50dp"
+            android:background="@color/redlight" >
 
             <Button
                 android:id="@+id/undo"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:drawableLeft="@drawable/arrow_back" />
-
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:drawableTop="@drawable/arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
-                android:id="@+id/add_transaction_text"
+                android:id="@+id/add_transaction_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
                 android:text="@string/add_transaction"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-        </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+
 
 
         <LinearLayout
@@ -66,7 +74,7 @@
                 android:background="@drawable/custom_button"
                 android:elevation="5dp"
                 android:text="@string/plus"
-                android:textColor="@color/green_light"
+                android:textColor="@color/redlightlight"
                 android:textSize="18sp"
                 android:visibility="visible" />
 
@@ -88,12 +96,14 @@
                     android:id="@+id/amount"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
-                    android:backgroundTint="@color/textgreen"
+                    android:backgroundTint="@color/redlight"
                     android:gravity="center"
                     android:hint="@string/amount"
                     android:padding="15dp"
-                    android:textColorHint="@color/green_light"
-                    android:textSize="25sp" />
+                    android:textColor="@color/redlight"
+                    android:textColorHint="@color/redlightlight"
+                    android:textSize="25sp"
+                    android:inputType="numberDecimal"/>
 
                 <TextView
                     android:id="@+id/zloty3"
@@ -101,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/zloty"
                     android:textAlignment="center"
-                    android:textColor="@color/textgreen"
+                    android:textColor="@color/redlight"
                     android:textSize="30sp" />
 
             </LinearLayout>
@@ -128,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
                     android:text="@string/date"
-                    android:textColor="@color/textgreen"
+                    android:textColor="@color/redlight"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
@@ -139,7 +149,7 @@
                     android:gravity="start|top"
                     android:hint="@string/selected_day"
                     android:paddingLeft="30dp"
-                    android:textColorHint="@color/textgreen"
+                    android:textColorHint="@color/redlight"
                     android:textSize="10sp"
                     android:textStyle="italic"
                     android:visibility="visible" />
@@ -217,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
                     android:text="@string/category"
-                    android:textColor="@color/textgreen"
+                    android:textColor="@color/redlight"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
@@ -239,7 +249,8 @@
                     android:id="@+id/category_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/edittext"
+                    android:paddingLeft="15dp"
+                    android:background="@drawable/edittextfullred"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -262,7 +273,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
                 android:text="@string/notes"
-                android:textColor="@color/textgreen"
+                android:textColor="@color/redlight"
                 android:textSize="14sp"
                 android:visibility="visible" />
 
@@ -273,14 +284,14 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.9"
-                android:background="@drawable/edittext2"
+                android:background="@drawable/edittext2red"
                 android:gravity="start|top"
                 android:hint="@string/notes_text"
                 android:inputType="textMultiLine"
                 android:minLines="5"
                 android:padding="30dp"
                 android:scrollbars="vertical"
-                android:textColorHint="@color/green_light"
+                android:textColorHint="@color/redlightlight"
                 android:textSize="12sp"
                 android:visibility="visible" />
 
@@ -289,11 +300,12 @@
 
         <Button
             android:id="@+id/confirm_button2"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:background="@drawable/edittext2red"
             android:text="@string/ok"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
 

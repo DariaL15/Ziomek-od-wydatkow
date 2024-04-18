@@ -18,28 +18,34 @@
         android:orientation="vertical">
 
 
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/textgreen">
 
             <Button
-                android:id="@+id/undo1"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:drawableLeft="@drawable/arrow_back" />
-
+            android:id="@+id/undo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:drawableTop="@drawable/arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
-                android:id="@+id/add_transaction_text1"
+                android:id="@+id/add_transaction_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_transaction"
                 android:textColor="@color/white"
+                android:paddingLeft="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-        </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
 
 
         <LinearLayout
@@ -93,7 +99,8 @@
                     android:hint="@string/amount"
                     android:padding="15dp"
                     android:textColorHint="@color/green_light"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:inputType="numberDecimal"/>
 
                 <TextView
                     android:id="@+id/zloty4"
@@ -239,7 +246,8 @@
                     android:id="@+id/category_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/edittext"
+                    android:paddingLeft="15dp"
+                    android:background="@drawable/edittextfullgreen"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -290,9 +298,10 @@
 
         <Button
             android:id="@+id/confirm_button_incomes_1"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:background="@drawable/edittext2"
             android:text="@string/ok"
             android:textSize="15sp"
             android:textStyle="bold" />

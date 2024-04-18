@@ -5,9 +5,12 @@
     <color name="darkgreen">#28562d</color>
     <color name="green">#a8e5b2</color>
     <color name="m_green">#7a967a</color>
-    <color name="l_green">#c0e1c0</color>
+    <color name="l_green">#ced6ce</color>
+    <color name="green_light_light">#eaefea</color>
     <color name="textgreen">#94a894</color>
     <color name="red">#b25b5b</color>
+    <color name="redlight">#af6969</color>
+    <color name="redlightlight">#d3b4b4</color>
     <color name="green_light">#d1d9d1</color>
     <color name="green_main_text">#607c60</color>
     <color name="grey_dark">#767676</color>

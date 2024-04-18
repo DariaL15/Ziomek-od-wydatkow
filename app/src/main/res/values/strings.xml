@@ -39,7 +39,7 @@
 
 
     <string name="amount">kwota</string>
-    <string name="add_transaction">Dodaj tranzakcję</string>
+    <string name="add_transaction">Dodaj transakcję</string>
     <string name="category">Kategoria:</string>
     <string name="choose">WYBIERZ</string>
     <string name="date">Data:</string>
@@ -65,6 +65,15 @@
     <string name="shopping_text">Zakupy</string>
     <string name="education_text">Edukacja</string>
     <string name="add_new_cat_text">Dodaj własną kategorię</string>
+    <string name="undo">Cofnij</string>
+    <string name="add_fixed_expense">Dodaj zlecenie stałe</string>
+    <string name="name_of_fixed_expense">Nazwa zlecenia:</string>
+    <string name="write_name">Wpisz nazwę</string>
+    <string name="amount_text">Kwota:</string>
+    <string name="enter_amount">Wpisz kwotę</string>
+    <string name="payment_date">Data najbliższej płatności:</string>
+    <string name="repeat_text">Powtarzaj:</string>
+    <string name="end_text">Zakończ:</string>
 
 
 </resources>

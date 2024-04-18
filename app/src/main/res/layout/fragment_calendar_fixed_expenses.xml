@@ -2,16 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:theme="@style/Theme.expenses"
-    android:id="@+id/calendar_view_fragment"
+    android:id="@+id/calendar_view_fragment_fixed_expenses"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/redlight"
+    android:background="@color/textgreen"
     android:padding="10dp"
-    tools:context=".CalendarFragment">
+    tools:context=".CalendarIncomesFragment">
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -30,8 +29,7 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frameLayout">
-
+        android:layout_below="@+id/frameLayout2">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,43 +41,43 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext2red"
+                android:background="@drawable/edittext"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="30dp">
 
                 <TextView
-                    android:id="@+id/select_date_text"
+                    android:id="@+id/select_date_text2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/select_day_text"
-                    android:textColor="@color/redlight"
+                    android:textColor="@color/textgreen"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
                 <CalendarView
-                    android:id="@+id/calendar_view"
+                    android:id="@+id/calendar_view2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp" />
 
                 <TextView
-                    android:id="@+id/selected_date"
+                    android:id="@+id/selected_date2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:hint="@string/selected_day"
-                    android:textColor="@color/redlight"
-                    android:textColorHint="@color/redlight"
+                    android:textColorHint="@color/textgreen"
+                    android:textColor="@color/textgreen"
                     android:textSize="20sp"
-                    android:textStyle="italic" />
+                    android:textStyle="italic"/>
 
                 <Button
-                    android:id="@+id/confirm_button3"
+                    android:id="@+id/confirm_button_fix_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/edittext2red"
+                    android:background="@drawable/edittextfullgreen"
                     android:text="@string/ok"
                     android:textSize="12sp"
                     android:textStyle="bold" />

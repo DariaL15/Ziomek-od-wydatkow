@@ -29,7 +29,7 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
             "house"->holder.imageView.setImageResource(R.drawable.icon_dom)
             "car"->holder.imageView.setImageResource(R.drawable.icon_auto)
             "health"->holder.imageView.setImageResource(R.drawable.icon_zdrowie)
-            "shopping"->holder.imageView.setImageResource(R.drawable.icon_zakupy)
+            "shopping"->holder.imageView.setImageResource(R.drawable.icon_zakupy2)
             "sport"->holder.imageView.setImageResource(R.drawable.icon_sport)
             "transport"->holder.imageView.setImageResource(R.drawable.icon_transport)
             "relax"->holder.imageView.setImageResource(R.drawable.icon_wypoczynek)

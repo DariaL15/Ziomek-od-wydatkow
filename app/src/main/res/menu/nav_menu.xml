@@ -13,6 +13,11 @@
             android:title="Strona główna"/>
 
         <item
+            android:id="@+id/nav_fixed_epenses"
+            android:icon="@drawable/money"
+            android:title="Zlecenia stałe"/>
+
+        <item
             android:id="@+id/nav_savings"
             android:icon="@drawable/savingsicon"
             android:title="Oszczędności"/>
