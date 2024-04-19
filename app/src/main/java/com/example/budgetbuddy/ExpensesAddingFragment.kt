@@ -180,7 +180,7 @@ class ExpensesAddingFragment : Fragment() {
         }
 
 
-        val budgetRef = db.collection(userId).document("budget")
+
 
         binding.confirmButton2.setOnClickListener {
             val amount = binding.amount.text.toString().toDoubleOrNull()
