@@ -1,5 +1,7 @@
 package com.example.budgetbuddy
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,12 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.api.Context
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapterFixed (private val dataList: ArrayList<ModelFixed>) : RecyclerView.Adapter<MyAdapterFixed.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-       val view = LayoutInflater.from(parent.context).inflate(R.layout.singlerow, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.singlerow_zlecenie, parent, false)
         return MyViewHolder(view)
     }
 
@@ -20,14 +24,12 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
         val currentItem =dataList[position]
         val formattedAmount  = "%.2f zł".format(currentItem.amount ?:0.0)
 
-        holder.t1.text = currentItem.notes.split(" ")[0]
-        holder.t2.text = currentItem.date
+        holder.t1.text = currentItem.name
+        holder.t2.text = currentItem.repeatFrequency
         holder.t3.text=formattedAmount
 
-        if (currentItem.amount !=null && currentItem.amount!! <0){
-            holder.t3.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.red))
-        }
-        when (currentItem.collection){
+
+        when (currentItem.category){
             "house"->holder.imageView.setImageResource(R.drawable.icon_dom)
             "car"->holder.imageView.setImageResource(R.drawable.icon_auto)
             "health"->holder.imageView.setImageResource(R.drawable.icon_zdrowie)
@@ -42,6 +44,7 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
             "education"->holder.imageView.setImageResource(R.drawable.icon_edukacja)
             else -> holder.imageView.setImageResource(R.drawable.circle)
         }
+
     }
 
 
@@ -54,6 +57,7 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
         val t2: TextView = itemView.findViewById(R.id.t2)
         val t3: TextView = itemView.findViewById(R.id.t3)
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
+
 
     }
 }

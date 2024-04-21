@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +35,15 @@ class SavingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        val toolbarMenu = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.VISIBLE
+        toolbarBack?.visibility = View.GONE
+
+        val textViewName = toolbarMenu?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Przezent"
+
         return inflater.inflate(R.layout.fragment_savings, container, false)
     }
 

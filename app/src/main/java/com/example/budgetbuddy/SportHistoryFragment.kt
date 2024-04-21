@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.budgetbuddy.databinding.FragmentCarHistoryBinding
@@ -31,7 +35,26 @@ class SportHistoryFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
+        val toolbarMenu = activity?.findViewById<Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Sport"
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+
+        imageViewBack?.setOnClickListener {
+            val fragmentBack = HomeFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragmentBack)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
+
         recview = binding.recviewSport
         recview.layoutManager=  LinearLayoutManager(requireContext())
         datalist=ArrayList()
@@ -55,9 +78,18 @@ class SportHistoryFragment : Fragment() {
 
     }
 
+    override fun onResume(){
+        super.onResume()
+        (activity as AppCompatActivity?)?.supportActionBar?.hide()
+    }
+
+    override fun onStop(){
+        super.onStop()
+        (activity as AppCompatActivity?)?.supportActionBar?.show()
+    }
     companion object{
-        fun newInstance(): ZakupyHistoryFragment {
-            return ZakupyHistoryFragment()
+        fun newInstance(): SportHistoryFragment {
+            return SportHistoryFragment()
         }
     }
 

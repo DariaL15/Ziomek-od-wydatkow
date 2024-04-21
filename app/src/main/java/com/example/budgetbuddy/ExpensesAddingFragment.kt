@@ -3,13 +3,20 @@ package com.example.budgetbuddy
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Editable.*
+import android.view.ContextMenu
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.example.budgetbuddy.databinding.FragmentExpensesAddingBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -36,9 +43,8 @@ class ExpensesAddingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         binding = FragmentExpensesAddingBinding.inflate(inflater, container, false)
+
 
         binding.addIncomeButton.setOnClickListener {
             val incomesAddingFragment = IncomesAddingFragment.newInstance(null, null, null, null)
@@ -131,14 +137,6 @@ class ExpensesAddingFragment : Fragment() {
             }
         }
 
-        binding.undo.setOnClickListener {
-            val home = HomeFragment.newInstance()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, home)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
-        }
 
 
 
@@ -257,6 +255,44 @@ class ExpensesAddingFragment : Fragment() {
 
 
         return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarMenu = activity?.findViewById<Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Dodaj tranzakcję"
+
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.redlight))
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+
+        imageViewBack?.setOnClickListener {
+            val fragmentBack = HomeFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragmentBack)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
+    }
+
+    override fun onResume(){
+        super.onResume()
+        (activity as AppCompatActivity?)?.supportActionBar?.hide()
+
+    }
+
+    override fun onStop(){
+        super.onStop()
+        (activity as AppCompatActivity?)?.supportActionBar?.show()
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
     }
 
     companion object {

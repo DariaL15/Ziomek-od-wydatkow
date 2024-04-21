@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 
 import com.example.budgetbuddy.databinding.FragmentHomeBinding
 
@@ -23,9 +25,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
-
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         val paymentReminderDialog = PaymentReminderDialogFragment.newInstance()
@@ -63,6 +62,40 @@ class HomeFragment : Fragment() {
             transaction.addToBackStack(null)
             transaction.commit()
         }
+
+        binding.catTransport.setOnClickListener{
+            val transportHistoryFragment =TransportHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, transportHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+
+        binding.catSport.setOnClickListener {
+            val sportHistoryFragment = SportHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, sportHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        binding.catUbrania.setOnClickListener{
+            val ubranieHistoryFragment =UbranieHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, ubranieHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        binding.catZdrowie.setOnClickListener{
+            val healthHistoryFragment =HealthHistoryFragment.newInstance()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, healthHistoryFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
         binding.catPrezent.setOnClickListener {
             val prezentHistoryFragment = PrezentHistoryFragment.newInstance()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -108,6 +141,8 @@ class HomeFragment : Fragment() {
 
 
 
+
+
         val view = binding.root
         firebaseRepository = FirebaseRepository(requireContext())
         val budgetmonthV = view.findViewById<TextView>(R.id.budgetmonth)
@@ -137,6 +172,18 @@ class HomeFragment : Fragment() {
     }
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarMenu = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_back)
+
+
+        val textViewName = toolbarMenu?.findViewById<TextView>(R.id.nameofpageHP)
+        textViewName?.text = "Strona główna"
+        toolbarMenu?.visibility = View.VISIBLE
+        toolbarBack?.visibility = View.GONE
+    }
 
 
     companion object {

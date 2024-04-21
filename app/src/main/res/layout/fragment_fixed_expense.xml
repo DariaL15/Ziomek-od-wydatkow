@@ -12,45 +12,6 @@
     tools:context=".FixedExpenseFragment">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_fixedexpense"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/textgreen"
-        android:elevation="4dp"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:buttonGravity="center_vertical">
-
-        <Button
-            android:id="@+id/undo"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:drawableTop="@drawable/arrow_back"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/fixed_expense_toolbar_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/name_fixed_expense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_fixed_expense"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"

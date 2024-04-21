@@ -9,7 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.example.budgetbuddy.databinding.FragmentIncomesAddingBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -127,14 +132,6 @@ class IncomesAddingFragment : Fragment() {
             }
         }
 
-        binding.undo1.setOnClickListener {
-            val home = HomeFragment.newInstance()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, home)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
-        }
 
         binding.chooseCalendarButton1.setOnClickListener {
 
@@ -246,6 +243,40 @@ class IncomesAddingFragment : Fragment() {
 
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarMenu = activity?.findViewById<Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Dodaj tranzakcję"
+
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+
+        imageViewBack?.setOnClickListener {
+            val fragmentBack = HomeFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragmentBack)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
+    }
+
+    override fun onResume(){
+        super.onResume()
+        (activity as AppCompatActivity?)?.supportActionBar?.hide()
+
+    }
+
+    override fun onStop(){
+        super.onStop()
+        (activity as AppCompatActivity?)?.supportActionBar?.show()
+    }
     companion object {
 
         fun newInstance(selectedDate: String?=null, selectedCategoryPosition: Int? = 0, selectedNotes:String?=null, selectedAmount:Double?=0.0) =

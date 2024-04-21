@@ -9,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.example.budgetbuddy.databinding.FragmentFixedExpenseBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -39,14 +42,7 @@ class FixedExpenseFragment : Fragment() {
 
                 binding = FragmentFixedExpenseBinding.inflate(inflater, container, false)
 
-        binding.undo.setOnClickListener {
-            val home = HomeFragment.newInstance()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, home)
-            transaction.addToBackStack(null)
-            transaction.commit()
 
-        }
                 val repaetSpiner=binding.repeatSpinner
                 val endPaymentSpiner=binding.endPaymentSpinner
 
@@ -310,6 +306,30 @@ binding.confirmButtonFix1.setOnClickListener {
 
 
                 return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarMenu = activity?.findViewById<Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Dodaj zlecenie stałe"
+
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+
+        imageViewBack?.setOnClickListener {
+            val fragmentBack = ListOfFixedExpensesFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragmentBack)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
     }
 
     companion object {
