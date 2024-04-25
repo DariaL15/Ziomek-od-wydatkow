@@ -7,29 +7,14 @@
     android:layout_height="match_parent"
     android:background="@color/textgreen"
     android:padding="10dp"
-    tools:context=".CalendarIncomesFragment">
+    tools:context=".CalendarIncomesFragment"
+    android:gravity="center">
 
-    <FrameLayout
-        android:id="@+id/frameLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/undo3"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:drawableTop="@drawable/arrow_back"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </FrameLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frameLayout1">
+    >
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

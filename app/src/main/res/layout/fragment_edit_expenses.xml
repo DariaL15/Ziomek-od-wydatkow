@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:theme="@style/Theme.expenses"
-    android:id="@+id/add_expenses_fragment"
+    android:id="@+id/edit_expenses_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:context=".ExpensesAddingFragment">
+    tools:context=".EditExpensesFragment">
 
 
     <LinearLayout
-        android:id="@+id/toolbar_addtransaction"
+        android:id="@+id/toolbar_addtransaction3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -22,35 +22,7 @@
 
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="75dp">
 
-            <Button
-                android:id="@+id/add_expenses_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:background="@drawable/custom_button"
-                android:elevation="5dp"
-                android:text="@string/minus"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/add_income_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:background="@drawable/custom_button"
-                android:elevation="5dp"
-                android:text="@string/plus"
-                android:textColor="@color/redlightlight"
-                android:textSize="18sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -65,7 +37,7 @@
                 android:layout_gravity="center_horizontal">
 
                 <EditText
-                    android:id="@+id/amount"
+                    android:id="@+id/amount_1"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
                     android:backgroundTint="@color/redlight"
@@ -78,7 +50,7 @@
                     android:inputType="numberDecimal"/>
 
                 <TextView
-                    android:id="@+id/zloty3"
+                    android:id="@+id/zloty3_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/zloty"
@@ -105,7 +77,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/choose_date_text"
+                    android:id="@+id/choose_date_text_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -115,7 +87,7 @@
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/select_date_end"
+                    android:id="@+id/select_date_end_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start|top"
@@ -139,7 +111,7 @@
                 android:visibility="visible">
 
                 <Button
-                    android:id="@+id/today"
+                    android:id="@+id/today_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
@@ -151,7 +123,7 @@
                     android:visibility="visible" />
 
                 <Button
-                    android:id="@+id/yesterday"
+                    android:id="@+id/yesterday_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -165,7 +137,7 @@
 
                 <Button
 
-                    android:id="@+id/choose_calendar_button"
+                    android:id="@+id/choose_calendar_button_1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="5dp"
@@ -195,7 +167,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/choose_category_text"
+                    android:id="@+id/choose_category_text_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -219,7 +191,7 @@
                 android:visibility="visible">
 
                 <Spinner
-                    android:id="@+id/category_spinner"
+                    android:id="@+id/category_spinner_1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:paddingLeft="15dp"
@@ -239,7 +211,7 @@
             android:layout_marginTop="30dp">
 
             <TextView
-                android:id="@+id/notes"
+                android:id="@+id/notes_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
@@ -251,7 +223,7 @@
                 android:visibility="visible" />
 
             <EditText
-                android:id="@+id/noteEditText"
+                android:id="@+id/noteEditText_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
@@ -272,7 +244,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/confirm_button2"
+            android:id="@+id/confirm_button2_1"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"

@@ -32,14 +32,17 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/redlight</item>
         <item name="colorPrimaryVariant">@color/redlightlight</item>
+        <item name="colorPrimaryDark">@color/red</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/red</item>
         <item name="colorSecondaryVariant">@color/red</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/redlight</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="android:statusBarColor">@color/red</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
         <!-- Customize your theme here. -->
     </style>
 

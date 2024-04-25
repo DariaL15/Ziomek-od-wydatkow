@@ -2,17 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:theme="@style/Theme.expenses"
-    android:id="@+id/add_expenses_fragment"
+    android:id="@+id/add_incomes_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:context=".ExpensesAddingFragment">
+    tools:context=".IncomesAddingFragment">
 
 
     <LinearLayout
-        android:id="@+id/toolbar_addtransaction"
+        android:id="@+id/toolbar_addtransaction4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -22,35 +21,6 @@
 
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="75dp">
-
-            <Button
-                android:id="@+id/add_expenses_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:background="@drawable/custom_button"
-                android:elevation="5dp"
-                android:text="@string/minus"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/add_income_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:background="@drawable/custom_button"
-                android:elevation="5dp"
-                android:text="@string/plus"
-                android:textColor="@color/redlightlight"
-                android:textSize="18sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -65,25 +35,24 @@
                 android:layout_gravity="center_horizontal">
 
                 <EditText
-                    android:id="@+id/amount"
+                    android:id="@+id/amount3_1"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
-                    android:backgroundTint="@color/redlight"
+                    android:backgroundTint="@color/textgreen"
                     android:gravity="center"
                     android:hint="@string/amount"
                     android:padding="15dp"
-                    android:textColor="@color/redlight"
-                    android:textColorHint="@color/redlightlight"
+                    android:textColorHint="@color/green_light"
                     android:textSize="25sp"
                     android:inputType="numberDecimal"/>
 
                 <TextView
-                    android:id="@+id/zloty3"
+                    android:id="@+id/zloty7_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/zloty"
                     android:textAlignment="center"
-                    android:textColor="@color/redlight"
+                    android:textColor="@color/textgreen"
                     android:textSize="30sp" />
 
             </LinearLayout>
@@ -105,26 +74,26 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/choose_date_text"
+                    android:id="@+id/choose_date_text2_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
                     android:text="@string/date"
-                    android:textColor="@color/redlight"
+                    android:textColor="@color/textgreen"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/select_date_end"
+                    android:id="@+id/select_date_end2_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start|top"
                     android:hint="@string/selected_day"
                     android:paddingLeft="30dp"
-                    android:textColorHint="@color/redlight"
+                    android:textColorHint="@color/textgreen"
                     android:textSize="10sp"
-                    android:textColor="@color/redlight"
                     android:textStyle="italic"
+                    android:textColor="@color/textgreen"
                     android:visibility="visible" />
 
 
@@ -139,7 +108,7 @@
                 android:visibility="visible">
 
                 <Button
-                    android:id="@+id/today"
+                    android:id="@+id/today2_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
@@ -147,11 +116,11 @@
                     android:gravity="center"
                     android:text="@string/today"
                     android:textColor="@color/white"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:visibility="visible" />
 
                 <Button
-                    android:id="@+id/yesterday"
+                    android:id="@+id/yesterday2_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -160,12 +129,12 @@
                     android:gravity="center"
                     android:text="@string/yesterday"
                     android:textColor="@color/white"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:visibility="visible" />
 
                 <Button
 
-                    android:id="@+id/choose_calendar_button"
+                    android:id="@+id/choose_calendar_button22_1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="5dp"
@@ -195,12 +164,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/choose_category_text"
+                    android:id="@+id/choose_category_text2_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
                     android:text="@string/category"
-                    android:textColor="@color/redlight"
+                    android:textColor="@color/textgreen"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
@@ -219,14 +188,15 @@
                 android:visibility="visible">
 
                 <Spinner
-                    android:id="@+id/category_spinner"
+                    android:id="@+id/category_spinner2_1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:paddingLeft="15dp"
-                    android:background="@drawable/edittextfullred"
+                    android:background="@drawable/edittextfullgreen"
                     android:gravity="center"
-                    style="@style/SpinnerStyle1"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
+
 
             </LinearLayout>
 
@@ -239,32 +209,32 @@
             android:layout_marginTop="30dp">
 
             <TextView
-                android:id="@+id/notes"
+                android:id="@+id/notes2_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
                 android:text="@string/notes"
-                android:textColor="@color/redlight"
+                android:textColor="@color/textgreen"
                 android:textSize="14sp"
                 android:visibility="visible" />
 
             <EditText
-                android:id="@+id/noteEditText"
+                android:id="@+id/noteEditText2_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.9"
-                android:background="@drawable/edittext2red"
+                android:background="@drawable/edittext2"
                 android:gravity="start|top"
                 android:hint="@string/notes_text"
                 android:inputType="textMultiLine"
                 android:minLines="5"
                 android:padding="30dp"
                 android:scrollbars="vertical"
-                android:textColorHint="@color/redlightlight"
+                android:textColorHint="@color/green_light"
                 android:textSize="12sp"
                 android:visibility="visible" />
 
@@ -272,13 +242,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/confirm_button2"
+            android:id="@+id/confirm_button_incomes_2_1"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:background="@drawable/edittext2red"
+            android:background="@drawable/edittext2"
             android:text="@string/ok"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
 

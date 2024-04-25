@@ -123,6 +123,7 @@
                     android:textColorHint="@color/textgreen"
                     android:textSize="10sp"
                     android:textStyle="italic"
+                    android:textColor="@color/textgreen"
                     android:visibility="visible" />
 
 
