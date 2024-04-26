@@ -4,6 +4,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.handleCoroutineException
 import android.content.Context
+import java.util.Calendar
+import java.util.Date
 
 class FirebaseRepository (private val context: Context){
     private val db = FirebaseFirestore.getInstance()
@@ -166,5 +168,9 @@ class FirebaseRepository (private val context: Context){
             onFailure(Exception("Użytkownik niezalogowany"))
         }
     }
+
+
+
+
 
 }

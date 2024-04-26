@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 
 import com.example.budgetbuddy.databinding.FragmentHomeBinding
 
@@ -19,6 +18,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var firebaseRepository: FirebaseRepository
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var paymentReminderDialogFragment: PaymentReminderDialogFragment
 
 
     override fun onCreateView(
@@ -27,8 +27,6 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val paymentReminderDialog = PaymentReminderDialogFragment.newInstance()
-        fragmentManager?.let { paymentReminderDialog.show(it, "PaymentReminderDialog") }
 
         binding.expenseButton.setOnClickListener {
             val expensesAddingFragment = ExpensesAddingFragment.newInstance(null,0,null, null)
@@ -168,12 +166,19 @@ class HomeFragment : Fragment() {
                 expensesV.text = "0.00"
             }
         )
+
+        val paymentReminderDialog = PaymentReminderDialogFragment()
+        paymentReminderDialog.show(childFragmentManager, "PaymentReminderDialog")
+
         return view
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        paymentReminderDialogFragment = PaymentReminderDialogFragment()
 
         val toolbarMenu = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         val toolbarBack = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_back)
@@ -183,6 +188,9 @@ class HomeFragment : Fragment() {
         textViewName?.text = "Strona główna"
         toolbarMenu?.visibility = View.VISIBLE
         toolbarBack?.visibility = View.GONE
+
+
+
     }
 
 

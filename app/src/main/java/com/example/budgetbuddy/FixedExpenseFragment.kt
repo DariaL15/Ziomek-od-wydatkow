@@ -1,9 +1,7 @@
 package com.example.budgetbuddy
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.example.budgetbuddy.databinding.FragmentFixedExpenseBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -114,8 +113,8 @@ class FixedExpenseFragment : Fragment() {
                     }
                 }
 
-                var selectedEndPayment=""
-                        endPaymentSpiner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                var selectedEndPayment: String
+                endPaymentSpiner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                             selectedEndPayment = end_payment[position]
                             selectedEndPaymentSpinerPosition=position
@@ -281,6 +280,7 @@ binding.confirmButtonFix1.setOnClickListener {
             "amount" to amount,
             "category" to category,
             "beginDate" to dateBegin,
+            "nextDate" to dateBegin,
             "repeatFrequency" to repeatValue,
             "endDayOfTransfers" to endDayRepeat,
             "amountOfTransfers" to amountOfTransfers )
