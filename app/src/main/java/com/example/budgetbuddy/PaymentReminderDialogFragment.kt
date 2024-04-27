@@ -84,11 +84,7 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                                     "expensesV" to updatedExpenses
                                 )
                             ).addOnSuccessListener {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Budżet został zaktualizowany",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Log.d("PaymentReminderDialog", "Budżet zaaktualizowany (zlecenie stałe) " )
 
 
                             }.addOnFailureListener {
@@ -162,7 +158,7 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                             nextDate = dateFormatter.parse(fixedExpense.nextDate)
                         }
                     } catch (e: ParseException) {
-                        Log.e("PaymentReminderDialog", "Error date: ${fixedExpense.nextDate}", e)
+                        Log.e("PaymentReminderDialog", "Błąd kolejnej daty zlecenia", e)
                         continue
                     }
 
@@ -171,7 +167,7 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                             endDate = dateFormatter.parse(fixedExpense.endDayOfTransfers)
                         }
                     } catch (e: ParseException) {
-                        Log.e("PaymentReminderDialog", "Error date: ${fixedExpense.endDayOfTransfers}", e)
+                        Log.e("PaymentReminderDialog", "Błąd pobierania daty zakończenia zlecenia", e)
                         continue
                     }
 
@@ -209,7 +205,6 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                         fixedExpenseList.add(updatedItem)
                         updateNextDateInDatabase(document.id, newNextDate)
                         nextDate = dateFormatter.parse(newNextDate)
-                        Log.d("NewNextDate", "New Next Date: $newNextDate")
                     }
 
 
@@ -271,11 +266,13 @@ class PaymentReminderDialogFragment : DialogFragment()  {
         fixedExpensesRef.document(documentId)
             .update("amountOfTransfersTemp", newAmount)
             .addOnSuccessListener {
-                Log.d("UpdateAmount", "amountOfTransfersTemp updated successfully")
+                Log.d("UpdateAmount", "amountOfTransfersTemp zaaktualizowana")
             }
             .addOnFailureListener { e ->
-                Log.w("UpdateAmount", "Error updating amountOfTransfersTemp", e)
+                Log.w("UpdateAmount", "amountOfTransfersTemp nie zaaktualizowana", e)
             }
     }
+
+
 
 }

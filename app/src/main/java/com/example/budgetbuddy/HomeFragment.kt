@@ -168,7 +168,10 @@ class HomeFragment : Fragment() {
         )
 
         val paymentReminderDialog = PaymentReminderDialogFragment()
-        paymentReminderDialog.show(childFragmentManager, "PaymentReminderDialog")
+            paymentReminderDialog.show(childFragmentManager, "PaymentReminderDialog")
+
+
+
 
         return view
     }

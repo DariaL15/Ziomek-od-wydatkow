@@ -1,6 +1,5 @@
 package com.example.budgetbuddy
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,12 +33,12 @@ class FixedExpenseAdapter(private var fixedExpenseList: ArrayList<ModelReminderI
 
         fun bind(fixedExpense: ModelReminderItem) {
             nameTextView.text = fixedExpense.name
-            amountTextView.text = fixedExpense.amount.toString()
+            amountTextView.text = String.format("%.2f", fixedExpense.amount)
             dateTextView.text = fixedExpense.nextDate
             confirmCheck.text = if (fixedExpense.isChecked) "Confirmed" else "Not Confirmed"
 
-            itemView.setOnClickListener {
-                fixedExpense.isChecked = !fixedExpense.isChecked
+            confirmCheck.setOnClickListener {
+                fixedExpense.isChecked = true
                 notifyItemChanged(adapterPosition)
             }
         }
