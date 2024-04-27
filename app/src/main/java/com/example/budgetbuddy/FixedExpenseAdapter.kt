@@ -37,6 +37,11 @@ class FixedExpenseAdapter(private var fixedExpenseList: ArrayList<ModelReminderI
             amountTextView.text = fixedExpense.amount.toString()
             dateTextView.text = fixedExpense.nextDate
             confirmCheck.text = if (fixedExpense.isChecked) "Confirmed" else "Not Confirmed"
+
+            itemView.setOnClickListener {
+                fixedExpense.isChecked = !fixedExpense.isChecked
+                notifyItemChanged(adapterPosition)
+            }
         }
     }
 
@@ -45,6 +50,17 @@ class FixedExpenseAdapter(private var fixedExpenseList: ArrayList<ModelReminderI
         fixedExpenseList.addAll(newList)
 
         notifyDataSetChanged()
+    }
+
+    fun getSelectedExpenses(): List<ModelReminderItem> {
+        val selectedExpenses = mutableListOf<ModelReminderItem>()
+
+        for (expense in fixedExpenseList) {
+            if (expense.isChecked) {
+                selectedExpenses.add(expense)
+            }
+        }
+        return selectedExpenses
     }
 
 }

@@ -19,6 +19,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+
 class PaymentReminderDialogFragment : DialogFragment()  {
 
 
@@ -28,6 +29,7 @@ class PaymentReminderDialogFragment : DialogFragment()  {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FixedExpenseAdapter
     private var ifOpen :Boolean?=null
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,11 +53,83 @@ class PaymentReminderDialogFragment : DialogFragment()  {
 
 
         confirmButton.setOnClickListener {
-            dismiss()
+
+            val selectedExpenses = adapter.getSelectedExpenses()
+            selectedExpenses.forEach { selectedExpense ->
+                val amount = selectedExpense.amount.toString().toDoubleOrNull()
+                val date = selectedExpense.nextDate
+                val category = selectedExpense.category
+                val notes = selectedExpense.name
+                val budgetRef = db.collection(userId).document("budget")
+                if (amount != null && date.isNotEmpty() && category.isNotEmpty() && notes.isNotEmpty() && category != "choose") {
+                    val expenseMap = hashMapOf(
+                        "amount" to -amount,
+                        "date" to date,
+                        "notes" to notes
+                    )
+
+                    budgetRef.collection(category).document().set(expenseMap).addOnSuccessListener {
+                        Log.d("PaymentReminderDialog", "Twój wydatek dodany z zlecenia stałego")
+
+
+                        budgetRef.get().addOnSuccessListener { document ->
+                            val currentBudget = document.getDouble("budgetV") ?: 0.0
+                            val updatedBudget = currentBudget - amount
+                            val currentExpenses = document.getDouble("expensesV") ?: 0.0
+                            val updatedExpenses = currentExpenses + amount
+
+                            budgetRef.update(
+                                mapOf(
+                                    "budgetV" to updatedBudget,
+                                    "expensesV" to updatedExpenses
+                                )
+                            ).addOnSuccessListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Budżet został zaktualizowany",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+
+                            }.addOnFailureListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Wystąpił błąd podczas aktualizacji budżetu",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }.addOnFailureListener {
+                            Toast.makeText(
+                                requireContext(),
+                                "Wystąpił błąd podczas pobierania aktualnego budżetu",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }.addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Wystąpił błąd podczas dodawania wydatku",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+            val home = HomeFragment.newInstance()
+            val transaction =
+                requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, home)
+            transaction.addToBackStack(null)
+            transaction.commit()
+
         }
 
         cancelButton.setOnClickListener {
-            dismiss()
+            val home = HomeFragment.newInstance()
+            val transaction =
+                requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, home)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
     }
 
@@ -82,7 +156,7 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                     val fixedExpense = document.toObject(ModelReminderItem::class.java)
                     val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
                     var nextDate: Date? = null
-
+                    var endDate: Date?= null
                     try {
                         if (fixedExpense.nextDate.isNotEmpty()) {
                             nextDate = dateFormatter.parse(fixedExpense.nextDate)
@@ -92,24 +166,55 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                         continue
                     }
 
+                    try {
+                        if (fixedExpense.endDayOfTransfers.isNotEmpty()) {
+                            endDate = dateFormatter.parse(fixedExpense.endDayOfTransfers)
+                        }
+                    } catch (e: ParseException) {
+                        Log.e("PaymentReminderDialog", "Error date: ${fixedExpense.endDayOfTransfers}", e)
+                        continue
+                    }
+
                     val repeatFrequency = fixedExpense.repeatFrequency
                     var newNextDate=dateFormatter.format(nextDate!!)
-                    while (nextDate != null && ( nextDate < today || isSameDay(today,nextDate) )) {
+
+                    while (nextDate != null && ( nextDate < today || isSameDay(today,nextDate) ) ) {
 
                         val updatedItem = ModelReminderItem(
                             name = fixedExpense.name,
                             amount = fixedExpense.amount,
                             nextDate = newNextDate,
                             isChecked = fixedExpense.isChecked,
-                            repeatFrequency = fixedExpense.repeatFrequency
+                            repeatFrequency = fixedExpense.repeatFrequency,
+                            category = fixedExpense.category
+
+
                         )
+                        if(fixedExpense.amountOfTransfers !=0 && fixedExpense.amountOfTransfersTemp != 0)
+                        {
+                            fixedExpense.amountOfTransfersTemp -= 1
+                            updateAmountOfTransfersTempInDatabase(document.id, fixedExpense.amountOfTransfersTemp)
+                        }
+                        if(fixedExpense.amountOfTransfers !=0 && fixedExpense.amountOfTransfersTemp == 0)
+                        {
+                            budgetRef.document(document.id).delete()
+                        }
+
+                        if(endDate!=null && nextDate >= endDate)
+                        {
+                            budgetRef.document(document.id).delete()
+                        }
+
                         newNextDate = calculateNewNextDate(nextDate, repeatFrequency)
                         fixedExpenseList.add(updatedItem)
                         updateNextDateInDatabase(document.id, newNextDate)
                         nextDate = dateFormatter.parse(newNextDate)
                         Log.d("NewNextDate", "New Next Date: $newNextDate")
                     }
+
+
                 }
+
 
                 if (fixedExpenseList.isNotEmpty()) {
                     ifOpen = true
@@ -135,7 +240,7 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                 Log.d("NewNextDate", "Data zaaktualizowana")
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Data nie zaaktualizowana", Toast.LENGTH_SHORT).show()
+                Log.d("NewNextDate", "Data nie zaaktualizowana")
 
             }
     }
@@ -159,6 +264,18 @@ class PaymentReminderDialogFragment : DialogFragment()  {
         return String.format(Locale.getDefault(), "%02d.%02d.%d", dayOfMonth, month, year)
     }
 
+    private fun updateAmountOfTransfersTempInDatabase(documentId: String, newAmount: Int) {
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        val fixedExpensesRef = db.collection(userId).document("fixedExpenses").collection("documents")
 
+        fixedExpensesRef.document(documentId)
+            .update("amountOfTransfersTemp", newAmount)
+            .addOnSuccessListener {
+                Log.d("UpdateAmount", "amountOfTransfersTemp updated successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.w("UpdateAmount", "Error updating amountOfTransfersTemp", e)
+            }
+    }
 
 }

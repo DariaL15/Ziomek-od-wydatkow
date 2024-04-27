@@ -283,7 +283,8 @@ binding.confirmButtonFix1.setOnClickListener {
             "nextDate" to dateBegin,
             "repeatFrequency" to repeatValue,
             "endDayOfTransfers" to endDayRepeat,
-            "amountOfTransfers" to amountOfTransfers )
+            "amountOfTransfers" to amountOfTransfers,
+            "amountOfTransfersTemp" to amountOfTransfers)
         budgetRef.collection("documents").document().set(fixedExpenseMap).addOnSuccessListener {
             Toast.makeText(context,"Zlecenie stałe dodane",Toast.LENGTH_SHORT).show()
         }
@@ -370,4 +371,5 @@ binding.confirmButtonFix1.setOnClickListener {
                 }
             }
     }
+
 }
