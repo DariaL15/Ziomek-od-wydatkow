@@ -69,13 +69,14 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                 cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
     }
 
-   private fun getFixedExpenses() {
+    private fun getFixedExpenses() {
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val budgetRef = db.collection(userId).document("fixedExpenses").collection("documents")
 
         budgetRef.get()
             .addOnSuccessListener { documents ->
                 val fixedExpenseList = arrayListOf<ModelReminderItem>()
+                val today = Calendar.getInstance().time
 
                 for (document in documents) {
                     val fixedExpense = document.toObject(ModelReminderItem::class.java)
@@ -90,36 +91,37 @@ class PaymentReminderDialogFragment : DialogFragment()  {
                         Log.e("PaymentReminderDialog", "Error date: ${fixedExpense.nextDate}", e)
                         continue
                     }
+
                     val repeatFrequency = fixedExpense.repeatFrequency
-                    val today = Calendar.getInstance().time
-                    val differenceInDays = calculateHowManyDays(nextDate, repeatFrequency)
+                    var newNextDate=dateFormatter.format(nextDate!!)
+                    while (nextDate != null && ( nextDate < today || isSameDay(today,nextDate) )) {
 
-
-                    if (nextDate != null && ( isSameDay(today, nextDate) || !differenceInDays ) && nextDate<today) {
-
-                            fixedExpenseList.add(fixedExpense)
-                            val newNextDate = calculateNewNextDate(nextDate, repeatFrequency)
-                            updateNextDateInDatabase(document.id, newNextDate)
+                        val updatedItem = ModelReminderItem(
+                            name = fixedExpense.name,
+                            amount = fixedExpense.amount,
+                            nextDate = newNextDate,
+                            isChecked = fixedExpense.isChecked,
+                            repeatFrequency = fixedExpense.repeatFrequency
+                        )
+                        newNextDate = calculateNewNextDate(nextDate, repeatFrequency)
+                        fixedExpenseList.add(updatedItem)
+                        updateNextDateInDatabase(document.id, newNextDate)
+                        nextDate = dateFormatter.parse(newNextDate)
+                        Log.d("NewNextDate", "New Next Date: $newNextDate")
                     }
                 }
 
                 if (fixedExpenseList.isNotEmpty()) {
-
-                    ifOpen =true
+                    ifOpen = true
                     adapter.updateList(fixedExpenseList)
-                }
-                else
-                {
+                } else {
                     dismiss()
                 }
-
-
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Błąd wyświtlania zleceń stałych", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Błąd wyświetlania zleceń stałych", Toast.LENGTH_SHORT).show()
             }
     }
-
 
 
 
@@ -130,7 +132,7 @@ class PaymentReminderDialogFragment : DialogFragment()  {
         fixedExpensesRef.document(documentId)
             .update("nextDate", newNextDate)
             .addOnSuccessListener {
-                Toast.makeText(context, "Data zaaktualizowana", Toast.LENGTH_SHORT).show()
+                Log.d("NewNextDate", "Data zaaktualizowana")
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Data nie zaaktualizowana", Toast.LENGTH_SHORT).show()
@@ -154,58 +156,7 @@ class PaymentReminderDialogFragment : DialogFragment()  {
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         val month = calendar.get(Calendar.MONTH) + 1
         val year = calendar.get(Calendar.YEAR)
-        val newNextDateFormatted = String.format(Locale.getDefault(), "%02d.%02d.%d", dayOfMonth, month, year)
-        Log.d("NewNextDate", "New Next Date: $newNextDateFormatted")
-        return newNextDateFormatted
-    }
-
-
-    private fun calculateHowManyDays(currentNextDate: Date?, repeat: String): Boolean {
-        val calendar = Calendar.getInstance()
-        val today = Calendar.getInstance()
-        calendar.time = currentNextDate ?: Date()
-
-        val daysDifference = when (repeat) {
-            "codziennie" -> 1
-            "co tydzień" -> 7
-            "co dwa tygodnie" -> 14
-            "co miesiąc" -> {
-                val nextMonth = today.clone() as Calendar
-                nextMonth.add(Calendar.MONTH, 1)
-                val daysInMonth = nextMonth.getActualMaximum(Calendar.DAY_OF_MONTH)
-                daysInMonth
-            }
-            "co trzy miesiące" -> {
-                val nextQuarter = today.clone() as Calendar
-                nextQuarter.add(Calendar.MONTH, 3)
-                val daysInQuarter = nextQuarter.getActualMaximum(Calendar.DAY_OF_MONTH)
-                daysInQuarter
-            }
-            "co sześć miesięcy" -> {
-                val nextHalfYear = today.clone() as Calendar
-                nextHalfYear.add(Calendar.MONTH, 6)
-                val daysInHalfYear = nextHalfYear.getActualMaximum(Calendar.DAY_OF_MONTH)
-                daysInHalfYear
-            }
-            "co rok" -> {
-                val nextYear = today.clone() as Calendar
-                nextYear.add(Calendar.YEAR, 1)
-                val daysInYear = nextYear.getActualMaximum(Calendar.DAY_OF_YEAR)
-                daysInYear
-            }
-
-            else -> {
-                0
-            }
-        }
-
-        val differenceInDays = (calendar.timeInMillis - today.timeInMillis) / (1000 * 60 * 60 * 24)
-
-        return if (differenceInDays < daysDifference) {
-             false
-        } else {
-             true
-        }
+        return String.format(Locale.getDefault(), "%02d.%02d.%d", dayOfMonth, month, year)
     }
 
 
