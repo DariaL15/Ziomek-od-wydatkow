@@ -5,55 +5,77 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.example.budgetbuddy.databinding.FragmentEditExpensesBinding
+import com.example.budgetbuddy.databinding.FragmentEditFixedExpensesBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EditExpensesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EditExpensesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentEditExpensesBinding
+    private lateinit var modelFixed: ModelFixed
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_expenses, container, false)
+       binding = FragmentEditExpensesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditExpensesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditExpensesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        val toolbarMenu = requireActivity().findViewById<Toolbar>(R.id.toolbar)
+
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarMenu?.findViewById<TextView>(R.id.nameofpageHP)
+        textViewName?.text = "Edytuj swoje wypłaty"
+
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+
+        imageViewBack?.setOnClickListener {
+            val fragmentBack = HomeFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragmentBack)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
+
+        val args = arguments
+        if (args != null) {
+            val notes = args.getString("notes", "")
+            val amount = args.getDouble("amount", 0.0)
+            val category = args.getString("category", "")
+            val date = args.getString("date", "")
+
+            binding.noteEditText1.setText(notes)
+            binding.amount1.setText(amount.toString())
+            binding.selectDateEnd1.setText(date)
+        }
+
+
+    }
+
+    override fun onResume(){
+        super.onResume()
+        (activity as AppCompatActivity?)?.supportActionBar?.hide()
+    }
+
+    override fun onStop(){
+        super.onStop()
+        (activity as AppCompatActivity?)?.supportActionBar?.show()
     }
 }

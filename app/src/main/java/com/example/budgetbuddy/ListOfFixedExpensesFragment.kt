@@ -70,8 +70,6 @@ class ListOfFixedExpensesFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
 
-
-
     }
 
 

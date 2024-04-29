@@ -1,59 +1,100 @@
 package com.example.budgetbuddy
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.example.budgetbuddy.databinding.FragmentEditFixedExpensesBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EditFixedExpensesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EditFixedExpensesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var binding: FragmentEditFixedExpensesBinding
+    private lateinit var modelFixed: ModelFixed
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        binding = FragmentEditFixedExpensesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val toolbarMenu = activity?.findViewById<Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Edytuj stałe zlecenie"
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+
+        imageViewBack?.setOnClickListener {
+            val fragmentBack = ListOfFixedExpensesFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragmentBack)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
+
+        val args = arguments
+        if (args != null) {
+            val name = args.getString("name", "")
+            val amount = args.getDouble("amount", 0.0)
+            val repeatFrequency = args.getString("repeatFrequency", "")
+            val category = args.getString("category", "")
+            val beginDate = args.getString("beginDate", "")
+            val nextDate = args.getString("nextDate", "")
+            val amountOfTransfers = args.getInt("amountOfTransfers", 0)
+            val amountOfTransfersTemp = args.getInt("amountOfTransfersTemp", 0)
+            val endDayOfTransfers = args.getString("endDayOfTransfers", "")
+
+
+
+
+            binding.fixedExpenseName1.setText(name)
+            binding.dateOfPayment1.setText(beginDate)
+
+            binding.confirmButtonFix11.setOnClickListener {
+                val updateName = binding.fixedExpenseName1.text.toString()
+                val updateAmount = binding.amountOfPayments1
+                val updateRepeatFraquency = binding.repeatSpinner1
+                val updateCategory = binding.selectCategoryFixedExpensesSpinner1.selectedItem.toString()
+                val updateBeginDate = binding.dateOfPayment1
+                val updateNextDate = binding
+                val updateAmountOfTransfers= binding
+                val updateOfTransfersTemp = binding
+                val updateEndDayOfTransfers = binding.dateOfEndOfPayment1
+
+            }
+
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_fixed_expenses, container, false)
+
+    override fun onResume(){
+        super.onResume()
+        (activity as AppCompatActivity?)?.supportActionBar?.hide()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditFixedExpensesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditFixedExpensesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onStop(){
+        super.onStop()
+        (activity as AppCompatActivity?)?.supportActionBar?.show()
     }
 }

@@ -1,16 +1,26 @@
 package com.example.budgetbuddy
 
+import android.content.ContentValues
+import android.content.DialogInterface
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.api.Context
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val userId: String = FirebaseAuth.getInstance().currentUser!!.uid
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
        val view = LayoutInflater.from(parent.context).inflate(R.layout.singlerow, parent, false)
         return MyViewHolder(view)
@@ -24,24 +34,52 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
         holder.t2.text = currentItem.date
         holder.t3.text=formattedAmount
 
+
+        holder.imageView.setImageResource(getCategoryIcon(currentItem.collection))
+
+
+        holder.deleteImageView.setOnClickListener {
+
+            val alertDialogBuilder= androidx.appcompat.app.AlertDialog.Builder(holder.itemView.context)
+            alertDialogBuilder.setTitle("Usunąć element")
+            alertDialogBuilder.setMessage("Czy pewno chcesz usunąć ten element?")
+            alertDialogBuilder.setPositiveButton("Tak") { dialogInterface: DialogInterface, i: Int ->
+
+                deleteItemFromDatabase(currentItem.notes)
+                dataList.removeAt(position)
+                notifyItemRemoved(position)
+                dialogInterface.dismiss()
+            }
+            alertDialogBuilder.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            alertDialogBuilder.show()
+        }
+
+        holder.editImageView.setOnClickListener {
+            val fragment: Fragment = if(currentItem.amount!=null && currentItem.amount!!<0){
+                EditExpensesFragment()
+            } else{
+                EditIncomesFragment()
+            }
+            val args = Bundle()
+            args.putString("notes", currentItem.notes)
+            args.putDouble("amount", currentItem.amount ?: 0.0)
+            args.putString("date", currentItem.date)
+            args.putString("collections", currentItem.collection)
+            fragment.arguments = args
+
+            val activity = holder.itemView.context as AppCompatActivity
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+
+        }
         if (currentItem.amount !=null && currentItem.amount!! <0){
             holder.t3.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.red))
         }
-        when (currentItem.collection){
-            "house"->holder.imageView.setImageResource(R.drawable.icon_dom)
-            "car"->holder.imageView.setImageResource(R.drawable.icon_auto)
-            "health"->holder.imageView.setImageResource(R.drawable.icon_zdrowie)
-            "shopping"->holder.imageView.setImageResource(R.drawable.icon_zakupy2)
-            "sport"->holder.imageView.setImageResource(R.drawable.icon_sport)
-            "transport"->holder.imageView.setImageResource(R.drawable.icon_transport)
-            "relax"->holder.imageView.setImageResource(R.drawable.icon_wypoczynek)
-            "clothes"->holder.imageView.setImageResource(R.drawable.icon_ubrania)
-            "entertainment"->holder.imageView.setImageResource(R.drawable.icon_rozrywka)
-            "restaurant"->holder.imageView.setImageResource(R.drawable.icon_restauracje)
-            "gift"->holder.imageView.setImageResource(R.drawable.icon_prezent2)
-            "education"->holder.imageView.setImageResource(R.drawable.icon_edukacja)
-            else -> holder.imageView.setImageResource(R.drawable.circle)
-        }
+
     }
 
 
@@ -49,11 +87,46 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
         return dataList.size
     }
 
+
+    private fun deleteItemFromDatabase(itemName: String){
+        db.collection(userId).document("fixedExpenses").collection("documents")
+            .whereEqualTo("name",itemName)
+            .get()
+            .addOnSuccessListener {documents->
+                for(document in documents){
+                    document.reference.delete()
+                }
+            }
+            .addOnFailureListener{e->
+                Log.w(ContentValues.TAG, "Error deleting document", e)
+            }
+    }
+
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val t1: TextView = itemView.findViewById(R.id.t1)
         val t2: TextView = itemView.findViewById(R.id.t2)
         val t3: TextView = itemView.findViewById(R.id.t3)
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val editImageView : ImageView = itemView.findViewById(R.id.edit)
+        val deleteImageView : ImageView = itemView.findViewById(R.id.delete)
 
+    }
+
+    private fun getCategoryIcon(category: String): Int{
+        return  when (category){
+            "house"->R.drawable.icon_dom
+            "car"->R.drawable.icon_auto
+            "health"->R.drawable.icon_zdrowie
+            "shopping"->R.drawable.icon_zakupy2
+            "sport"->R.drawable.icon_sport
+            "transport"->R.drawable.icon_transport
+            "relax"->R.drawable.icon_wypoczynek
+            "clothes"->R.drawable.icon_ubrania
+            "entertainment"->R.drawable.icon_rozrywka
+            "restaurant"->R.drawable.icon_restauracje
+            "gift"->R.drawable.icon_prezent2
+            "education"->R.drawable.icon_edukacja
+            else -> R.drawable.circle
+        }
     }
 }

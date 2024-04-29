@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.budgetbuddy.databinding.FragmentCalendarBinding
 import java.text.SimpleDateFormat
@@ -30,6 +33,30 @@ class CalendarFragment : Fragment() {
         }
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarMenu = activity?.findViewById<Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Wybierz dzień"
+
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.redlight))
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+
+        imageViewBack?.setOnClickListener {
+            val fragmentBack = HomeFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragmentBack)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

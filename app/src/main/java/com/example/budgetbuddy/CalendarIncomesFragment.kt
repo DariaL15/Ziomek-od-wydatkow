@@ -10,6 +10,9 @@ import android.widget.CalendarView
 import android.widget.TextView
 import com.example.budgetbuddy.databinding.FragmentCalendarIncomesBinding
 import android.icu.util.Calendar
+import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -69,6 +72,30 @@ class CalendarIncomesFragment : Fragment() {
 
         return binding.root
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarMenu = activity?.findViewById<Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Wybierz dzień"
+
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
+
+        imageViewBack?.setOnClickListener {
+            val fragmentBack = IncomesAddingFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragmentBack)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
     }
 
     companion object {

@@ -255,7 +255,7 @@ class IncomesAddingFragment : Fragment() {
         val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
         textViewName?.text = "Dodaj tranzakcję"
 
-
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
         imageViewBack?.setOnClickListener {
