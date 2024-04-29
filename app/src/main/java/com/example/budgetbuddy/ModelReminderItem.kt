@@ -5,8 +5,12 @@ class ModelReminderItem (
     var amount: Double = 0.0,
     var nextDate: String = "",
     var isChecked: Boolean = false,
-    val repeatFrequency: String
+    val repeatFrequency: String,
+    var amountOfTransfers: Int = 0,
+    var amountOfTransfersTemp: Int = 0,
+    var endDayOfTransfers: String = "",
+    var category: String = ""
 )
 {
-    constructor() : this("", 0.0, "", false, "")
+    constructor() : this("", 0.0, "", false, "",0,0,"", "")
 }
