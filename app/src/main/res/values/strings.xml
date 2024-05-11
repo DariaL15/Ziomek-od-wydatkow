@@ -87,5 +87,6 @@
     <string name="question_remove_expense">JESTEŚ PEWNY?</string>
     <string name="delete">USUŃ</string>
     <string name="fixed_expenses">Zlecenie stałe:</string>
+    <string name="title_activity_char_pie">CharPieActivity</string>
 
 </resources>

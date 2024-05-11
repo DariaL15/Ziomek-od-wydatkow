@@ -100,7 +100,8 @@
         app:menu="@menu/nav_menu"
         android:background="@color/white"
         app:itemTextColor="@color/darkgreen"
-        app:itemIconTint="@color/textgreen" />
+        app:itemIconTint="@color/textgreen"
+        app:itemBackground="@color/white"/>
 
 
 

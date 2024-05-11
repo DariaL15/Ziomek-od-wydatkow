@@ -8,7 +8,8 @@
         <item name="colorSecondary">@color/m_green</item>
         <item name="colorSecondaryVariant">@color/m_green</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:statusBarColor">@color/black</item>
     </style>
 
 
@@ -23,8 +24,9 @@
         <item name="colorSecondaryVariant">@color/darkgreen</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/white</item>
         <!-- Customize your theme here. -->
+        <item name="colorControlHighlight">@color/textgreen</item>
     </style>
 
 
