@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.example.budgetbuddy.databinding.FragmentCarHistoryBinding
 import com.example.budgetbuddy.databinding.FragmentEdukacjaHistoryBinding
 import com.example.budgetbuddy.databinding.FragmentHomeHistoryBinding
@@ -42,7 +43,7 @@ class EdukacjaHistoryFragment : Fragment() {
 
         val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
         textViewName?.text = "Edukacja"
-
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
         imageViewBack?.setOnClickListener {
@@ -67,6 +68,7 @@ class EdukacjaHistoryFragment : Fragment() {
                     val obj = document.toObject(Model::class.java)
                     obj?.let{
                         it.collection="education"
+                        it.documentId = document.id
                         datalist.add(it)}
                 }
                 datalist.reverse()

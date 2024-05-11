@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.budgetbuddy.databinding.FragmentCarHistoryBinding
@@ -44,7 +45,7 @@ class RestauracjaHistoryFragment : Fragment() {
         textViewName?.text = "Restauracja"
 
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
-
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
         imageViewBack?.setOnClickListener {
             val fragmentBack = HomeFragment.newInstance()
             activity?.supportFragmentManager?.beginTransaction()
@@ -67,6 +68,7 @@ class RestauracjaHistoryFragment : Fragment() {
                     val obj = document.toObject(Model::class.java)
                     obj?.let{
                         it.collection="restaurant"
+                        it.documentId = document.id
                         datalist.add(it)}
                 }
                 datalist.reverse()

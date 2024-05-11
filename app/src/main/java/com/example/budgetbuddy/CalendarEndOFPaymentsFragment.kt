@@ -117,12 +117,8 @@ class CalendarEndOFPaymentsFragment : Fragment() {
 
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
-        imageViewBack?.setOnClickListener {
-            val fragmentBack = FixedExpenseFragment.newInstance()
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, fragmentBack)
-                ?.addToBackStack(null)
-                ?.commit()
+        imageViewBack?.setOnClickListener{
+            activity?.supportFragmentManager?.popBackStack()
         }
     }
 

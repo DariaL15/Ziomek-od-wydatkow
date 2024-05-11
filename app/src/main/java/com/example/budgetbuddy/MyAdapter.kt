@@ -1,6 +1,7 @@
 package com.example.budgetbuddy
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val userId: String = FirebaseAuth.getInstance().currentUser!!.uid
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
        val view = LayoutInflater.from(parent.context).inflate(R.layout.singlerow, parent, false)
         return MyViewHolder(view)
@@ -45,12 +47,12 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
             alertDialogBuilder.setMessage("Czy pewno chcesz usunąć ten element?")
             alertDialogBuilder.setPositiveButton("Tak") { dialogInterface: DialogInterface, i: Int ->
 
-                deleteItemFromDatabase(currentItem.notes)
+                deleteItemFromDatabase(currentItem.documentId!!, currentItem.collection)
                 dataList.removeAt(position)
                 notifyItemRemoved(position)
                 dialogInterface.dismiss()
             }
-            alertDialogBuilder.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
+            alertDialogBuilder.setNegativeButton("Nie") { dialogInterface: DialogInterface, i: Int ->
                 dialogInterface.dismiss()
             }
             alertDialogBuilder.show()
@@ -63,10 +65,11 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
                 EditIncomesFragment()
             }
             val args = Bundle()
+            args.putString("documentId", currentItem.documentId)
             args.putString("notes", currentItem.notes)
             args.putDouble("amount", currentItem.amount ?: 0.0)
             args.putString("date", currentItem.date)
-            args.putString("collections", currentItem.collection)
+            args.putString("collection", currentItem.collection)
             fragment.arguments = args
 
             val activity = holder.itemView.context as AppCompatActivity
@@ -88,17 +91,15 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
     }
 
 
-    private fun deleteItemFromDatabase(itemName: String){
-        db.collection(userId).document("fixedExpenses").collection("documents")
-            .whereEqualTo("name",itemName)
-            .get()
-            .addOnSuccessListener {documents->
-                for(document in documents){
-                    document.reference.delete()
-                }
+    private fun deleteItemFromDatabase(documentId: String, itemCategory: String){
+        db.collection(userId).document("budget").collection(itemCategory)
+            .document(documentId)
+            .delete()
+            .addOnSuccessListener {
+               Log.w(TAG, "Element został usunięty")
             }
             .addOnFailureListener{e->
-                Log.w(ContentValues.TAG, "Error deleting document", e)
+                Log.w(TAG, "Błąd w usunięciu elementa", e)
             }
     }
 

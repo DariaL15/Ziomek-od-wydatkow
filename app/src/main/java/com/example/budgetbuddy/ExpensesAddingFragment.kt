@@ -273,6 +273,7 @@ class ExpensesAddingFragment : Fragment() {
 
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
+        imageViewBack?.setOnClickListener(null)
         imageViewBack?.setOnClickListener {
             val fragmentBack = HomeFragment.newInstance()
             activity?.supportFragmentManager?.beginTransaction()

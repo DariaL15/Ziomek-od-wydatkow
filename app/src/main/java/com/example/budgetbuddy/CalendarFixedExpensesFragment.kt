@@ -119,16 +119,12 @@ class CalendarFixedExpensesFragment : Fragment() {
         val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
         textViewName?.text = "Wybierz dzień"
 
-        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.redlight))
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
 
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
-        imageViewBack?.setOnClickListener {
-            val fragmentBack = FixedExpenseFragment.newInstance()
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, fragmentBack)
-                ?.addToBackStack(null)
-                ?.commit()
+        imageViewBack?.setOnClickListener{
+            activity?.supportFragmentManager?.popBackStack()
         }
     }
 

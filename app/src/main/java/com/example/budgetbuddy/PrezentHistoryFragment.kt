@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.budgetbuddy.databinding.FragmentHomeHistoryBinding
@@ -46,7 +47,7 @@ class PrezentHistoryFragment : Fragment() {
 
         val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
         textViewName?.text = "Przezent"
-
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
         imageViewBack?.setOnClickListener {
@@ -71,6 +72,7 @@ class PrezentHistoryFragment : Fragment() {
                     val obj = document.toObject(Model::class.java)
                     obj?.let{
                         it.collection="gift"
+                        it.documentId = document.id
                         datalist.add(it)}
                 }
                 datalist.reverse()

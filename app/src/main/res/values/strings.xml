@@ -84,7 +84,7 @@
     <string name="confirm_notification_text">OPŁACONE</string>
     <string name="no_confirm_notification_text">ANULUJ</string>
     <string name="day_of_payment">Dziś jest dzień opłaty za: </string>
-    <string name="question_remove_expense">JESTEŚ PEWNY?</string>
+    <string name="question_remove_expense">CZY JESTEŚ PEWNY, ŻE CHCESZ USUNĄĆ TEN ELEMENT?</string>
     <string name="delete">USUŃ</string>
     <string name="fixed_expenses">Zlecenie stałe:</string>
 
