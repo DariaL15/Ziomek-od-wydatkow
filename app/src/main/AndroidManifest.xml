@@ -13,11 +13,6 @@
         android:theme="@style/Theme.BudgetBuddy"
         tools:targetApi="31">
         <activity
-            android:name=".CharPieActivity"
-            android:exported="false"
-            android:label="@string/title_activity_char_pie"
-            android:theme="@style/Theme.BudgetBuddy" />
-        <activity
             android:name=".BudgeActivity"
             android:exported="false" />
         <activity
