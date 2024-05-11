@@ -5,7 +5,7 @@
     android:id="@+id/calendar_edit_expenses"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/textgreen"
+    android:background="@color/redlight"
     android:padding="10dp"
     tools:context=".CalendarEditExpensesFragment"
     android:gravity="center">
@@ -24,7 +24,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext"
+                android:background="@drawable/edittext2red"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="30dp">
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/select_day_text"
-                    android:textColor="@color/textgreen"
+                    android:textColor="@color/redlight"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
@@ -50,8 +50,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:hint="@string/selected_day"
-                    android:textColorHint="@color/textgreen"
-                    android:textColor="@color/textgreen"
+                    android:textColorHint="@color/redlight"
+                    android:textColor="@color/redlight"
                     android:textSize="20sp"
                     android:textStyle="italic"/>
 
@@ -60,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/edittextfullgreen"
+                    android:background="@drawable/edittext2red"
                     android:text="@string/ok"
                     android:textSize="12sp"
                     android:textStyle="bold" />

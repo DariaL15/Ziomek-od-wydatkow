@@ -14,6 +14,7 @@ import com.example.budgetbuddy.databinding.FragmentCarHistoryBinding
 import com.example.budgetbuddy.databinding.FragmentHomeHistoryBinding
 import com.google.firebase.auth.FirebaseAuth
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -44,7 +45,7 @@ class CarHistoryFragment : Fragment() {
         textViewName?.text = "Samochod"
 
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
-
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
         imageViewBack?.setOnClickListener {
             val fragmentBack = HomeFragment.newInstance()
             activity?.supportFragmentManager?.beginTransaction()
@@ -66,6 +67,7 @@ class CarHistoryFragment : Fragment() {
                     val obj = document.toObject(Model::class.java)
                     obj?.let{
                         it.collection="car"
+                        it.documentId = document.id
                         datalist.add(it)}
                 }
                 datalist.reverse()

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import java.io.Serializable
 
 class ModelFixed(
+    var documentId: String?= null,
     var name: String="",
     var amount: Double?=null,
     var repeatFrequency: String="",
@@ -12,8 +13,9 @@ class ModelFixed(
     var nextDate: String="",
     var amountOfTransfers: Int ?=null,
     var endDayOfTransfers: String="",
-    var amountOfTransfersTemp: Int? =null) {
-    constructor():this("",null,"", "", "", "", null, "", null)
+    var amountOfTransfersTemp: Int? =null,
+    var whenStopFixedExpense: String="") {
+    constructor():this("","",null,"", "", "", "", null, "", null, "")
 }
 
 

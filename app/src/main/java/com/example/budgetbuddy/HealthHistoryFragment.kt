@@ -15,6 +15,7 @@ import com.example.budgetbuddy.databinding.FragmentHomeHistoryBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 
 
 class HealthHistoryFragment : Fragment() {
@@ -41,7 +42,7 @@ class HealthHistoryFragment : Fragment() {
 
         val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
         textViewName?.text = "Zdrowie"
-
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
         imageViewBack?.setOnClickListener {
@@ -67,6 +68,7 @@ class HealthHistoryFragment : Fragment() {
                     val obj = document.toObject(Model::class.java)
                     obj?.let{
                         it.collection="health"
+                        it.documentId = document.id
                         datalist.add(it)}
                 }
                 datalist.reverse()

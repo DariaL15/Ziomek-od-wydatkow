@@ -64,7 +64,10 @@ class ListOfFixedExpensesFragment : Fragment() {
                 for(document in list)
                 {
                     val obj = document.toObject(ModelFixed::class.java)
-                    obj?.let{datalist.add(it)}
+
+                    obj?.let{
+                        it.documentId = document.id
+                        datalist.add(it)}
                 }
                 datalist.reverse()
                 adapter.notifyDataSetChanged()

@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.budgetbuddy.databinding.FragmentFixedExpenseBinding
 import com.google.firebase.Firebase
@@ -59,8 +60,6 @@ class FixedExpenseFragment : Fragment() {
 
                 arguments?.getString(ARG_NAME)?.let { selectedName ->
                         binding.fixedExpenseName.text = Editable.Factory.getInstance().newEditable(selectedName)
-
-
                 }
 
                 arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
@@ -113,7 +112,7 @@ class FixedExpenseFragment : Fragment() {
                     }
                 }
 
-                var selectedEndPayment: String
+                var selectedEndPayment = ""
                 endPaymentSpiner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                             selectedEndPayment = end_payment[position]
@@ -267,11 +266,13 @@ binding.confirmButtonFix1.setOnClickListener {
     val repeatValue = selectedRepeat
     val endDayRepeat = binding.dateOfEndOfPayment.text.toString()
     val daysAmountString = binding.numberOfTransfersEdit.text.toString()
+    val whenStopFixedExpense = selectedEndPayment
     val amountOfTransfers = if (daysAmountString.isNotEmpty()) {
         daysAmountString.toInt()
     } else {
         0
     }
+
 
     if( name.isNotEmpty() && amount!=null && category.isNotEmpty() && dateBegin.isNotEmpty() && repeatValue.isNotEmpty() )
     {
@@ -284,14 +285,15 @@ binding.confirmButtonFix1.setOnClickListener {
             "repeatFrequency" to repeatValue,
             "endDayOfTransfers" to endDayRepeat,
             "amountOfTransfers" to amountOfTransfers,
-            "amountOfTransfersTemp" to amountOfTransfers)
+            "amountOfTransfersTemp" to amountOfTransfers,
+            "whenStopFixedExpense" to whenStopFixedExpense)
         budgetRef.collection("documents").document().set(fixedExpenseMap).addOnSuccessListener {
             Toast.makeText(context,"Zlecenie stałe dodane",Toast.LENGTH_SHORT).show()
         }
             .addOnFailureListener {
                 Toast.makeText(context,"Zlecenie stałe nie dodane",Toast.LENGTH_SHORT).show()
             }
-        val home = HomeFragment.newInstance()
+        val home = ListOfFixedExpensesFragment.newInstance()
         val transaction =
             requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, home)
@@ -321,11 +323,14 @@ binding.confirmButtonFix1.setOnClickListener {
         val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
         textViewName?.text = "Dodaj zlecenie stałe"
 
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
+
 
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
+        imageViewBack?.setOnClickListener(null)
         imageViewBack?.setOnClickListener {
-            val fragmentBack = ListOfFixedExpensesFragment.newInstance()
+            val fragmentBack = HomeFragment.newInstance()
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragment_container, fragmentBack)
                 ?.addToBackStack(null)

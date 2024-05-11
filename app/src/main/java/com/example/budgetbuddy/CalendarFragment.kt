@@ -47,14 +47,12 @@ class CalendarFragment : Fragment() {
 
         toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.redlight))
 
+
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
-        imageViewBack?.setOnClickListener {
-            val fragmentBack = HomeFragment.newInstance()
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, fragmentBack)
-                ?.addToBackStack(null)
-                ?.commit()
+        imageViewBack?.setOnClickListener(null)
+        imageViewBack?.setOnClickListener{
+            activity?.supportFragmentManager?.popBackStack()
         }
     }
     override fun onCreateView(

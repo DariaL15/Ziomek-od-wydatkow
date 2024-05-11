@@ -50,13 +50,13 @@ class MyAdapterFixed (private val dataList: ArrayList<ModelFixed>) : RecyclerVie
             alertDialogBuilder.setMessage("Czy pewno chcesz usunąć ten element?")
             alertDialogBuilder.setPositiveButton("Tak") { dialogInterface: DialogInterface, i: Int ->
 
-                deleteItemFromDatabase(currentItem.name)
+                deleteItemFromDatabase(currentItem.documentId!!)
 
                 dataList.removeAt(position)
                 notifyItemRemoved(position)
                 dialogInterface.dismiss()
             }
-            alertDialogBuilder.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
+            alertDialogBuilder.setNegativeButton("Nie") { dialogInterface: DialogInterface, i: Int ->
                 dialogInterface.dismiss()
             }
             alertDialogBuilder.show()
@@ -67,6 +67,7 @@ class MyAdapterFixed (private val dataList: ArrayList<ModelFixed>) : RecyclerVie
         holder.editImageView.setOnClickListener {
             val fragment =EditFixedExpensesFragment()
             val args =Bundle()
+            args.putString("documentId", currentItem.documentId)
             args.putString("name", currentItem.name)
             args.putDouble("amount", currentItem.amount ?: 0.0)
             args.putString("repeatFrequency", currentItem.repeatFrequency)
@@ -75,6 +76,10 @@ class MyAdapterFixed (private val dataList: ArrayList<ModelFixed>) : RecyclerVie
             args.putString("nextDate", currentItem.nextDate)
             args.putInt("amountOfTransfers", currentItem.amountOfTransfers ?: 0)
             args.putString("endDayOfTransfers", currentItem.endDayOfTransfers)
+            args.putInt("amountOfTransfersTemp", currentItem.amountOfTransfersTemp?: 0)
+            args.putString("whenStopFixedExpense", currentItem.whenStopFixedExpense)
+
+
             fragment.arguments = args
 
             val activity = holder.itemView.context as AppCompatActivity
@@ -87,17 +92,15 @@ class MyAdapterFixed (private val dataList: ArrayList<ModelFixed>) : RecyclerVie
 
     }
 
-    private fun deleteItemFromDatabase(itemName: String){
+    private fun deleteItemFromDatabase(documentId: String){
         db.collection(userId).document("fixedExpenses").collection("documents")
-            .whereEqualTo("name",itemName)
-            .get()
-            .addOnSuccessListener {documents->
-                for(document in documents){
-                    document.reference.delete()
-                }
+            .document(documentId)
+            .delete()
+            .addOnSuccessListener {
+                Log.w(TAG, "Element został usunięty")
             }
             .addOnFailureListener{e->
-                Log.w(TAG, "Error deleting document", e)
+                Log.w(TAG, "Błąd w usunięciu elementa", e)
             }
     }
 

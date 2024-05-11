@@ -258,6 +258,7 @@ class IncomesAddingFragment : Fragment() {
         toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
+        imageViewBack?.setOnClickListener(null)
         imageViewBack?.setOnClickListener {
             val fragmentBack = HomeFragment.newInstance()
             activity?.supportFragmentManager?.beginTransaction()

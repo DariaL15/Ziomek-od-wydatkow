@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.budgetbuddy.databinding.FragmentCarHistoryBinding
@@ -42,6 +43,8 @@ class ZakupyHistoryFragment : Fragment() {
         val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
         textViewName?.text = "Zakupy"
 
+        toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
+
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
 
         imageViewBack?.setOnClickListener {
@@ -65,6 +68,7 @@ class ZakupyHistoryFragment : Fragment() {
                     val obj = document.toObject(Model::class.java)
                     obj?.let{
                         it.collection="shopping"
+                        it.documentId = document.id
                         datalist.add(it)}
                 }
                 datalist.reverse()
