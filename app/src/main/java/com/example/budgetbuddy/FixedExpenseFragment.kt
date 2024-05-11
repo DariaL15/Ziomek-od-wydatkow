@@ -113,7 +113,7 @@ class FixedExpenseFragment : Fragment() {
                     }
                 }
 
-                var selectedEndPayment: String
+                var selectedEndPayment = ""
                 endPaymentSpiner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                             selectedEndPayment = end_payment[position]
@@ -267,11 +267,13 @@ binding.confirmButtonFix1.setOnClickListener {
     val repeatValue = selectedRepeat
     val endDayRepeat = binding.dateOfEndOfPayment.text.toString()
     val daysAmountString = binding.numberOfTransfersEdit.text.toString()
+    val whenStopFixedExpense = selectedEndPayment
     val amountOfTransfers = if (daysAmountString.isNotEmpty()) {
         daysAmountString.toInt()
     } else {
         0
     }
+
 
     if( name.isNotEmpty() && amount!=null && category.isNotEmpty() && dateBegin.isNotEmpty() && repeatValue.isNotEmpty() )
     {
@@ -284,7 +286,8 @@ binding.confirmButtonFix1.setOnClickListener {
             "repeatFrequency" to repeatValue,
             "endDayOfTransfers" to endDayRepeat,
             "amountOfTransfers" to amountOfTransfers,
-            "amountOfTransfersTemp" to amountOfTransfers)
+            "amountOfTransfersTemp" to amountOfTransfers,
+            "whenStopFixedExpense" to whenStopFixedExpense)
         budgetRef.collection("documents").document().set(fixedExpenseMap).addOnSuccessListener {
             Toast.makeText(context,"Zlecenie stałe dodane",Toast.LENGTH_SHORT).show()
         }
