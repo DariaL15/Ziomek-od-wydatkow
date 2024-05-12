@@ -21,6 +21,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+
+//полностью анулируется число в доходах и расходах
+//теряется выбор категории при изменении даты
+//не изменяется число
+//в злеценях вообще ничего не сохраняется
+
 class MyAdapterFixed (private val dataList: ArrayList<ModelFixed>) : RecyclerView.Adapter<MyAdapterFixed.MyViewHolder>() {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()

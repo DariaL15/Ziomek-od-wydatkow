@@ -35,6 +35,7 @@ class EditExpensesFragment : Fragment() {
 
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +44,12 @@ class EditExpensesFragment : Fragment() {
 
         val args = arguments
         if (args != null) {
+            val notes = args.getString("notes" )
+            val amount = args.getDouble("amount", 0.0)
             val date = args.getString("date")
+
+            binding.noteEditText1.setText(notes)
+            binding.amount1.setText(amount.toString())
             binding.selectDateEnd1.text=date
         }
 
@@ -147,21 +153,6 @@ class EditExpensesFragment : Fragment() {
 
         }
 
-        arguments?.getString(ARG_NOTES)?.let { selectedNotes ->
-            binding.noteEditText1.text = Editable.Factory.getInstance().newEditable(selectedNotes)
-        }
-
-        arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
-
-            if (selectedAmount != 0.0) {
-                val formattedAmount = String.format("%.2f", selectedAmount)
-                binding.amount1.text = Editable.Factory.getInstance().newEditable(formattedAmount)
-            }
-        }
-
-        arguments?.getString(ARG_SELECTED_DATE)?.let { selectedDate ->
-            binding.selectDateEnd1.text = selectedDate
-        }
 
 
 
@@ -229,6 +220,33 @@ class EditExpensesFragment : Fragment() {
         originalCollection: String,
         newCollection: String
     ){
+        val budgetRef = db.collection(userId).document("budget")
+        budgetRef.get().addOnSuccessListener { document->
+            val  currentBudget = document.getDouble("budgetV")?:0.0
+            val currentExpenses = document.getDouble("expensesV") ?: 0.0
+            val currentAmount = arguments?.getDouble("amount", 0.0)
+            val updateAmount = binding.amount1.text.toString().toDoubleOrNull()
+            val updatedBudget : Double
+            val updatedExpenses: Double
+            if (currentAmount!! > updateAmount!!){
+                updatedBudget = currentBudget + (currentAmount - updateAmount)
+                updatedExpenses = currentExpenses - (currentAmount - updateAmount)
+            }
+            else{
+                updatedBudget = currentBudget - ( updateAmount - currentAmount)
+                updatedExpenses = currentExpenses + ( updateAmount -currentAmount )
+            }
+            budgetRef.update(
+                mapOf(
+                    "budgetV" to updatedBudget,
+                    "expensesV" to updatedExpenses
+                )
+            ). addOnSuccessListener {
+                Log.w(TAG, "Budżet został zaktualizowany")
+            }
+
+        }
+
         if(originalCollection==newCollection)
         {
             db.collection(userId).document("budget").collection(originalCollection)

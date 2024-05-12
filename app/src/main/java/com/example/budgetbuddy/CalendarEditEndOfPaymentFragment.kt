@@ -1,59 +1,141 @@
 package com.example.budgetbuddy
 
+import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CalendarView
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+import com.example.budgetbuddy.databinding.FragmentCalendarEndOFPaymentsBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CalendarEditEndOfPaymentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val ARG_NAME = "selected_name"
+private const val ARG_AMOUNT = "selected_amount"
+private const val ARG_SELECTED_DATE = "selected_date"
+private const val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
+private const val ARG_SELECTED_REPEAT_POSITION = "selected_repeat_position"
+private const val ARG_SELECTED_END_PAYMENT_POSITION = "selected_end_payment_position"
+private const val ARG_SELECTED_AMOUNT_END_PAYMENT_POSITION = "selected_amount_end_payment_position"
+private const val ARG_NEXT_DATE="nextDate"//для вычисления
+private const val ARG_WHEN_STOP_FIXED_EXPENSE="whenStopExpense"
 class CalendarEditEndOfPaymentFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentCalendarEndOFPaymentsBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar_edit_end_of_payment, container, false)
+    ): View {
+        binding = FragmentCalendarEndOFPaymentsBinding.inflate(inflater, container, false)
+
+        val selectedDateText: TextView =binding.selectedDate3
+        val calendarView : CalendarView =binding.calendarView3
+        val confirmButton : Button =binding.confirmButtonFix3
+        var nameV= ""
+        var amountV=0.0
+        var dateBegin=""
+        val categoryV = arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION, 0) ?: 0
+        val repeatV = arguments?.getInt(ARG_SELECTED_REPEAT_POSITION, 0) ?: 0
+        val endPaymentV = arguments?.getInt(ARG_SELECTED_END_PAYMENT_POSITION, 0) ?: 0
+        var amountDaysV =0
+
+        var dateEnd =" "
+        val dayNext = arguments?.getString(ARG_NEXT_DATE)
+        val whenStop=  arguments?.getInt(ARG_WHEN_STOP_FIXED_EXPENSE, 0)
+
+
+        setCurrentDate(selectedDateText)
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            updateSelectedDate(year, month, dayOfMonth, selectedDateText)
+        }
+
+        arguments?.getString(ARG_SELECTED_DATE)?.let { selectedDate ->
+            dateBegin = selectedDate
+        }
+
+        arguments?.getString(ARG_NAME)?.let { selectedName ->
+            nameV = selectedName
+        }
+
+        arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
+            amountV = selectedAmount
+        }
+
+        arguments?.getInt(ARG_SELECTED_AMOUNT_END_PAYMENT_POSITION)?.let { selectedDateEndPaymentPosition ->
+            amountDaysV = selectedDateEndPaymentPosition
+        }
+
+
+        confirmButton.setOnClickListener {
+
+
+
+            val selectedDate = selectedDateText.text.toString()
+            val fef = EditFixedExpensesFragment.newInstance(selectedDate, dayNext, categoryV, nameV, amountV, repeatV,  endPaymentV ,dateEnd, amountDaysV, whenStop)
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, fef)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        return binding.root
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CalendarEditEndOfPaymentFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CalendarEditEndOfPaymentFragment().apply {
+        fun newInstance(selectedName: String, selectedAmount: Double,selectedDate: String, selectedCategoryPosition: Int, selectedRepeatPosition: Int, selectedEndPaymentPosition: Int,selectedAmountEndPaymentPosition: Int) =
+            CalendarEndOFPaymentsFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_NAME,selectedName)
+                    putDouble(ARG_AMOUNT,selectedAmount)
+                    putInt(ARG_SELECTED_CATEGORY_POSITION, selectedCategoryPosition)
+                    putInt(ARG_SELECTED_REPEAT_POSITION, selectedRepeatPosition)
+                    putInt(ARG_SELECTED_END_PAYMENT_POSITION, selectedEndPaymentPosition)
+                    putInt(ARG_SELECTED_AMOUNT_END_PAYMENT_POSITION, selectedAmountEndPaymentPosition)
+
+
                 }
             }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbarMenu = activity?.findViewById<Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<Toolbar>(R.id.toolbar_back)
+        toolbarMenu?.visibility = View.GONE
+        toolbarBack?.visibility = View.VISIBLE
+
+        val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
+        textViewName?.text = "Wybierz dzień"
+
+
+        val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
+
+        imageViewBack?.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
+        }
+    }
+
+    private fun setCurrentDate(textView: TextView) {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+        textView.text = formattedDate
+    }
+
+    private fun updateSelectedDate(year: Int, month: Int, dayOfMonth: Int, textView: TextView) {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayOfMonth)
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+        textView.text = formattedDate
+    }
+
 }

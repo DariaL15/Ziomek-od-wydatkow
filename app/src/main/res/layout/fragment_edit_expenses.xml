@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Theme.expenses"
     android:id="@+id/edit_expenses_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,12 +40,12 @@
                     android:id="@+id/amount_1"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
-                    android:backgroundTint="@color/textgreen"
+                    android:backgroundTint="@color/redlight"
                     android:gravity="center"
                     android:hint="@string/amount"
                     android:padding="15dp"
                     android:textColor="@color/redlight"
-                    android:textColorHint="@color/green_light"
+                    android:textColorHint="@color/redlightlight"
                     android:textSize="25sp"
                     android:inputType="numberDecimal"/>
 
@@ -54,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/zloty"
                     android:textAlignment="center"
-                    android:textColor="@color/textgreen"
+                    android:textColor="@color/redlight"
                     android:textSize="30sp" />
 
             </LinearLayout>
@@ -81,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
                     android:text="@string/date"
-                    android:textColor="@color/textgreen"
+                    android:textColor="@color/redlight"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
@@ -92,9 +93,9 @@
                     android:gravity="start|top"
                     android:hint="@string/selected_day"
                     android:paddingLeft="30dp"
-                    android:textColorHint="@color/textgreen"
+                    android:textColorHint="@color/redlight"
                     android:textSize="10sp"
-                    android:textColor="@color/textgreen"
+                    android:textColor="@color/redlight"
                     android:textStyle="italic"
                     android:visibility="visible" />
 
@@ -171,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
                     android:text="@string/category"
-                    android:textColor="@color/textgreen"
+                    android:textColor="@color/redlight"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
@@ -194,7 +195,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:paddingLeft="15dp"
-                    android:background="@drawable/edittextfullgreen"
+                    android:background="@drawable/edittextfullred"
                     android:gravity="center"
                     style="@style/SpinnerStyle1"
                     android:textSize="14sp" />
@@ -217,7 +218,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
                 android:text="@string/notes"
-                android:textColor="@color/textgreen"
+                android:textColor="@color/redlight"
                 android:textSize="14sp"
                 android:visibility="visible" />
 
@@ -228,14 +229,14 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.9"
-                android:background="@drawable/edittext2"
+                android:background="@drawable/edittext2red"
                 android:gravity="start|top"
                 android:hint="@string/notes_text"
                 android:inputType="textMultiLine"
                 android:minLines="5"
                 android:padding="30dp"
                 android:scrollbars="vertical"
-                android:textColorHint="@color/green_light"
+                android:textColorHint="@color/redlightlight"
                 android:textSize="12sp"
                 android:visibility="visible" />
 

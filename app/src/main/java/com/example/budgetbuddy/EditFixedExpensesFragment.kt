@@ -40,8 +40,20 @@ class EditFixedExpensesFragment : Fragment() {
 
         binding = FragmentEditFixedExpensesBinding.inflate(inflater, container, false)
 
+
+
+        val amount = arguments?.getDouble("amount", 0.0)
+        val amountOfTransfers = arguments?.getInt("amountOfTransfers")
+        val amountOfTransfersTemp = arguments?.getInt("amountOfTransfersInt")
+        val beginDate = arguments?.getString("beginDate")
         val endDayOfTransfers=  arguments?.getString("endDayOfTransfers")
-        val beginDate =  arguments?.getString("beginDate")
+        val name = arguments?.getString("name")
+
+
+        binding.fixedExpenseName1.setText(name)
+        binding.fixedExpenseEnterAmount1.setText(amount.toString())
+        binding.numberOfTransfersEdit1.setText(amountOfTransfers.toString())
+
 
         binding.dateOfPayment1.text = beginDate
         binding.dateOfEndOfPayment1.text = endDayOfTransfers
@@ -66,38 +78,6 @@ class EditFixedExpensesFragment : Fragment() {
         endPaymentSpiner.setSelection(getPositionForWhenStop(whenStopPayment))
         var selectedRepeatSpinerPosition = 0
         var selectedEndPaymentSpinerPosition = 0
-
-        arguments?.getString(ARG_NAME)?.let { selectedName ->
-            binding.fixedExpenseName1.text = Editable.Factory.getInstance().newEditable(selectedName)
-        }
-
-        arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
-
-            if (selectedAmount != 0.0) {
-                val formattedAmount = String.format("%.2f", selectedAmount)
-                binding.fixedExpenseEnterAmount1.text = Editable.Factory.getInstance().newEditable(formattedAmount)
-            }
-        }
-
-        arguments?.getInt(ARG_AMOUNT_OF_TRANSFERS)?.let { selectedDayAmount ->
-            if(selectedDayAmount !=0 )
-            {
-                binding.numberOfTransfersEdit1.setText(selectedDayAmount.toString())
-            }
-        }
-
-        arguments?.getString(ARG_BEGIN_DATE)?.let { selectedDate ->
-            binding.dateOfPayment1.text = selectedDate
-        }
-
-        arguments?.getString(ARG_END_DAY_OF_TRANSFERS)?.let { selectedDate ->
-            binding.dateOfEndOfPayment1.text = selectedDate
-        }
-
-        arguments?.getInt(ARG_AMOUNT_OF_TRANSFERS)?.let{ selectedAmountOfTransfers ->
-            if (selectedAmountOfTransfers!=0)
-                binding.numberOfTransfersEdit1.setText(selectedAmountOfTransfers.toString())
-        }
 
 
         var selectedRepeat=""

@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +49,31 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
             alertDialogBuilder.setMessage("Czy pewno chcesz usunąć ten element?")
             alertDialogBuilder.setPositiveButton("Tak") { dialogInterface: DialogInterface, i: Int ->
 
+
+                val budgetRef = db.collection(userId).document("budget")
+                budgetRef.get().addOnSuccessListener { document->
+                    val currentBudget = document.getDouble("budgetV")?:0.0
+                    val currentExpenses = document.getDouble("expensesV") ?: 0.0
+                    val updatedBudget : Double
+                    val updatedExpenses: Double
+                    if (currentItem.amount!=null && currentItem.amount!!<0){
+                         updatedBudget = currentBudget + currentItem.amount!!
+                         updatedExpenses = currentExpenses - currentItem.amount!!
+                    }
+                    else{
+                         updatedBudget = currentBudget - currentItem.amount!!
+                        updatedExpenses = currentExpenses + currentItem.amount!!
+                    }
+
+                    budgetRef.update(
+                        mapOf(
+                            "budgetV" to updatedBudget,
+                            "expensesV" to updatedExpenses
+                        )
+                    ). addOnSuccessListener {
+                        Log.w(TAG, "Budżet został zaktualizowany")
+                    }
+                }
                 deleteItemFromDatabase(currentItem.documentId!!, currentItem.collection)
                 dataList.removeAt(position)
                 notifyItemRemoved(position)
