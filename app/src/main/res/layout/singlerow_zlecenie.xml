@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="Notes"
                 android:textColor="@color/darkgreen"
-                android:textSize="19dp"
+                android:textSize="21dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -48,7 +48,7 @@
                 android:layout_marginTop="1dp"
                 android:text="Date"
                 android:textColor="@color/textgreen"
-                android:textSize="12dp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="Amount"
             android:textColor="@color/darkgreen"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:textStyle="bold"  />
 
         <LinearLayout
@@ -82,7 +82,7 @@
 
             <ImageView
                 android:id="@+id/delete"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/delete_forever" />
