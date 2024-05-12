@@ -1,9 +1,11 @@
 package com.example.budgetbuddy
 
+import android.app.DatePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Color.*
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,37 +30,84 @@ class AnalyticsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
+        val currentDate = Calendar.getInstance()
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        val month = currentDate.get(Calendar.MONTH) + 1
+        val year = currentDate.get(Calendar.YEAR)
+
+        binding.dateTo.text = String.format("%02d.%02d.%d", day, month, year)
+        binding.dateFrom.text = String.format("%02d.%02d.%d", day, month-1, year)
+        binding.chooseCalendarButton1.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(Calendar.YEAR, year)
+                    selectedDate.set(Calendar.MONTH, monthOfYear)
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
+                    binding.dateFrom.text=selectedDateFormatted
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+            datePickerDialog.show()
+
+        }
+
+        binding.chooseCalendarButton2.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(Calendar.YEAR, year)
+                    selectedDate.set(Calendar.MONTH, monthOfYear)
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
+                    binding.dateTo.text=selectedDateFormatted
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+            datePickerDialog.show()
+
+        }
+
+
         binding.barChartCategoryExpenses.animation.duration = animationDuraction
         binding.barChartCategoryExpenses.labelsSize=20F
 
 
         binding.barChartExpenses.animation.duration = animationDuraction
         binding.barChartExpenses.donutColors = intArrayOf(
-            parseColor("#90EE90"),
-            parseColor("#EE9090")
+            parseColor("#7CAA74"),
+            parseColor("#BF4747")
         )
 
         binding.barChartCategoryExpenses.barsColorsList = listOf(
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
-            parseColor("#90EE90"),
+            parseColor("#6598BA"),
+            parseColor("#A86E51"),
+            parseColor("#F9BB69"),
+            parseColor("#CE755D"),
+            parseColor("#939399"),
+            parseColor("#8DC9C3"),
+            parseColor("#BF4747"),
+            parseColor("#F2D85A"),
+            parseColor("#7CAA74"),
+            parseColor("#364D84"),
+            parseColor("#B56F95"),
+            parseColor("#6375B7"),
         )
 
 
         val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        val dateFrom = dateFormatter.parse("20.01.2024")
-        val dateEnd = dateFormatter.parse("25.05.2024")
+        val dateFrom = dateFormatter.parse(binding.dateFrom.text.toString())
+        val dateEnd = dateFormatter.parse(binding.dateTo.text.toString())
 
 
         firebaseRepository = FirebaseRepository(requireContext())
@@ -228,8 +277,8 @@ class AnalyticsFragment : Fragment() {
         )
 
         private var barSetBuget = listOf(
-            2.00F,
-            50.00F
+            0.00F,
+            0.00F
         )
 
         fun newInstance() = AnalyticsFragment()
