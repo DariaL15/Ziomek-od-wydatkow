@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_analytics"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AnalyticsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="100dp"
+        android:text="BUDŻET OGÓLNY"
+        android:textColor="@color/grey_dark"
+        android:textSize="30dp" />
 
-</FrameLayout>
+<com.db.williamchart.view.DonutChartView
+    android:id="@+id/barChartExpenses"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginTop="150dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <TextView
+        android:layout_width="197dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/budgetAmount"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="190dp"
+        android:hint="BUDŻET"
+        android:textColor="#90EE90"
+        android:textSize="30dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="197dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/expensesAmount"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="220dp"
+        android:hint="WYDATKI"
+        android:textColor="#EE9090"
+        android:textSize="30dp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="213dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="350dp"
+        android:text="KATEGORIE"
+        android:textColor="@color/grey_dark"
+        android:textSize="30dp" />
+
+    <com.db.williamchart.view.BarChartView
+        android:id="@+id/barChartCategoryExpenses"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="400dp"
+        app:chart_axis="x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    </RelativeLayout>

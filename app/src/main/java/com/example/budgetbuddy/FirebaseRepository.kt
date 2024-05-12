@@ -4,8 +4,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.handleCoroutineException
 import android.content.Context
+import android.util.Log
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 class FirebaseRepository (private val context: Context){
     private val db = FirebaseFirestore.getInstance()
@@ -170,7 +174,40 @@ class FirebaseRepository (private val context: Context){
     }
 
 
+    fun getTotalExpenseFromCategory(
+        category: String,
+        dateFrom: Date,
+        dateEnd: Date,
+        callback: (Double) -> Unit
+    ) {
+        val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        var totalAmountTemp = 0.0
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        val budgetRef = db.collection(userId).document("budget").collection(category)
 
+        budgetRef.get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val expense = document.toObject(Model::class.java)
+                    var date: Date? = null
+                    val amount: Double? = expense.amount
+                    try {
+                        if (expense.date.isNotEmpty()) {
+                            date = dateFormatter.parse(expense.date)
+                        }
+                    } catch (e: ParseException) {
+                        Log.e("FirebaseRepository", "Błąd pobierania daty", e)
+                        continue
+                    }
+
+                    if (date != null && date > dateFrom && date < dateEnd && amount != null) {
+                        totalAmountTemp += if (amount < 0) -amount else amount
+                    }
+                }
+
+                callback(totalAmountTemp)
+            }
+    }
 
 
 }

@@ -1,59 +1,238 @@
 package com.example.budgetbuddy
 
+import android.content.ContentValues.TAG
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Color.*
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toDrawable
+import androidx.fragment.app.Fragment
+import com.example.budgetbuddy.databinding.FragmentAnalyticsBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
+import com.db.williamchart.data.Label
+import com.db.williamchart.data.Scale
+import com.db.williamchart.data.shouldDisplayAxisX
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AnalyticsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AnalyticsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var binding: FragmentAnalyticsBinding
+    private lateinit var firebaseRepository: FirebaseRepository
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_analytics, container, false)
+
+
+        binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
+        binding.barChartCategoryExpenses.animation.duration = animationDuraction
+        binding.barChartCategoryExpenses.labelsSize=20F
+
+
+        binding.barChartExpenses.animation.duration = animationDuraction
+        binding.barChartExpenses.donutColors = intArrayOf(
+            parseColor("#90EE90"),
+            parseColor("#EE9090")
+        )
+
+        binding.barChartCategoryExpenses.barsColorsList = listOf(
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+            parseColor("#90EE90"),
+        )
+
+
+        val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val dateFrom = dateFormatter.parse("20.01.2024")
+        val dateEnd = dateFormatter.parse("25.05.2024")
+
+
+        firebaseRepository = FirebaseRepository(requireContext())
+
+
+
+        firebaseRepository.getBudget(
+            onSuccess = {budget ->
+                val formattedBudget = String.format("%.2f", budget).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
+                val updatedBudgetSet = barSetBuget.toMutableList()
+                updatedBudgetSet[0] = budget.toFloat()
+                barSetBuget = updatedBudgetSet.toList()
+                binding.barChartExpenses.animate(barSetBuget.map { it })
+                binding.budgetAmount.text=formattedBudget
+            },
+            onFailure = {
+
+            }
+        )
+
+        firebaseRepository.getExpensesVal(
+            onSuccess = {expenses ->
+                val formattedBudget = String.format("%.2f", expenses).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
+                val updatedBudgetSet = barSetBuget.toMutableList()
+                updatedBudgetSet[1] = expenses.toFloat()
+                barSetBuget = updatedBudgetSet.toList()
+                binding.barChartExpenses.donutTotal = barSetBuget[0] + barSetBuget[1]
+                binding.barChartExpenses.animate(barSetBuget.map { it })
+                binding.expensesAmount.text=formattedBudget
+            },
+            onFailure = {
+
+            }
+        )
+
+        firebaseRepository.getTotalExpenseFromCategory("car", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[0] = "Samochód" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+        firebaseRepository.getTotalExpenseFromCategory("house", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[1] = "Dom" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+
+
+
+        }
+        firebaseRepository.getTotalExpenseFromCategory("clothes", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[2] = "Ubrania" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("shopping", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[3] = "Zakupy" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("transport", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[4] = "Transport" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("sport", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[5] = "Sport" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("health", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[6] = "Zdrowie" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("entertainment", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[7] = "Rozrywka" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("relax", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[8] = "Relax" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("restaurant", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[9] = "Restauracje" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("gift", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[10] = "Prezenty" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+        firebaseRepository.getTotalExpenseFromCategory("education", dateFrom, dateEnd) { totalExpense ->
+            val updatedBarSet = barSet.toMutableList()
+            updatedBarSet[11] = "Edukacja" to totalExpense
+            barSet = updatedBarSet.toList()
+            val entries = barSet.map { it.first to it.second.toFloat() }
+            binding.barChartExpenses.donutTotal= barSetBuget.toMutableList()[0] + barSetBuget.toMutableList()[1]
+            binding.barChartCategoryExpenses.animate(entries)
+        }
+
+
+
+        binding.barChartExpenses.animate(barSetBuget)
+
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+
+
+
+
+        return binding.root
     }
 
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AnalyticsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AnalyticsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        private const val animationDuraction = 100L
+
+
+
+        private var barSet = listOf(
+            "Samochód" to 0.00,
+            "Dom" to 0.00,
+            "Ubrania" to 0.00,
+            "Zakupy" to 0.00,
+            "Transport" to 0.00,
+            "Sport" to 0.00,
+            "Zdrowie" to 0.00,
+            "Rozrywka" to 0.00,
+            "Relax" to 0.00,
+            "Restauracje" to 0.00,
+            "Prezenty" to 0.00,
+            "Edukacja" to 0.00
+        )
+
+        private var barSetBuget = listOf(
+            2.00F,
+            50.00F
+        )
+
+        fun newInstance() = AnalyticsFragment()
     }
 }
+
