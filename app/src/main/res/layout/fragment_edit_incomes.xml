@@ -42,6 +42,7 @@
                     android:gravity="center"
                     android:hint="@string/amount"
                     android:padding="15dp"
+                    android:textColor="@color/textgreen"
                     android:textColorHint="@color/green_light"
                     android:textSize="25sp"
                     android:inputType="numberDecimal"/>
@@ -243,7 +244,7 @@
 
         <Button
             android:id="@+id/confirm_button_incomes_2_1"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:background="@drawable/edittext2"
