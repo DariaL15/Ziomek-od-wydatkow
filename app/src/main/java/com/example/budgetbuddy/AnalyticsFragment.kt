@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import com.example.budgetbuddy.databinding.FragmentAnalyticsBinding
@@ -19,6 +20,7 @@ import java.util.Locale
 import com.db.williamchart.data.Label
 import com.db.williamchart.data.Scale
 import com.db.williamchart.data.shouldDisplayAxisX
+import java.util.Date
 
 
 class AnalyticsFragment : Fragment() {
@@ -38,45 +40,7 @@ class AnalyticsFragment : Fragment() {
 
         binding.dateTo.text = String.format("%02d.%02d.%d", day, month, year)
         binding.dateFrom.text = String.format("%02d.%02d.%d", day, month-1, year)
-        binding.chooseCalendarButton1.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(Calendar.YEAR, year)
-                    selectedDate.set(Calendar.MONTH, monthOfYear)
-                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
-                    binding.dateFrom.text=selectedDateFormatted
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-            )
-            datePickerDialog.show()
 
-        }
-
-        binding.chooseCalendarButton2.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(Calendar.YEAR, year)
-                    selectedDate.set(Calendar.MONTH, monthOfYear)
-                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
-                    binding.dateTo.text=selectedDateFormatted
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-            )
-            datePickerDialog.show()
-
-        }
 
 
         binding.barChartCategoryExpenses.animation.duration = animationDuraction
@@ -142,112 +106,170 @@ class AnalyticsFragment : Fragment() {
 
             }
         )
+fun updateChar (dateFrom: Date, dateEnd: Date) {
+    firebaseRepository.getTotalExpenseFromCategory("car", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[0] = "Samochód" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
 
-        firebaseRepository.getTotalExpenseFromCategory("car", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[0] = "Samochód" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+    firebaseRepository.getTotalExpenseFromCategory("house", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[1] = "Dom" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
 
-            binding.barChartCategoryExpenses.animate(entries)
+
+    }
+    firebaseRepository.getTotalExpenseFromCategory("clothes", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[2] = "Ubrania" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory("shopping", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[3] = "Zakupy" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory("transport", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[4] = "Transport" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory("sport", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[5] = "Sport" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory("health", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[6] = "Zdrowie" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory(
+        "entertainment",
+        dateFrom,
+        dateEnd
+    ) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[7] = "Rozrywka" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory("relax", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[8] = "Relax" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory(
+        "restaurant",
+        dateFrom,
+        dateEnd
+    ) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[9] = "Restauracje" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory("gift", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[10] = "Prezenty" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    firebaseRepository.getTotalExpenseFromCategory("education", dateFrom, dateEnd) { totalExpense ->
+        val updatedBarSet = barSet.toMutableList()
+        updatedBarSet[11] = "Edukacja" to totalExpense
+        barSet = updatedBarSet.toList()
+        val entries = barSet.map { it.first to it.second.toFloat() }
+        binding.barChartExpenses.donutTotal =
+            barSetBuget.toMutableList()[0] + barSetBuget.toMutableList()[1]
+        binding.barChartCategoryExpenses.animate(entries)
+    }
+
+    val entries = barSet.map { it.first to it.second.toFloat() }
+    binding.barChartCategoryExpenses.animate(entries)
+}
+        updateChar(dateFrom,dateEnd)
+        binding.chooseCalendarButton1.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                { _, year, monthOfYear, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(Calendar.YEAR, year)
+                    selectedDate.set(Calendar.MONTH, monthOfYear)
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
+                    binding.dateFrom.text=selectedDateFormatted
+                    updateChar(dateFormatter.parse(selectedDateFormatted),dateEnd)
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+            datePickerDialog.show()
+            updateChar(dateFrom,dateEnd)
+
+
+
         }
-        firebaseRepository.getTotalExpenseFromCategory("house", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[1] = "Dom" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
+
+        binding.chooseCalendarButton2.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                { _, year, monthOfYear, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(Calendar.YEAR, year)
+                    selectedDate.set(Calendar.MONTH, monthOfYear)
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
+                    binding.dateTo.text=selectedDateFormatted
+                    updateChar(dateFrom,dateFormatter.parse(selectedDateFormatted))
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+
+            )
+            datePickerDialog.show()
 
 
 
         }
-        firebaseRepository.getTotalExpenseFromCategory("clothes", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[2] = "Ubrania" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("shopping", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[3] = "Zakupy" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("transport", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[4] = "Transport" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("sport", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[5] = "Sport" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("health", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[6] = "Zdrowie" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("entertainment", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[7] = "Rozrywka" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("relax", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[8] = "Relax" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("restaurant", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[9] = "Restauracje" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("gift", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[10] = "Prezenty" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
-        firebaseRepository.getTotalExpenseFromCategory("education", dateFrom, dateEnd) { totalExpense ->
-            val updatedBarSet = barSet.toMutableList()
-            updatedBarSet[11] = "Edukacja" to totalExpense
-            barSet = updatedBarSet.toList()
-            val entries = barSet.map { it.first to it.second.toFloat() }
-            binding.barChartExpenses.donutTotal= barSetBuget.toMutableList()[0] + barSetBuget.toMutableList()[1]
-            binding.barChartCategoryExpenses.animate(entries)
-        }
-
 
 
         binding.barChartExpenses.animate(barSetBuget)
 
-        val entries = barSet.map { it.first to it.second.toFloat() }
-        binding.barChartCategoryExpenses.animate(entries)
+
 
 
 
@@ -280,6 +302,7 @@ class AnalyticsFragment : Fragment() {
             0.00F,
             0.00F
         )
+
 
         fun newInstance() = AnalyticsFragment()
     }
