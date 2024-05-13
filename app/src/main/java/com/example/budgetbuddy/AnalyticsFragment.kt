@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
@@ -278,6 +279,23 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
     }
 
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        val toolbarMenu = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        val toolbarBack = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_back)
+
+
+        val textViewName = toolbarMenu?.findViewById<TextView>(R.id.nameofpageHP)
+        textViewName?.text = "Podsumowanie"
+        toolbarMenu?.visibility = View.VISIBLE
+        toolbarBack?.visibility = View.GONE
+
+
+
+    }
     companion object {
         private const val animationDuraction = 100L
 
