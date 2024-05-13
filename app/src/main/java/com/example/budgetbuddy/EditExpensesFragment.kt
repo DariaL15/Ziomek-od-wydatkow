@@ -92,6 +92,10 @@ class EditExpensesFragment : Fragment() {
         var selectedCategoryPosition = 0
 
 
+        arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION)?.let { position ->
+            selectedCategoryPosition = position
+            categorySpinner.setSelection(selectedCategoryPosition)
+        }
         arguments?.getString("collection")?.let{collection->
             selectedCategoryV = collection
             selectedCategoryPosition = categoriesEnglish.indexOf(collection)
@@ -115,6 +119,7 @@ class EditExpensesFragment : Fragment() {
         }
 
 
+
         binding.chooseCalendarButton1.setOnClickListener {
 
             val amountString = binding.amount1.text.toString()
@@ -124,7 +129,8 @@ class EditExpensesFragment : Fragment() {
             val calendarFragment = CalendarEditExpensesFragment.newInstance(
                 selectedCategoryPosition,
                 binding.noteEditText1.text.toString(),
-                amount
+                amount,
+                binding.selectDateEnd1.text.toString()
             )
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, calendarFragment)
@@ -132,6 +138,9 @@ class EditExpensesFragment : Fragment() {
             transaction.commit()
         }
 
+        arguments?.getString(ARG_SELECTED_DATE)?.let { selectedDate ->
+            binding.selectDateEnd1.text = selectedDate
+        }
         binding.today1.setOnClickListener {
             val currentDate = Calendar.getInstance()
             val day = currentDate.get(Calendar.DAY_OF_MONTH)

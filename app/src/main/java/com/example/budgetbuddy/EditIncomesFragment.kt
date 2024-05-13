@@ -88,6 +88,11 @@ class EditIncomesFragment : Fragment() {
         var selectedCategoryPosition = 0
 
 
+        arguments?.getInt(EditIncomesFragment.ARG_SELECTED_CATEGORY_POSITION)?.let { position ->
+            selectedCategoryPosition = position
+            categorySpinner.setSelection(selectedCategoryPosition)
+        }
+
         arguments?.getString("collection")?.let{collection->
             selectedCategoryV = collection
             selectedCategoryPosition = categoriesEnglish.indexOf(collection)
@@ -112,6 +117,9 @@ class EditIncomesFragment : Fragment() {
             }
         }
 
+        arguments?.getString(ARG_SELECTED_DATE)?.let { selectedDate ->
+            binding.selectDateEnd21.text = selectedDate
+        }
 
         binding.chooseCalendarButton221.setOnClickListener {
 
@@ -282,6 +290,7 @@ class EditIncomesFragment : Fragment() {
         private const val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
         private const val ARG_NOTES = "notes"
         private const val ARG_AMOUNT = "amount"
+
         fun newInstance(
             selectedDate: String?=null,
             selectedCategoryPosition: Int? = 0,

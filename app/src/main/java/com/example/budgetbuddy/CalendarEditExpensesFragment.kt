@@ -68,6 +68,9 @@ class CalendarEditExpensesFragment : Fragment() {
         var notesV = ""
         var amountV = 0.00
 
+        arguments?.getString(ARG_SELECTED_DATE)?.let {  selectedDate ->
+            selectedDateText.text = selectedDate
+        }
         setCurrentDate(selectedDateText)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             updateSelectedDate(year, month, dayOfMonth, selectedDateText)
@@ -100,12 +103,14 @@ class CalendarEditExpensesFragment : Fragment() {
             selectedCategoryPosition: Int,
             selectedNotes: String,
             selectedAmount: Double,
+            selectedDate: String
         ) =
             CalendarEditExpensesFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SELECTED_CATEGORY_POSITION, selectedCategoryPosition)
                     putString(ARG_NOTES,selectedNotes)
                     putDouble(ARG_AMOUNT,selectedAmount)
+                    putString(ARG_SELECTED_DATE, selectedDate)
                 }
             }
     }
