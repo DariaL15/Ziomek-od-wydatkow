@@ -1,27 +1,20 @@
 package com.example.budgetbuddy
 
 import android.app.DatePickerDialog
-import android.content.ContentValues.TAG
-import android.content.Context
-import android.graphics.Color
 import android.graphics.Color.*
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.graphics.drawable.toDrawable
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.budgetbuddy.databinding.FragmentAnalyticsBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
-import com.db.williamchart.data.Label
-import com.db.williamchart.data.Scale
-import com.db.williamchart.data.shouldDisplayAxisX
 import java.util.Date
+import kotlin.math.roundToInt
 
 
 class AnalyticsFragment : Fragment() {
@@ -31,7 +24,7 @@ class AnalyticsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
         val currentDate = Calendar.getInstance()
@@ -43,9 +36,12 @@ class AnalyticsFragment : Fragment() {
         binding.dateFrom.text = String.format("%02d.%02d.%d", day, month-1, year)
 
 
-
         binding.barChartCategoryExpenses.animation.duration = animationDuraction
-        binding.barChartCategoryExpenses.labelsSize=20F
+        binding.barChartCategoryExpenses.labelsSize= 25f
+        binding.barChartCategoryExpenses.labelsFormatter= { it.roundToInt().toString() }
+        binding.barChartCategoryExpenses.labelsColor = ContextCompat.getColor(requireContext(), R.color.textgreen)
+binding.barChartCategoryExpenses.spacing = 5F
+
 
 
         binding.barChartExpenses.animation.duration = animationDuraction
@@ -76,8 +72,6 @@ class AnalyticsFragment : Fragment() {
 
 
         firebaseRepository = FirebaseRepository(requireContext())
-
-
 
         firebaseRepository.getBudget(
             onSuccess = {budget ->
@@ -218,7 +212,9 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
     val entries = barSet.map { it.first to it.second.toFloat() }
     binding.barChartCategoryExpenses.animate(entries)
 }
-        updateChar(dateFrom,dateEnd)
+        if (dateFrom != null && dateEnd != null) {
+            updateChar(dateFrom,dateEnd)
+        }
         binding.chooseCalendarButton1.setOnClickListener {
             val calendar = Calendar.getInstance()
             val datePickerDialog = DatePickerDialog(
@@ -230,14 +226,18 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
                     binding.dateFrom.text=selectedDateFormatted
-                    updateChar(dateFormatter.parse(selectedDateFormatted),dateEnd)
+                    if (dateFrom != null && dateEnd != null) {
+                        updateChar(dateFormatter.parse(selectedDateFormatted)!!, dateEnd)
+                    }
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
             )
             datePickerDialog.show()
-            updateChar(dateFrom,dateEnd)
+            if (dateFrom != null && dateEnd != null) {
+                updateChar(dateFrom, dateEnd)
+            }
 
 
 
@@ -254,7 +254,9 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
                     binding.dateTo.text=selectedDateFormatted
-                    updateChar(dateFrom,dateFormatter.parse(selectedDateFormatted))
+                    if (dateFrom != null && dateEnd != null) {
+                        updateChar(dateFrom, dateFormatter.parse(selectedDateFormatted)!!)
+                    }
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
