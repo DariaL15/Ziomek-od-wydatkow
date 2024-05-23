@@ -22,10 +22,11 @@
         <item
             android:id="@+id/nav_analytics"
             android:icon="@drawable/analysis"
-            android:title="Podsumowanie"/>
+            android:title="Podsumowanie" />
 
 
     </group>
+
     <item
         android:title="">
         <menu>

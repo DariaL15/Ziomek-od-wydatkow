@@ -10,6 +10,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
+        android:layout_marginTop="30dp"
         android:layout_width="94dp"
         android:layout_height="66dp"
         android:src="@drawable/osoba"/>

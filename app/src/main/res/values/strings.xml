@@ -89,4 +89,15 @@
     <string name="fixed_expenses">Zlecenie stałe:</string>
     <string name="title_activity_char_pie">CharPieActivity</string>
 
+
+    <string name="add_img">Dodaj zdjęcie</string>
+
+    <string name="change_img">Zmień zdjęcie</string>
+    <string name="change_name">Edytuj imię</string>
+    <string name="change_lastname">Edytuj nazwisko</string>
+    <string name="setting_text">Ustawienia</string>
+    <string name="save">Zapisz</string>
+
+
+
 </resources>

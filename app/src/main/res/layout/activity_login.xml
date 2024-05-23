@@ -48,7 +48,7 @@
                 android:drawablePadding="10dp"
                 android:hint="@string/email"
                 android:padding="15dp"
-                android:textColor="@color/textgreen"
+                android:textColor="@color/m_green"
                 android:textColorHint="@color/textgreen"
                 android:textSize="13sp"
                 android:textStyle="italic" />
@@ -62,7 +62,7 @@
                 android:drawableLeft="@drawable/zamek"
                 android:drawablePadding="10dp"
                 android:hint="@string/passw"
-                android:textColor="@color/textgreen"
+                android:textColor="@color/m_green"
                 android:inputType="textPassword"
                 android:padding="15dp"
                 android:textColorHint="@color/textgreen"
