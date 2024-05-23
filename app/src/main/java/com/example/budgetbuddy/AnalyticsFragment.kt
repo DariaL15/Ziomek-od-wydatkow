@@ -204,8 +204,9 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
         updatedBarSet[11] = "Edukacja" to totalExpense
         barSet = updatedBarSet.toList()
         val entries = barSet.map { it.first to it.second.toFloat() }
-        binding.barChartExpenses.donutTotal =
-            barSetBuget.toMutableList()[0] + barSetBuget.toMutableList()[1]
+
+
+        binding.barChartExpenses.donutTotal = barSetBuget.toMutableList()[0] + barSetBuget.toMutableList()[1]
         binding.barChartCategoryExpenses.animate(entries)
     }
 
@@ -272,11 +273,6 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
 
         binding.barChartExpenses.animate(barSetBuget)
 
-
-
-
-
-
         return binding.root
     }
 
@@ -301,8 +297,6 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
     companion object {
         private const val animationDuraction = 100L
 
-
-
         private var barSet = listOf(
             "Samochód" to 0.00,
             "Dom" to 0.00,
@@ -322,7 +316,6 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
             0.00F,
             0.00F
         )
-
 
         fun newInstance() = AnalyticsFragment()
     }

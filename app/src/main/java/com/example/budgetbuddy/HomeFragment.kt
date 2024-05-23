@@ -1,32 +1,63 @@
 package com.example.budgetbuddy
 
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
+import android.app.DatePickerDialog
+import android.content.Context
+import android.widget.Button
+import android.graphics.Color.*
 
 import com.example.budgetbuddy.databinding.FragmentHomeBinding
-
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class HomeFragment : Fragment() {
 
 
     private lateinit var firebaseRepository: FirebaseRepository
+
     private lateinit var binding: FragmentHomeBinding
     private lateinit var paymentReminderDialogFragment: PaymentReminderDialogFragment
 
 
+    private lateinit var datePickerDialog: DatePickerDialog
+    private lateinit var dateButton: Button
+
+    private var selectedYear = 0
+    private var selectedMonth = 0
+
+    private var barSetBuget = listOf ( 0.00F, 0.00F,0.00F,0.00F,0.00F,0.00F,0.00F,0.00F,0.00F,0.00F,0.00F,0.00F )
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        setupDonutChart()
+        dateButton  = binding.datePickerButton
+        dateButton.text = getCurrentMonthYear()
+
+        firebaseRepository = FirebaseRepository(requireContext())
+
+        loadSavedDate()
+        dateButton.text = makeDateString(selectedMonth, selectedYear)
+        initDatePicker()
+
+        dateButton.setOnClickListener { openDatePicker(it) }
+
+         updateChart(selectedYear, selectedMonth)
 
         binding.expenseButton.setOnClickListener {
             val expensesAddingFragment = ExpensesAddingFragment.newInstance(null,0,null, null)
@@ -138,9 +169,6 @@ class HomeFragment : Fragment() {
         }
 
 
-
-
-
         val view = binding.root
         firebaseRepository = FirebaseRepository(requireContext())
         val budgetmonthV = view.findViewById<TextView>(R.id.budgetmonth)
@@ -170,16 +198,148 @@ class HomeFragment : Fragment() {
         val paymentReminderDialog = PaymentReminderDialogFragment()
             paymentReminderDialog.show(childFragmentManager, "PaymentReminderDialog")
 
-
-
+        binding.barChart.animate(barSetBuget)
 
         return view
+    }
+
+    private fun loadSavedDate() {
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        selectedYear = prefs.getInt(PREF_SELECTED_YEAR, Calendar.getInstance().get(Calendar.YEAR))
+        selectedMonth = prefs.getInt(PREF_SELECTED_MONTH, Calendar.getInstance().get(Calendar.MONTH)+1)
+    }
+
+    private fun saveSelectedDate(year: Int, month: Int){
+        val prefs= requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        with(prefs.edit()){
+            putInt(PREF_SELECTED_YEAR, year )
+            putInt(PREF_SELECTED_MONTH, month)
+            apply()
+        }
+    }
+
+    private fun updateChart(year: Int, month: Int) {
+        val categories = listOf("car", "house", "clothes", "transport", "sport", "health", "entertainment", "relax", "restaurant", "gift", "education")
+        val updatedBudgetSet = MutableList(categories.size) { 0f }
+
+        var completedRequests = 0
+        val totalRequests = categories.size
+
+        categories.forEachIndexed { index, category ->
+            firebaseRepository.getExpenseMonth(category, year, month, onSuccess = { expenses ->
+                updatedBudgetSet[index] = expenses.toFloat()
+
+                completedRequests++
+                if (completedRequests == totalRequests) {
+                    updateDonutChart(updatedBudgetSet)
+                }
+            }, onFailure = {
+                // Обработка ошибки, если нужно
+                completedRequests++
+                if (completedRequests == totalRequests) {
+                    updateDonutChart(updatedBudgetSet)
+                }
+            })
+        }
+    }
+
+    private fun updateDonutChart(budgetSet: List<Float>) {
+        barSetBuget = budgetSet
+        binding.barChart.donutTotal = budgetSet.sum()
+        binding.barChart.animate(barSetBuget)
+    }
+
+    private fun setupDonutChart() {
+        binding.barChart.animation.duration = animationDuraction
+
+        binding.barChart.donutColors = intArrayOf(
+            parseColor("#6598BA"),
+            parseColor("#A86E51"),
+            parseColor("#F9BB69"),
+            parseColor("#CE755D"),
+            parseColor("#939399"),
+            parseColor("#8DC9C3"),
+            parseColor("#BF4747"),
+            parseColor("#F2D85A"),
+            parseColor("#7CAA74"),
+            parseColor("#364D84"),
+            parseColor("#B56F95"),
+            parseColor("#6375B7")
+        )
+    }
+
+    private fun getCurrentMonthYear(): String {
+
+        val cal = Calendar.getInstance()
+
+        selectedMonth = cal.get(Calendar.MONTH)+1
+        selectedYear = cal.get(Calendar.YEAR)
+        return makeDateString(selectedYear, selectedMonth)
+    }
+
+    private fun initDatePicker() {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, _ ->
+            selectedMonth = month+1
+            selectedYear = year
+            val date = makeDateString(selectedMonth, year)
+            dateButton.text= date
+            saveSelectedDate(year, month+1)
+            updateChart(selectedYear, selectedMonth)
+        }
+
+        val cal = Calendar.getInstance()
+        val year=cal.get(Calendar.YEAR)
+        val month=cal.get(Calendar.MONTH)
+
+        val style = AlertDialog.THEME_HOLO_LIGHT
+
+        val locale=Locale("pl", "PL")
+        Locale.setDefault(locale)
+
+        val configuration = resources.configuration
+        configuration.setLocale(locale)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+
+        datePickerDialog= DatePickerDialog(requireContext(), style, dateSetListener, year, month, 1 )
+        datePickerDialog.datePicker.findViewById<View>(
+            resources.getIdentifier("android:id/day",null,null)
+        ).visibility=View.GONE
+
+        datePickerDialog.datePicker.maxDate=cal.timeInMillis
+
+    }
+
+    private fun makeDateString(month: Int, year: Int): String {
+
+        return "${getMonthFormat(month)} $year   "
+    }
+
+
+    private fun getMonthFormat(month: Int): String {
+        return when (month){
+            1->"STYCZEŃ"
+            2->"LUTY"
+            3->"MARZEC"
+            4->"KWIECIEŃ"
+            5->"MAJ"
+            6->"CZERWIEC"
+            7->"LIPIEC"
+            8->"SIERPIEŃ"
+            9->"WRZESIEŃ"
+            10->"PAŹDZIERNIK"
+            11->"LISTOPAD"
+            12->"GRUDZIEŃ"
+            else -> "STYCZEŃ"
+        }
+    }
+
+    fun openDatePicker(view: View){
+        datePickerDialog.show()
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         paymentReminderDialogFragment = PaymentReminderDialogFragment()
 
@@ -192,12 +352,27 @@ class HomeFragment : Fragment() {
         toolbarMenu?.visibility = View.VISIBLE
         toolbarBack?.visibility = View.GONE
 
-
-
     }
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        clearSavedDate()
+    }
+
+    private fun clearSavedDate() {
+        val prefs=requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit().clear().apply()
+    }
+
     companion object {
+
+        private const val animationDuraction = 100L
+
+        private const val PREFS_NAME = "HomeFragmentPrefs"
+        private const val PREF_SELECTED_YEAR = "selectedYear"
+        private const val PREF_SELECTED_MONTH = "selectedMonth"
+
 
         fun newInstance() =
             HomeFragment().apply {

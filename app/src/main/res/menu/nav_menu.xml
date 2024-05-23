@@ -17,10 +17,6 @@
             android:icon="@drawable/moneyicon1"
             android:title="Zlecenia stałe"/>
 
-        <item
-            android:id="@+id/nav_savings"
-            android:icon="@drawable/savingsicon"
-            android:title="Oszczędności"/>
 
 
         <item
@@ -28,20 +24,16 @@
             android:icon="@drawable/analysis"
             android:title="Podsumowanie"/>
 
-        <item
-            android:id="@+id/nav_debt"
-            android:icon="@drawable/debt"
-            android:title="Długi"/>
+
     </group>
     <item
         android:title="">
-
         <menu>
 
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@drawable/circle"
-                android:title="Ustawienia"/>
+                android:icon="@drawable/baseline_account_circle_24"
+                android:title="Edytuj profil"/>
 
             <item
             android:id="@+id/nav_logout"

@@ -20,10 +20,14 @@ import java.util.Locale
 
 class CalendarEditExpensesFragment : Fragment() {
 
-    private  val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
+    private  val ARG_SELECTED_CATEGORY_POSITION = "categoryPos"
+    private  val ARG_SELECTED_CATEGORY_V = "collection"
     private  val ARG_AMOUNT = "amount"
     private  val ARG_NOTES = "notes"
-    private  val ARG_SELECTED_DATE = "selected_date"
+    private  val ARG_SELECTED_DATE = "date"
+    private val ARG_ID = "documentId"
+    private val ARG_ORG_COLLECTION_V ="oldCollection"
+
 
     private lateinit var binding: FragmentCalendarEditExpensesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +68,10 @@ class CalendarEditExpensesFragment : Fragment() {
         val selectedDateText: TextView = binding.selectedDate32
         val calendarView: CalendarView = binding.calendarView32
         val confirmButton: Button = binding.confirmButtonFix32
-        val categoryV = arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION, 0) ?: 0
+        val categoryPos = arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION, 0) ?: 0
+        val categoryV=arguments?.getString(ARG_SELECTED_CATEGORY_V)
+        val selectedId = arguments?.getString(ARG_ID)
+        val orgCollection=arguments?.getString(ARG_ORG_COLLECTION_V)
         var notesV = ""
         var amountV = 0.00
 
@@ -86,8 +93,19 @@ class CalendarEditExpensesFragment : Fragment() {
                 amountV = selectedAmount
             }
 
+
             val selectedDate = selectedDateText.text.toString()
-            val eaf = EditExpensesFragment.newInstance(selectedDate, categoryV, notesV, amountV)
+            val args = Bundle()
+            args.putString("documentId",selectedId)
+            args.putString("notes", notesV)
+            args.putDouble("amount",amountV)
+            args.putString("date",selectedDate)
+            args.putString("collection",categoryV)
+            args.putInt("categoryPos",categoryPos)
+            args.putString("oldCollection", orgCollection)
+
+            val eaf = EditExpensesFragment.newInstance()
+            eaf.arguments = args
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, eaf)
             transaction.addToBackStack(null)
@@ -99,18 +117,10 @@ class CalendarEditExpensesFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(
-            selectedCategoryPosition: Int,
-            selectedNotes: String,
-            selectedAmount: Double,
-            selectedDate: String
-        ) =
+        fun newInstance() =
             CalendarEditExpensesFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_SELECTED_CATEGORY_POSITION, selectedCategoryPosition)
-                    putString(ARG_NOTES,selectedNotes)
-                    putDouble(ARG_AMOUNT,selectedAmount)
-                    putString(ARG_SELECTED_DATE, selectedDate)
+
                 }
             }
     }

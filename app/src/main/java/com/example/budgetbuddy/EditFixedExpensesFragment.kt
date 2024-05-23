@@ -41,6 +41,7 @@ class EditFixedExpensesFragment : Fragment() {
         binding = FragmentEditFixedExpensesBinding.inflate(inflater, container, false)
 
 
+        val documentId = arguments?.getString("documentId")
 
         val amount = arguments?.getDouble("amount", 0.0)
         val amountOfTransfers = arguments?.getInt("amountOfTransfers")
@@ -75,7 +76,7 @@ class EditFixedExpensesFragment : Fragment() {
         endPaymentSpiner.adapter=adapterE
 
         repaetSpiner.setSelection(getPositionForRepeatFrequency(repeatFrequency))
-        endPaymentSpiner.setSelection(getPositionForWhenStop(whenStopPayment))
+
         var selectedRepeatSpinerPosition = 0
         var selectedEndPaymentSpinerPosition = 0
 
@@ -93,7 +94,9 @@ class EditFixedExpensesFragment : Fragment() {
             }
         }
 
+
         var selectedEndPayment=""
+        endPaymentSpiner.setSelection(getPositionForWhenStop(whenStopPayment))
         endPaymentSpiner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedEndPayment = end_payment[position]
@@ -155,12 +158,18 @@ class EditFixedExpensesFragment : Fragment() {
         var selectedCategoryV = ""
         var selectedCategoryPosition = 0
 
+
+        arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION)?.let { position ->
+            selectedCategoryPosition = position
+            categorySpinner.setSelection(selectedCategoryPosition)
+        }
+
         arguments?.getString("category")?.let{collection->
             selectedCategoryV = collection
             selectedCategoryPosition = categoriesEnglish.indexOf(collection)
         }
 
-        categorySpinner.setSelection(selectedCategoryPosition)//54546445
+        categorySpinner.setSelection(selectedCategoryPosition)
 
         categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -177,57 +186,65 @@ class EditFixedExpensesFragment : Fragment() {
             }
         }
 
+
+
         binding.chooseCalendarButton11.setOnClickListener {
 
             val amountString = binding.fixedExpenseEnterAmount1.text.toString()
             val amount = amountString.toDoubleOrNull() ?: 0.0
             val nameV = binding.fixedExpenseName1.text.toString()
-            val daysAmountString = binding.numberOfTransfersEdit1.text.toString()
-            val daysAmount = if (daysAmountString.isNotEmpty()) {
-                daysAmountString.toInt()
-            } else {
-                0
-            }
+            val nextDate = arguments?.getString("nextDate")
             val dateEnd = binding.dateOfEndOfPayment1.text.toString()
 
-            val calendarFragment = CalendarEditFixedExpensesFragment.newInstance(
-                nameV,
-                amount,
-                selectedCategoryPosition,
-                selectedRepeatSpinerPosition,
-                selectedEndPaymentSpinerPosition,
-                daysAmount,
-                dateEnd
-            )
+            val dateBegin= binding.dateOfPayment1.text.toString()
+            val calendarFragment = CalendarEditFixedExpensesFragment.newInstance()
+            val args = Bundle()
+            args.putString("documentId", documentId)
+            args.putString("name", nameV)
+            args.putDouble("amount", amount)
+            args.putString("repeatFrequency", selectedRepeat)
+            args.putString("category",selectedCategoryV)
+            args.putString("beginDate",dateBegin )
+            args.putString("nextDate",nextDate)
+            args.putInt("amountOfTransfers", binding.numberOfTransfersEdit1.text.toString().toInt())
+            args.putString("endDayOfTransfers", dateEnd)
+            args.putInt("amountOfTransfersTemp", amountOfTransfersTemp!!)
+            args.putString("whenStopFixedExpense", selectedEndPayment )
+
+            calendarFragment.arguments = args
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, calendarFragment)
             transaction.addToBackStack(null)
             transaction.commit()
         }
 
+        arguments?.getString(ARG_BEGIN_DATE)?.let { selectedDate ->
+            binding.dateOfPayment1.text = selectedDate
+        }
+
         binding.chooseCalendarButton21.setOnClickListener {
             val nameV = binding.fixedExpenseName1.text.toString()
             val amountString = binding.fixedExpenseEnterAmount1.text.toString()
             val amount = amountString.toDoubleOrNull() ?: 0.0
-            val daysAmountString = binding.numberOfTransfersEdit1.text.toString()
-            val daysAmount = if (daysAmountString.isNotEmpty()) {
-                daysAmountString.toInt()
-            } else {
-                0
-            }
+            val nextDate = arguments?.getString("nextDate")
+            val dateEnd = binding.dateOfEndOfPayment1.text.toString()
             val dateBegin= binding.dateOfPayment1.text.toString()
 
 
-            val calendarEditEndOFFixedExpensesFragment = CalendarEndOFPaymentsFragment.newInstance(
-                nameV,
-                amount,
-                dateBegin,
-                selectedCategoryPosition,
-                selectedRepeatSpinerPosition,
-                selectedEndPaymentSpinerPosition,
-                daysAmount
-
-            )
+            val args = Bundle()
+            args.putString("documentId", documentId)
+            args.putString("name", nameV)
+            args.putDouble("amount", amount)
+            args.putString("repeatFrequency", selectedRepeat)
+            args.putString("category",selectedCategoryV)
+            args.putString("beginDate",dateBegin )
+            args.putString("nextDate",nextDate)
+            args.putInt("amountOfTransfers", binding.numberOfTransfersEdit1.text.toString().toInt())
+            args.putString("endDayOfTransfers", dateEnd)
+            args.putInt("amountOfTransfersTemp", amountOfTransfersTemp!!)
+            args.putString("whenStopFixedExpense", selectedEndPayment )
+            val calendarEditEndOFFixedExpensesFragment = CalendarEditEndOfPaymentFragment.newInstance()
+            calendarEditEndOFFixedExpensesFragment.arguments = args
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, calendarEditEndOFFixedExpensesFragment)
             transaction.addToBackStack(null)
@@ -253,10 +270,6 @@ class EditFixedExpensesFragment : Fragment() {
             } else {
                 0
             }
-
-            val args = arguments
-            val documentId = args?.getString("documentId")
-
 
             if( documentId!=null  )
             {
@@ -306,7 +319,7 @@ class EditFixedExpensesFragment : Fragment() {
     }
 
     private fun getPositionForWhenStop(whenStopPayment: String?): Int {
-        return repeat.indexOf(whenStopPayment)
+        return end_payment.indexOf(whenStopPayment)
     }
 
     private fun updateDocumentInDatabase(
@@ -358,59 +371,11 @@ class EditFixedExpensesFragment : Fragment() {
 
     companion object {
         private const val ARG_SELECTED_CATEGORY_POSITION = "selected_category_category"
-        private const val ARG_NAME = "name"
-        private const val ARG_AMOUNT = "amount"
-        private const val ARG_REPEAT_FREQUENCY_POSITION = "repeatFrequencyPos"
         private const val ARG_BEGIN_DATE="beginDate"
-        private const val ARG_NEXT_DATE="nextDate"//для вычисления
-        private const val ARG_AMOUNT_OF_TRANSFERS="amountOfTransfers"
-        private const val ARG_END_DAY_OF_TRANSFERS="endDayOfTransfers"
-        private const val ARG_AMOUNT_OF_TRANSFERS_TEMP="amountOfTransfersTemp"//для вычесления
-        private const val ARG_WHEN_STOP_FIXED_EXPENSE="whenStopExpense"
-        fun newInstance(
-            selectedDate: String?=null,
-            selectedNextDate: String?=null,
-            selectedCategoryPosition: Int? = 0,
-            selectedName:String?=null,
-            selectedAmount:Double?=0.0,
-            selectedRepeatFrequency: Int?=0,
-            selectedAmountOfTransfers: Int?=0,
-            selectedEndDayOfTransfers:String?=null,
-            selectedAmountOfTransfersTemp:Int?=0,
-            selectedWhenStopFixedExpense: Int?=0
-        ) =
+
+        fun newInstance() =
             EditFixedExpensesFragment().apply {
                 arguments = Bundle().apply {
-
-                    if (selectedDate != null ) {
-                        putString(ARG_BEGIN_DATE, selectedDate)
-                    }
-                    if (selectedDate != null ) {
-                        putString(ARG_NEXT_DATE, selectedNextDate)
-                    }
-                    if (selectedCategoryPosition != null) {
-                        putInt(ARG_SELECTED_CATEGORY_POSITION, selectedCategoryPosition)
-                    }
-                    if (selectedName != null ) {
-                        putString(ARG_NAME, selectedName)
-                    }
-                    if (selectedAmount != null) {
-                        putDouble(ARG_AMOUNT, selectedAmount)
-                    }
-                    if (selectedRepeatFrequency != null) {
-                        putInt(ARG_REPEAT_FREQUENCY_POSITION, selectedRepeatFrequency)
-                    }
-                    if (selectedAmountOfTransfers != null) {
-                    putInt(ARG_AMOUNT_OF_TRANSFERS, selectedAmountOfTransfers)
-                    }
-                    if (selectedAmountOfTransfersTemp != null) {
-                    putInt(ARG_AMOUNT_OF_TRANSFERS_TEMP, selectedAmountOfTransfersTemp)
-                    }
-                    if (selectedEndDayOfTransfers!= null) {
-                        putString(ARG_END_DAY_OF_TRANSFERS, selectedEndDayOfTransfers)
-                    }
-                    if(selectedWhenStopFixedExpense!=null)
-                        putInt(ARG_WHEN_STOP_FIXED_EXPENSE, selectedWhenStopFixedExpense)
                 }
             }
     }

@@ -16,7 +16,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-    android:layout_weight="0.7"
+        android:layout_weight="0.7"
       >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,11 +24,24 @@
             android:layout_height="match_parent"
             tools:context=".Home">
 
+
+
             <View
                 android:id="@+id/circle"
                 android:layout_width="330dp"
                 android:layout_height="430dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.db.williamchart.view.DonutChartView
+                android:id="@+id/barChart"
+                android:layout_width="243dp"
+                android:layout_height="242dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="163dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,82 +55,70 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+
                 <LinearLayout
-                    android:id="@+id/homepage_centerpart_center"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:background="@drawable/circle"
+                    android:id="@+id/viewbudget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/viewbudget"
+                        android:id="@+id/frame_budgetmonth"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:id="@+id/frame_budgetmonth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/budgetmonth"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/m_green"
+                            android:textSize="27sp"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/budgetmonth"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textColor="@color/m_green"
-                                android:textSize="27sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:id="@+id/zloty1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="7dp"
-                                android:text="@string/zloty"
-                                android:textColor="@color/m_green"
-                                android:textSize="27sp"
-                                android:textStyle="bold"/>
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/frame_expenses"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/expenses"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textColor="@color/red"
-                                android:textSize="18sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:id="@+id/zloty2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="7dp"
-                                android:text="@string/zloty"
-                                android:textColor="@color/red"
-                                android:textSize="18sp"
-                                android:textStyle="bold"/>
-
-                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/zloty1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="7dp"
+                            android:text="@string/zloty"
+                            android:textColor="@color/m_green"
+                            android:textSize="27sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
 
+                    <LinearLayout
+                        android:id="@+id/frame_expenses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/expenses"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/red"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/zloty2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="7dp"
+                            android:text="@string/zloty"
+                            android:textColor="@color/red"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
 
 
@@ -160,7 +161,7 @@
                 app:layout_constraintCircleAngle="56"
                 app:layout_constraintCircleRadius="190dp"
                 app:layout_constraintStart_toStartOf="@id/circle"
-                app:layout_constraintTop_toTopOf="@id/circle"/>
+                app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
                 android:id="@+id/cat_sport"
@@ -291,6 +292,20 @@
                 app:layout_constraintCircleRadius="190dp"
                 app:layout_constraintStart_toStartOf="@id/circle"
                 app:layout_constraintTop_toTopOf="@id/circle" />
+
+            <Button
+                android:id="@+id/datePickerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Wybrany misiąc "
+                style="?android:spinnerStyle"
+                android:textStyle="bold"
+                android:textColor="@color/m_green"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                tools:ignore="MissingConstraints" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

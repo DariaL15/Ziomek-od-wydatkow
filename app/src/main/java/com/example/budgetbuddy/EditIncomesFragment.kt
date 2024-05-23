@@ -38,6 +38,9 @@ class EditIncomesFragment : Fragment() {
     ): View {
         binding = FragmentEditIncomesBinding.inflate(inflater, container, false)
 
+        val documentId = arguments?.getString("documentId")
+        val originalCollection = arguments?.getString("collection")
+
         val args = arguments
         if (args != null) {
             val notes = args.getString("notes" )
@@ -126,11 +129,16 @@ class EditIncomesFragment : Fragment() {
             val amountString = binding.amount31.text.toString()
             val amount = amountString.toDoubleOrNull() ?: 0.0
 
-            val calendarFragment = CalendarEditIncomesFragment.newInstance(
-                selectedCategoryPosition,
-                binding.noteEditText21.text.toString(),
-                amount
-            )
+            val calendarFragment = CalendarEditIncomesFragment.newInstance()
+            val args = Bundle()
+            args.putString("documentId", documentId)
+            args.putString("notes", binding.noteEditText21.text.toString())
+            args.putDouble("amount", amount)
+            args.putString("date", binding.selectDateEnd21.text.toString())
+            args.putString("collection",selectedCategoryV)
+            args.putInt("categoryPos", selectedCategoryPosition)
+            args.putString("oldCollection",originalCollection.toString() )
+            calendarFragment.arguments = args
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, calendarFragment)
             transaction.addToBackStack(null)
@@ -164,11 +172,6 @@ class EditIncomesFragment : Fragment() {
             val notes = binding.noteEditText21.text.toString()
             val amount = binding.amount31.text.toString().toDoubleOrNull() ?:0.0
             val date = binding.selectDateEnd21.text.toString()
-
-            val args = arguments
-            val documentId = args?.getString("documentId")
-            val originalCollection = args?.getString("collection")
-
 
             if( documentId!=null && originalCollection!=null )
             {
@@ -288,30 +291,13 @@ class EditIncomesFragment : Fragment() {
     companion object {
         private const val ARG_SELECTED_DATE = "selected_date"
         private const val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
-        private const val ARG_NOTES = "notes"
-        private const val ARG_AMOUNT = "amount"
 
         fun newInstance(
-            selectedDate: String?=null,
-            selectedCategoryPosition: Int? = 0,
-            selectedNotes:String?=null,
-            selectedAmount:Double?=0.0
+
         ) =
             EditIncomesFragment().apply {
                 arguments = Bundle().apply {
 
-                    if (selectedDate != null ) {
-                        putString(ARG_SELECTED_DATE, selectedDate)
-                    }
-                    if (selectedCategoryPosition != null) {
-                        putInt(ARG_SELECTED_CATEGORY_POSITION, selectedCategoryPosition)
-                    }
-                    if (selectedNotes != null ) {
-                        putString(ARG_NOTES, selectedNotes)
-                    }
-                    if (selectedAmount != null) {
-                        putDouble(ARG_AMOUNT, selectedAmount)
-                    }
                 }
             }
     }

@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.handleCoroutineException
 import android.content.Context
 import android.util.Log
+import androidx.compose.ui.text.substring
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -209,5 +210,69 @@ class FirebaseRepository (private val context: Context){
             }
     }
 
+     fun getTotalExpenseFromCategoryMonth(
+         category: String,
+         year: Int, month: Int,
+         callback: (Double)->Unit
+     ) {
+         var totalAmountTemp = 0.0
+         val userId = FirebaseAuth.getInstance().currentUser!!.uid
+         val budgetRef = db.collection(userId).document("budget").collection(category)
+         budgetRef.get()
+             .addOnSuccessListener { documents ->
+                 for (document in documents) {
+                     val expense = document.toObject(Model::class.java)
+                     val date:String = expense.date
+                     val amount: Double? = expense.amount
+                     date.let {
+                         val docYear = it.substring(6, 10).toInt()
+                         val docMonth = it.substring(3, 5).toInt()
+
+                         if (docYear == year && docMonth == month && amount != null) {
+                             totalAmountTemp += if (amount < 0) -amount else amount
+                         }
+                     }
+                 }
+                     callback(totalAmountTemp)
+                 }.addOnFailureListener { e ->
+                     callback(0.0)
+             }
+     }
+
+
+    fun getExpenseMonth(category: String, year: Int, month: Int, onSuccess: (Double) -> Unit, onFailure: (Exception) -> Unit)
+    {
+        var totalAmountTemp = 0.0
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        if(userId != null)
+        {
+            val budgetRef = db.collection(userId).document("budget").collection(category)
+            budgetRef.get()
+                .addOnSuccessListener { documents ->
+                    for(document in documents)
+                    {
+                        val expense = document.toObject(Model::class.java)
+                        val date: String = expense.date
+                        val amount: Double?=expense.amount
+
+                        val docYear = date.substring(6,10).toInt()
+                        val docMonth = date.substring(3,5).toInt()
+
+                        if (docYear == year && docMonth == month && amount != null) {
+                            totalAmountTemp += if (amount < 0) -amount else amount
+                        }
+
+                    }
+                    onSuccess(totalAmountTemp)
+                }
+                .addOnFailureListener {
+                    onFailure(Exception("Błąd pobierania budżetu"))
+                }
+        }
+        else {
+            onFailure(Exception("Użytkownik niezalogowany"))
+        }
+    }
 
 }

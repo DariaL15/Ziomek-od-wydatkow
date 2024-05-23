@@ -19,9 +19,13 @@ import java.util.Locale
 
 class CalendarEditIncomesFragment : Fragment() {
 
-    private  val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
+    private  val ARG_SELECTED_CATEGORY_POSITION = "categoryPos"
+    private  val ARG_SELECTED_CATEGORY_V = "collection"
     private  val ARG_AMOUNT = "amount"
     private  val ARG_NOTES = "notes"
+    private  val ARG_SELECTED_DATE = "date"
+    private val ARG_ID = "documentId"
+    private val ARG_ORG_COLLECTION_V ="oldCollection"
 
     private lateinit var binding: FragmentCalendarEditIncomesBinding
 
@@ -60,10 +64,16 @@ class CalendarEditIncomesFragment : Fragment() {
         val selectedDateText: TextView = binding.selectedDate33
         val calendarView: CalendarView = binding.calendarView33
         val confirmButton: Button = binding.confirmButtonFix33
-        val categoryV = arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION, 0) ?: 0
+        val categoryPos= arguments?.getInt(ARG_SELECTED_CATEGORY_POSITION, 0) ?: 0
+        val categoryV=arguments?.getString(ARG_SELECTED_CATEGORY_V)
+        val selectedId = arguments?.getString(ARG_ID)
+        val orgCollection=arguments?.getString(ARG_ORG_COLLECTION_V)
         var notesV = ""
         var amountV = 0.00
 
+        arguments?.getString(ARG_SELECTED_DATE)?.let {  selectedDate ->
+            selectedDateText.text = selectedDate
+        }
         setCurrentDate(selectedDateText)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             updateSelectedDate(year, month, dayOfMonth, selectedDateText)
@@ -81,7 +91,16 @@ class CalendarEditIncomesFragment : Fragment() {
             }
 
             val selectedDate = selectedDateText.text.toString()
-            val eaf = EditIncomesFragment.newInstance(selectedDate, categoryV, notesV, amountV)
+            val args = Bundle()
+            args.putString("documentId",selectedId)
+            args.putString("notes", notesV)
+            args.putDouble("amount",amountV)
+            args.putString("date",selectedDate)
+            args.putString("collection",categoryV)
+            args.putInt("categoryPos",categoryPos)
+            args.putString("oldCollection", orgCollection)
+            val eaf = EditIncomesFragment.newInstance()
+            eaf.arguments = args
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, eaf)
             transaction.addToBackStack(null)
@@ -93,15 +112,10 @@ class CalendarEditIncomesFragment : Fragment() {
 
     companion object {
         fun newInstance(
-            selectedCategoryPosition: Int,
-            selectedNotes: String,
-            selectedAmount: Double
+
         ) =
             CalendarEditIncomesFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_SELECTED_CATEGORY_POSITION, selectedCategoryPosition)
-                    putString(ARG_NOTES,selectedNotes)
-                    putDouble(ARG_AMOUNT,selectedAmount)
                 }
             }
     }
