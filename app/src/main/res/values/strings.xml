@@ -96,8 +96,22 @@
     <string name="change_img">Zmień zdjęcie</string>
     <string name="change_name">Edytuj imię</string>
     <string name="change_lastname">Edytuj nazwisko</string>
-    <string name="setting_text">Ustawienia</string>
+    <string name="setting_text">Edytuj</string>
     <string name="save">Zapisz</string>
+
+
+
+    <string name="select_date">Wybierz okres:</string>
+    <string name="from">od</string>
+    <string name="to">do</string>
+    <string name="myslnik">-</string>
+
+
+    <string name="general_budget">BUDŻET OGÓLNY</string>
+    <string name="expenses">WYDATKI</string>
+    <string name="budget">BUDŻET</string>
+    <string name="cat">KATEGORIE</string>
+
 
 
 

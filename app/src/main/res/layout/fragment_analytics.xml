@@ -1,309 +1,394 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_analytics"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/textgreen"
+    android:orientation="vertical"
     tools:context=".AnalyticsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="5dp"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="10dp">
 
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/textLabel"
-            android:text="Data od:"
-            android:textColor="@color/textgreen"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <TextView
-            android:id="@+id/dateFrom"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/textgreen"
-            android:textSize="15dp"
-            app:layout_constraintStart_toEndOf="@id/textLabel"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <Button
-            android:id="@+id/choose_calendar_button1"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:background="@drawable/edittext2"
-            android:drawableTop="@drawable/calendar"
-            android:visibility="visible"
-            app:layout_constraintStart_toEndOf="@id/dateFrom"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittext"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
 
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/textLabel1"
-            android:text="Data do:"
-            android:textColor="@color/textgreen"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/dateTo"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/textgreen"
-            android:textSize="15dp"
-            app:layout_constraintStart_toEndOf="@id/textLabel1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_date"
+                    android:textAlignment="center"
+                    android:textColor="@color/textgreen"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/choose_calendar_button2"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:background="@drawable/edittext2"
-            android:drawableTop="@drawable/calendar"
-            android:visibility="visible"
-            app:layout_constraintStart_toEndOf="@id/dateTo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-          />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="BUDŻET OGÓLNY"
-        android:textColor="@color/textgreen"
-        android:textSize="30dp"
-        android:gravity="center"/>
-
-<com.db.williamchart.view.DonutChartView
-    android:id="@+id/barChartExpenses"
-    android:layout_width="250dp"
-    android:layout_height="250dp"
-    android:layout_marginTop="150dp"
-    android:layout_marginStart="80dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
 
-    />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/budgetAmount"
-        android:layout_marginTop="220dp"
-        android:hint="BUDŻET"
-        android:textColor="#7CAA74"
-        android:textSize="30dp"
-        android:gravity="center"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/expensesAmount"
-        android:layout_marginTop="270dp"
-        android:hint="WYDATKI"
-        android:textColor="#BF4747"
-        android:textSize="30dp"
-        android:gravity="center"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="430dp"
-        android:text="KATEGORIE"
-        android:textColor="@color/textgreen"
-        android:textSize="30dp"
-        android:gravity="center"/>
-
-    <com.db.williamchart.view.BarChartView
-        android:id="@+id/barChartCategoryExpenses"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="490dp"
-        app:chart_axis="y"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittextfullgreen"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="640dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        >
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/auto_ic"
-            android:src="@drawable/icon_auto"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-            />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/dom_ic"
-            android:src="@drawable/icon_dom"
-            app:layout_constraintStart_toEndOf="@id/auto_ic"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
+                        <TextView
+                            android:id="@+id/dateFrom"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:hint="@string/from"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textSize="15sp" />
 
-            />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/ubrania"
-            android:src="@drawable/icon_ubrania"
-            app:layout_constraintStart_toEndOf="@id/dom_ic"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/zakupy"
-            android:src="@drawable/icon_zakupy2"
-            app:layout_constraintStart_toEndOf="@id/ubrania"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/transport"
-            android:src="@drawable/icon_transport"
-            app:layout_constraintStart_toEndOf="@id/zakupy"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/sport"
-            android:src="@drawable/icon_sport"
-            app:layout_constraintStart_toEndOf="@id/transport"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/zdrowie"
-            android:src="@drawable/icon_zdrowie"
-            app:layout_constraintStart_toEndOf="@id/sport"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/rozrywka"
-            android:src="@drawable/icon_rozrywka"
-            app:layout_constraintStart_toEndOf="@id/zdrowie"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/relax"
-            android:src="@drawable/icon_wypoczynek"
-            app:layout_constraintStart_toEndOf="@id/rozrywka"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/restauracje"
-            android:src="@drawable/icon_restauracje"
-            app:layout_constraintStart_toEndOf="@id/relax"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/prezenty"
-            android:src="@drawable/icon_prezent2"
-            app:layout_constraintStart_toEndOf="@id/restauracje"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/edukacja"
-            android:src="@drawable/icon_edukacja"
-            app:layout_constraintStart_toEndOf="@id/prezenty"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="2.5dp"
-
-            />
+                        <ImageButton
+                            android:id="@+id/choose_calendar_button1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/circle1"
+                            android:backgroundTint="@color/textgreen"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/calendar"
+                            android:visibility="visible" />
 
 
+                    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:text="@string/myslnik"
+                        android:textAlignment="center"
+                        android:textColor="@color/textgreen"
+                        android:textSize="25sp" />
 
-</RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittextfullgreen"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+
+                        <TextView
+                            android:id="@+id/dateTo"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:hint="@string/to"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textSize="15sp" />
+
+                        <ImageButton
+                            android:id="@+id/choose_calendar_button2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/circle1"
+                            android:backgroundTint="@color/textgreen"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/calendar"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/general_budget"
+                        android:textColor="@color/textgreen"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+
+                        />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+
+                        >
+
+                        <com.db.williamchart.view.DonutChartView
+                            android:id="@+id/barChartExpenses"
+                            android:layout_width="220dp"
+                            android:layout_height="220dp"
+                            android:layout_gravity="center" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_gravity="center"
+                                    android:id="@+id/budgetAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:hint="@string/budget"
+                                    android:textColorHint="@color/m_green"
+                                    android:textSize="23sp"
+                                    android:textColor="@color/m_green"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/zloty11"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="7dp"
+                                    android:text="@string/zloty"
+                                    android:textColor="@color/m_green"
+                                    android:textSize="23sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_gravity="center"
+                                    android:id="@+id/expensesAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:hint="@string/expenses"
+                                    android:textColor="@color/red"
+                                    android:textColorHint="@color/red"
+                                    android:textSize="23sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/zloty21"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="7dp"
+                                    android:text="@string/zloty"
+                                    android:textColor="@color/red"
+                                    android:textSize="23sp"
+                                    android:textStyle="bold" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/cat"
+                        android:textColor="@color/textgreen"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+
+                    <com.db.williamchart.view.BarChartView
+                        android:id="@+id/barChartCategoryExpenses"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="10dp"
+                        app:chart_axis="y"
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="27dp">
+
+                        <ImageView
+                            android:id="@+id/auto_ic"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/icon_auto" />
+
+                        <ImageView
+                            android:id="@+id/dom_ic"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_dom"
+                            />
+
+                        <ImageView
+                            android:id="@+id/ubrania"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/icon_ubrania"
+                            android:layout_marginLeft="2dp"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/zakupy"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_zakupy2"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/transport"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_transport"
+                                                        />
+
+                        <ImageView
+                            android:id="@+id/sport"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_sport"
+                                                      />
+
+                        <ImageView
+                            android:id="@+id/zdrowie"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_zdrowie"
+                            />
+
+                        <ImageView
+                            android:id="@+id/rozrywka"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_rozrywka"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/relax"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/icon_wypoczynek"
+                            android:layout_marginLeft="2dp"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/restauracje"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_restauracje"
+
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/prezenty"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_prezent2"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/edukacja"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_edukacja"
+                                                        />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
