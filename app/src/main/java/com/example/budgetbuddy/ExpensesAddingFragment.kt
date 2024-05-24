@@ -21,7 +21,7 @@ import com.example.budgetbuddy.databinding.FragmentExpensesAddingBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-
+import java.util.*
 
 private const val ARG_SELECTED_DATE = "selected_date"
 private const val ARG_SELECTED_CATEGORY_POSITION = "selected_category_position"
@@ -127,12 +127,12 @@ class ExpensesAddingFragment : Fragment() {
         }
 
 
-
+        val dotLocale = Locale("en", "US")
 
         arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
 
             if (selectedAmount != 0.0) {
-                val formattedAmount = String.format("%.2f", selectedAmount)
+                val formattedAmount = String.format(dotLocale,"%.2f", selectedAmount)
                 binding.amount.text = Factory.getInstance().newEditable(formattedAmount)
             }
         }

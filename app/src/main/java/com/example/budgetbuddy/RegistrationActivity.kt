@@ -1,9 +1,13 @@
 package com.example.budgetbuddy
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,6 +23,7 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistrationBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private var db = Firebase.firestore
+    private val IMAGE_PICK_REQUEST_CODE = 1001
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -38,6 +43,10 @@ class RegistrationActivity : AppCompatActivity() {
             val password2 = binding.passw2.text.toString()
             val imie = binding.imie.text.toString()
             val nazwisko = binding.nazwisko.text.toString()
+
+
+
+            Log.d("RegistrationActivity", "Przed wywołaniem launch()")
 
 
 

@@ -16,7 +16,7 @@ import com.example.budgetbuddy.databinding.FragmentCalendarFixedExpensesBinding
 import com.example.budgetbuddy.databinding.FragmentCalendarIncomesBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
-
+import java.util.*
 
 private const val ARG_NAME = "selected_name"
 private const val ARG_AMOUNT = "selected_amount"

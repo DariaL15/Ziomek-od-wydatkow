@@ -17,7 +17,7 @@ import com.example.budgetbuddy.databinding.FragmentFixedExpenseBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-
+import java.util.*
 
 private const val ARG_NAME = "selected_name"
 private const val ARG_AMOUNT = "selected_amount"
@@ -61,11 +61,11 @@ class FixedExpenseFragment : Fragment() {
                 arguments?.getString(ARG_NAME)?.let { selectedName ->
                         binding.fixedExpenseName.text = Editable.Factory.getInstance().newEditable(selectedName)
                 }
-
+                val dotLocale = Locale("en", "US")
                 arguments?.getDouble(ARG_AMOUNT)?.let { selectedAmount ->
 
                     if (selectedAmount != 0.0) {
-                        val formattedAmount = String.format("%.2f", selectedAmount)
+                        val formattedAmount = String.format(dotLocale,"%.2f", selectedAmount)
                         binding.fixedExpenseEnterAmount.text = Editable.Factory.getInstance().newEditable(formattedAmount)
                     }
                 }
