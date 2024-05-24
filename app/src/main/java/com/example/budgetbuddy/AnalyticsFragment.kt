@@ -72,36 +72,27 @@ binding.barChartCategoryExpenses.spacing = 5F
 
 
         firebaseRepository = FirebaseRepository(requireContext())
-
-        firebaseRepository.getBudget(
-            onSuccess = {budget ->
+        fun updateChar (dateFrom: Date, dateEnd: Date) {
+        firebaseRepository.getIncomesFromDates(dateFrom, dateEnd) { budget ->
                 val formattedBudget = String.format("%.2f", budget).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
                 val updatedBudgetSet = barSetBuget.toMutableList()
-                updatedBudgetSet[0] = budget.toFloat()
+                updatedBudgetSet[0] = budget.toString().toFloat()
                 barSetBuget = updatedBudgetSet.toList()
                 binding.barChartExpenses.animate(barSetBuget.map { it })
                 binding.budgetAmount.text=formattedBudget
-            },
-            onFailure = {
-
             }
-        )
 
-        firebaseRepository.getExpensesVal(
-            onSuccess = {expenses ->
-                val formattedBudget = String.format("%.2f", expenses).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
+        firebaseRepository.getExpenseFromDates(dateFrom, dateEnd) { budget ->
+                val formattedBudget = String.format("%.2f", budget).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
                 val updatedBudgetSet = barSetBuget.toMutableList()
-                updatedBudgetSet[1] = expenses.toFloat()
+                updatedBudgetSet[1] = budget.toFloat()
                 barSetBuget = updatedBudgetSet.toList()
                 binding.barChartExpenses.donutTotal = barSetBuget[0] + barSetBuget[1]
                 binding.barChartExpenses.animate(barSetBuget.map { it })
                 binding.expensesAmount.text=formattedBudget
-            },
-            onFailure = {
-
             }
-        )
-fun updateChar (dateFrom: Date, dateEnd: Date) {
+
+
     firebaseRepository.getTotalExpenseFromCategory("car", dateFrom, dateEnd) { totalExpense ->
         val updatedBarSet = barSet.toMutableList()
         updatedBarSet[0] = "Samochód" to totalExpense
@@ -227,8 +218,10 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
                     binding.dateFrom.text=selectedDateFormatted
-                    if (dateFrom != null && dateEnd != null) {
-                        updateChar(dateFormatter.parse(selectedDateFormatted)!!, dateEnd)
+
+                    val dateEnd1= dateFormatter.parse(binding.dateTo.text.toString())
+                    if (dateFrom != null && dateEnd1 != null) {
+                        updateChar(dateFormatter.parse(selectedDateFormatted)!!, dateEnd1)
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -236,9 +229,7 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
                 calendar.get(Calendar.DAY_OF_MONTH)
             )
             datePickerDialog.show()
-            if (dateFrom != null && dateEnd != null) {
-                updateChar(dateFrom, dateEnd)
-            }
+
 
 
 
@@ -255,8 +246,9 @@ fun updateChar (dateFrom: Date, dateEnd: Date) {
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     val selectedDateFormatted = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.time)
                     binding.dateTo.text=selectedDateFormatted
-                    if (dateFrom != null && dateEnd != null) {
-                        updateChar(dateFrom, dateFormatter.parse(selectedDateFormatted)!!)
+                    val dateFrom1 = dateFormatter.parse(binding.dateFrom.text.toString())
+                    if (dateFrom1 != null && dateEnd != null) {
+                        updateChar(dateFrom1, dateFormatter.parse(selectedDateFormatted)!!)
                     }
                 },
                 calendar.get(Calendar.YEAR),
