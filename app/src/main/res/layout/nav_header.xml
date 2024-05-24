@@ -7,7 +7,9 @@
     android:gravity="bottom"
     android:padding="16dp"
     android:background="@color/textgreen"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Home">
 
     <ImageView
         android:layout_marginTop="30dp"

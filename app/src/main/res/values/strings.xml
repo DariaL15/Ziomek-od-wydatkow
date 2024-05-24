@@ -100,7 +100,6 @@
     <string name="save">Zapisz</string>
 
 
-
     <string name="select_date">Wybierz okres:</string>
     <string name="from">od</string>
     <string name="to">do</string>
@@ -111,8 +110,6 @@
     <string name="expenses">WYDATKI</string>
     <string name="budget">BUDŻET</string>
     <string name="cat">KATEGORIE</string>
-
-
 
 
 </resources>

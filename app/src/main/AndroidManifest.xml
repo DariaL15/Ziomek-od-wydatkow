@@ -13,6 +13,9 @@
         android:theme="@style/Theme.BudgetBuddy"
         tools:targetApi="31">
         <activity
+            android:name=".HomeDataUser"
+            android:exported="false" />
+        <activity
             android:name=".BudgeActivity"
             android:exported="false" />
         <activity

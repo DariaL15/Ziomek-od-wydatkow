@@ -38,7 +38,7 @@ class AnalyticsFragment : Fragment() {
 
         binding.barChartCategoryExpenses.animation.duration = animationDuraction
         binding.barChartCategoryExpenses.labelsSize= 25f
-        binding.barChartCategoryExpenses.labelsFormatter= { it.roundToInt().toString() }
+        binding.barChartCategoryExpenses.labelsFormatter= { it.roundToInt().toString().padStart(5,'_') }
         binding.barChartCategoryExpenses.labelsColor = ContextCompat.getColor(requireContext(), R.color.textgreen)
 binding.barChartCategoryExpenses.spacing = 5F
 

@@ -130,7 +130,7 @@ class FirebaseRepository (private val context: Context){
                 .addOnSuccessListener { document ->
                     if(document != null && document.exists() )
                     {
-                        val surname = document.getString("surname") ?: "Nazwisko"
+                        val surname = document.getString("surename") ?: "Nazwisko"
                         onSuccess(surname)
                     }
                     else
@@ -201,8 +201,8 @@ class FirebaseRepository (private val context: Context){
                         continue
                     }
 
-                    if (date != null && date > dateFrom && date < dateEnd && amount != null) {
-                        totalAmountTemp += if (amount < 0) -amount else amount
+                    if (date != null && date > dateFrom && date <= dateEnd && amount != null) {
+                        totalAmountTemp += if (amount < 0) -amount else 0.0
                     }
                 }
 
