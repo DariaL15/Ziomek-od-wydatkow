@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import android.view.MenuItem
 import android.view.Window
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -14,12 +15,16 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.example.budgetbuddy.databinding.NavHeaderBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+
 
 class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
-
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
     private lateinit var firebaseRepository: FirebaseRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +35,19 @@ class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
         val textViewImie = headerView.findViewById<TextView>(R.id.view_imie)
         val textViewNazwisko = headerView.findViewById<TextView>(R.id.view_nazwisko)
         val textViewEmail = headerView.findViewById<TextView>(R.id.view_email)
-
+        val image = headerView.findViewById<ImageView>(R.id.imageView)
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         firebaseRepository = FirebaseRepository(this)
+
+
+
+
+
+
         firebaseRepository.getName(
             onSuccess = {name ->
                 textViewImie.text = name
-                Log.d("Home", "Imię użytkownika: $name")
+
 
             },
             onFailure = {
@@ -64,6 +75,8 @@ class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
                 textViewEmail.text = "E-mail"
             }
         )
+
+
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)

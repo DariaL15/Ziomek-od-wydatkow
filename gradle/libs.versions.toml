@@ -18,7 +18,7 @@ activityCompose = "1.8.2"
 composeBom = "2023.08.00"
 williamchart = "10.3.1"
 williamchartVersion = "3.10.1"
-
+firebaseStorage = "21.0.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -44,7 +44,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 williamchart = { module = "com.diogobernardino:williamchart", version.ref = "williamchart" }
 williamchart-v3101 = { module = "com.diogobernardino:williamchart", version.ref = "williamchartVersion" }
-
+firebaseStorage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
