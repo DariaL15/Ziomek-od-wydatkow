@@ -25,7 +25,6 @@
             tools:context=".Home">
 
 
-
             <View
                 android:id="@+id/circle"
                 android:layout_width="330dp"
@@ -151,11 +150,11 @@
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
-                android:id="@+id/cat_transport"
+                android:id="@+id/cat_zdrowie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/icon_transport"
+                android:background="@drawable/icon_zdrowie"
                 android:orientation="vertical"
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="60"
@@ -177,11 +176,11 @@
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
-                android:id="@+id/cat_zdrowie"
+                android:id="@+id/cat_wypoczynek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/icon_zdrowie"
+                android:background="@drawable/icon_wypoczynek"
                 android:orientation="vertical"
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="120"
@@ -204,11 +203,11 @@
                 app:layout_constraintTop_toTopOf="@id/circle" />
 
             <LinearLayout
-                android:id="@+id/cat_wypoczynek"
+                android:id="@+id/cat_transport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/icon_wypoczynek"
+                android:background="@drawable/icon_wiecej"
                 android:orientation="vertical"
                 app:layout_constraintCircle="@id/circle"
                 app:layout_constraintCircleAngle="180"
