@@ -23,6 +23,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.firebase.storage.storage
 
 class RegistrationActivity : AppCompatActivity() {
@@ -150,7 +152,10 @@ class RegistrationActivity : AppCompatActivity() {
 
             imageUri = data?.data
 
-            binding.addImgButton.setImageURI(imageUri)
+            Glide.with(this)
+                .load(imageUri)
+                .transform(CircleCrop())
+                .into(binding.addImgButton)
             binding.addImgText.text="ZDJĘCIE DODANE"
         }
     }

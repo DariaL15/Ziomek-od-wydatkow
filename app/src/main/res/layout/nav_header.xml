@@ -12,6 +12,7 @@
     tools:context=".Home">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_marginTop="30dp"
         android:layout_width="94dp"
         android:layout_height="66dp"

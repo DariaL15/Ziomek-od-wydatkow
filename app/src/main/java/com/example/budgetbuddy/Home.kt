@@ -16,10 +16,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.budgetbuddy.databinding.NavHeaderBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
 
 
 class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +40,27 @@ class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
         val image = headerView.findViewById<ImageView>(R.id.imageView)
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         firebaseRepository = FirebaseRepository(this)
+        image.setImageResource(R.drawable.osoba)
+
+        val storageRef = FirebaseStorage.getInstance().reference.child("images/$userId/profile.jpg")
+        storageRef.metadata.addOnSuccessListener { _ ->
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                val imageUrl = uri.toString()
+                Glide.with(this)
+                    .load(imageUrl)
+                    .transform(CircleCrop())
+                    .into(image)
+            }.addOnFailureListener { exception ->
+                Log.e("Home", "Nie udało sie pobrac zdjecia")
+            }
+        }.addOnFailureListener { exception ->
+            if ((exception as StorageException).errorCode == StorageException.ERROR_OBJECT_NOT_FOUND) {
+                Log.e("Home", "Zdjecie nie istnieje")
+
+            } else {
+                Log.e("Home", "Blad sprawdzenia czy zdjecie istnieje")
+            }
+        }
 
 
 
