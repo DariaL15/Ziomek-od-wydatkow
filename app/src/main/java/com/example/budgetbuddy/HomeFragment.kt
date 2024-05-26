@@ -219,7 +219,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateChart(year: Int, month: Int) {
-        val categories = listOf("car", "house", "clothes", "transport", "sport", "health", "entertainment", "relax", "restaurant", "gift", "education")
+        val categories = listOf("car", "house", "clothes","shopping", "transport", "sport", "health", "entertainment", "relax", "restaurant", "gift", "education")
         val updatedBudgetSet = MutableList(categories.size) { 0f }
 
         var completedRequests = 0
@@ -234,7 +234,6 @@ class HomeFragment : Fragment() {
                     updateDonutChart(updatedBudgetSet)
                 }
             }, onFailure = {
-                // Обработка ошибки, если нужно
                 completedRequests++
                 if (completedRequests == totalRequests) {
                     updateDonutChart(updatedBudgetSet)

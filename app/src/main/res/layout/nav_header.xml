@@ -18,7 +18,7 @@
         android:src="@drawable/osoba"/>
 
    <LinearLayout
-       android:layout_marginTop="10dp"
+       android:layout_marginTop="1dp"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:gravity="center">
@@ -46,12 +46,12 @@
    </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/view_email"
-        android:textColor="@color/white"
+        android:layout_width="128dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="3dp"
         android:hint="e-mail"
-        android:textSize="12sp"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
 </LinearLayout>

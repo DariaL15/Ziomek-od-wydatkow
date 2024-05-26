@@ -57,12 +57,12 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
                     val updatedBudget : Double
                     val updatedExpenses: Double
                     if (currentItem.amount!=null && currentItem.amount!!<0){
-                         updatedBudget = currentBudget + currentItem.amount!!
-                         updatedExpenses = currentExpenses - currentItem.amount!!
+                         updatedBudget = currentBudget - currentItem.amount!!
+                         updatedExpenses = currentExpenses + currentItem.amount!!
                     }
                     else{
                          updatedBudget = currentBudget - currentItem.amount!!
-                        updatedExpenses = currentExpenses + currentItem.amount!!
+                        updatedExpenses= currentExpenses
                     }
 
                     budgetRef.update(
@@ -157,4 +157,5 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
             else -> R.drawable.circle
         }
     }
+
 }
