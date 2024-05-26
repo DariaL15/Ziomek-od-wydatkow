@@ -256,7 +256,7 @@ class HomeFragment : Fragment() {
             parseColor("#A86E51"),
             parseColor("#F9BB69"),
             parseColor("#CE755D"),
-            parseColor("#939399"),
+            parseColor("#4D7F49"),
             parseColor("#8DC9C3"),
             parseColor("#BF4747"),
             parseColor("#F2D85A"),

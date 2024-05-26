@@ -62,7 +62,7 @@ class EditExpensesFragment : Fragment() {
             "house" to "Dom",
             "clothes" to "Ubrania",
             "shopping" to "Zakupy",
-            "transport" to "Transport",
+            "transport" to "Inne",
             "sport" to "Sport",
             "health" to "Zdrowie",
             "entertainment" to "Rozrywka",
@@ -223,7 +223,7 @@ class EditExpensesFragment : Fragment() {
                 "health"->HealthHistoryFragment.newInstance()
                 "sport"->SportHistoryFragment.newInstance()
                 "shopping"->ZakupyHistoryFragment.newInstance()
-                "transport"->TransportHistoryFragment.newInstance()
+                "transport"->TransportHistoryFragment.newInstance()//inne
                 "relax"->WypoczynekHistoryFragment.newInstance()
                 "clothes"->UbranieHistoryFragment.newInstance()
                 "entertainment"->RozrywkaHistoryFragment.newInstance()

@@ -98,7 +98,7 @@ class SettingsFragment : Fragment() {
         binding.saveButton.setOnClickListener {
             val name = binding.nameChange.text.toString()
             val surname = binding.changeLastname.text.toString()
-                updateUser( name, surname)
+                updateUser(name, surname)
                 val home  = HomeFragment.newInstance()
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, home)
@@ -143,7 +143,7 @@ class SettingsFragment : Fragment() {
         if (name.isNotEmpty() && surname.isNotEmpty()) {
             if (imageUri!=null)
             {
-                val storageRef = storage.reference.child("image/$userId/profile.jpg")
+                val storageRef = storage.reference.child("images/$userId/profile.jpg")
                 storageRef.putFile(imageUri!!).addOnSuccessListener { taskSnapshot ->
                     storageRef.downloadUrl.addOnSuccessListener { uri ->
                         val imageUrl = uri.toString()

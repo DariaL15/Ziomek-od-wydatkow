@@ -59,7 +59,7 @@ class EditIncomesFragment : Fragment() {
             "house" to "Dom",
             "clothes" to "Ubrania",
             "shopping" to "Zakupy",
-            "transport" to "Transport",
+            "transport" to "Inne",
             "sport" to "Sport",
             "health" to "Zdrowie",
             "entertainment" to "Rozrywka",
