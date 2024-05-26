@@ -40,7 +40,7 @@ class TransportHistoryFragment : Fragment() {
         toolbarMenu?.visibility = View.GONE
         toolbarBack?.visibility = View.VISIBLE
         val textViewName = toolbarBack?.findViewById<TextView>(R.id.nameofpageback)
-        textViewName?.text = "Transport"
+        textViewName?.text = "Inne"
 
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
         toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))

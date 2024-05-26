@@ -1,5 +1,7 @@
 package com.example.budgetbuddy
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -130,10 +132,20 @@ class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
                 .replace(R.id.fragment_container, SettingsFragment()).commit()
             R.id.nav_analytics->supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, AnalyticsFragment()).commit()
-            R.id.nav_logout->Toast.makeText(this, "Wylogowane", Toast.LENGTH_SHORT).show()
+            R.id.nav_logout-> {
+                logout()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(this, "Użytkownuk został wylogowany", Toast.LENGTH_SHORT).show()
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun logout() {
+        val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().clear().apply()
     }
 
     override fun onBackPressed(){

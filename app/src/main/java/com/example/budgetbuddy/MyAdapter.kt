@@ -147,7 +147,7 @@ class MyAdapter(private val dataList: ArrayList<Model>) : RecyclerView.Adapter<M
             "health"->R.drawable.icon_zdrowie
             "shopping"->R.drawable.icon_zakupy2
             "sport"->R.drawable.icon_sport
-            "transport"->R.drawable.icon_transport
+            "transport"->R.drawable.icon_wiecej
             "relax"->R.drawable.icon_wypoczynek
             "clothes"->R.drawable.icon_ubrania
             "entertainment"->R.drawable.icon_rozrywka

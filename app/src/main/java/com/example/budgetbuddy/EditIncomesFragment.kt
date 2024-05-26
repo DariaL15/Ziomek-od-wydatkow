@@ -200,15 +200,31 @@ class EditIncomesFragment : Fragment() {
         toolbarMenu?.visibility = View.GONE
         toolbarBack?.visibility = View.VISIBLE
 
+        val orgColl = arguments?.getString("collection")
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
-
         imageViewBack?.setOnClickListener(null)
         imageViewBack?.setOnClickListener {
-            val fragmentBack = HomeFragment.newInstance()
+
+            val fragmentBack = when(orgColl) {
+                "car"->CarHistoryFragment.newInstance()
+                "house"->HomeHistoryFragment.newInstance()
+                "health"->HealthHistoryFragment.newInstance()
+                "sport"->SportHistoryFragment.newInstance()
+                "shopping"->ZakupyHistoryFragment.newInstance()
+                "transport"->TransportHistoryFragment.newInstance()
+                "relax"->WypoczynekHistoryFragment.newInstance()
+                "clothes"->UbranieHistoryFragment.newInstance()
+                "entertainment"->RozrywkaHistoryFragment.newInstance()
+                "restaurant"->RestauracjaHistoryFragment.newInstance()
+                "gift"->PrezentHistoryFragment.newInstance()
+                "education"->EditIncomesFragment.newInstance()
+                else -> HomeFragment.newInstance()
+            }
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragment_container, fragmentBack)
                 ?.addToBackStack(null)
                 ?.commit()
+
         }
     }
 

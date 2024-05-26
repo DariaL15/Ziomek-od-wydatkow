@@ -44,6 +44,7 @@ class ListOfFixedExpensesFragment : Fragment() {
         toolbarBack?.visibility = View.GONE
 
         val addButton = view.findViewById<FloatingActionButton>(R.id.fab_add)
+        addButton.setOnClickListener(null)
         addButton.setOnClickListener{
             val fragmentNext = FixedExpenseFragment.newInstance()
             activity?.supportFragmentManager?.beginTransaction()

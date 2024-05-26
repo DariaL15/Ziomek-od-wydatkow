@@ -90,6 +90,7 @@ class CalendarIncomesFragment : Fragment() {
         val imageViewBack = toolbarBack?.findViewById<ImageView>(R.id.imageView)
         toolbarBack?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.textgreen))
 
+        imageViewBack?.setOnClickListener(null)
         imageViewBack?.setOnClickListener{
             activity?.supportFragmentManager?.popBackStack()
         }
