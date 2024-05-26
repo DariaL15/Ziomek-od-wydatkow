@@ -304,14 +304,7 @@
 
                             />
 
-                        <ImageView
-                            android:id="@+id/transport"
-                            android:layout_width="0dp"
-                            android:layout_height="25dp"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="2dp"
-                            android:src="@drawable/icon_transport"
-                                                        />
+
 
                         <ImageView
                             android:id="@+id/sport"
@@ -380,6 +373,16 @@
                             android:layout_marginLeft="2dp"
                             android:src="@drawable/icon_edukacja"
                                                         />
+
+
+                        <ImageView
+                            android:id="@+id/transport"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/icon_wiecej"
+                            />
 
 
                     </LinearLayout>
