@@ -262,8 +262,8 @@ class FirebaseRepository (private val context: Context) {
                         val docYear = date.substring(6, 10).toInt()
                         val docMonth = date.substring(3, 5).toInt()
 
-                        if (docYear == year && docMonth == month && amount != null) {
-                            totalAmountTemp += if (amount < 0) -amount else amount
+                        if (docYear == year && docMonth == month && amount!! < 0) {
+                            totalAmountTemp += -amount
                         }
 
                     }

@@ -99,11 +99,15 @@ class SettingsFragment : Fragment() {
             val name = binding.nameChange.text.toString()
             val surname = binding.changeLastname.text.toString()
                 updateUser(name, surname)
+
+            val intent = Intent(requireContext(), Home::class.java)
+            startActivity(intent)
+            /*
                 val home  = HomeFragment.newInstance()
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, home)
                 transaction.addToBackStack(null)
-                transaction.commit()
+                transaction.commit()*/
 
         }
 
@@ -141,38 +145,41 @@ class SettingsFragment : Fragment() {
 
     private fun updateUser( name: String, surname: String) {
         if (name.isNotEmpty() && surname.isNotEmpty()) {
-            if (imageUri!=null)
-            {
+            if (imageUri!=null) {
                 val storageRef = storage.reference.child("images/$userId/profile.jpg")
                 storageRef.putFile(imageUri!!).addOnSuccessListener { taskSnapshot ->
                     storageRef.downloadUrl.addOnSuccessListener { uri ->
                         val imageUrl = uri.toString()
 
-                         db.collection(userId).document("user")
-                             .update(
-                                 mapOf(
-                                     "name" to name,
-                                     "surename" to surname,
-                                     "imageUrl" to imageUrl
-                                 )
-                             ).addOnSuccessListener {  Log.d(TAG, "Zmiany zostały zapisane") }
-                             .addOnFailureListener { e -> Log.w(TAG, "Zmiany nie zostały zapisane", e) }
+                        db.collection(userId).document("user")
+                            .update(
+                                mapOf(
+                                    "imageUrl" to imageUrl
+                                )
+                            ).addOnSuccessListener { Log.d(TAG, "Zmiany zostały zapisane") }
+                            .addOnFailureListener { e ->
+                                Log.w(
+                                    TAG,
+                                    "Zmiany nie zostały zapisane",
+                                    e
+                                )
+                            }
                     }
 
-                }.addOnFailureListener{ exception ->
+                }.addOnFailureListener { exception ->
                     Log.e(TAG, "Błąd przy przesyłaniu zdjęcia", exception)
                 }
-            }else{
-
+            }
                 db.collection(userId).document("user")
                     .update(
                         mapOf(
                             "name" to name,
                             "surename" to surname,
                         )
+
                     ).addOnSuccessListener { Log.d(TAG, "Zmiany zostały zapisane") }
                     .addOnFailureListener{ e -> Log.w(TAG, "Zmiany nie zostały zapisane", e)}
-            }
+
 
         }
         else {
