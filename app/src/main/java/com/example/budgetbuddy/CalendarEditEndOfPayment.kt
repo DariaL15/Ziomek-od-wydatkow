@@ -17,6 +17,8 @@ import com.example.budgetbuddy.databinding.FragmentCalendarEndOFPaymentsBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+
+
 private  const val ARG_ID = "documentId"
 private const val ARG_NAME = "name"
 private const val ARG_AMOUNT = "amount"
@@ -28,15 +30,17 @@ private const val ARG_AMOUNT_OF_TRANS="amountOfTransfers"
 private const val ARG_AMOUNT_OF_TRANS_TEMP="amountOfTransfersTemp"
 private const val ARG_END_DAY_OF_TRANS="endDayOfTransfers"
 private const val ARG_WHEN_STOP_FIXED_EXPENSE="whenStopFixedExpense"
-class CalendarEditEndOfPaymentFragment : Fragment() {
+class CalendarEditEndOfPayment : Fragment() {
+
 
     private lateinit var binding: FragmentCalendarEditEndOfPaymentBinding
+
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentCalendarEditEndOfPaymentBinding.inflate(inflater, container, false)
 
         val selectedDateText: TextView =binding.selectedDate34
@@ -72,9 +76,6 @@ class CalendarEditEndOfPaymentFragment : Fragment() {
             amountV = selectedAmount
         }
 
-
-
-
         confirmButton.setOnClickListener {
 
             val selectedDate = selectedDateText.text.toString()
@@ -101,14 +102,6 @@ class CalendarEditEndOfPaymentFragment : Fragment() {
 
         return binding.root
     }
-/*
- companion object{
-     fun newInstance() =
-         CalendarEditEndOfPaymentFragment.apply {
-             arguments = Bundle().apply {
-             }
-         }
- }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -144,4 +137,13 @@ class CalendarEditEndOfPaymentFragment : Fragment() {
         textView.text = formattedDate
     }
 
+
+    companion object {
+
+        fun newInstance() =
+            CalendarEditEndOfPayment().apply {
+                arguments = Bundle().apply {
+                }
+            }
+    }
 }

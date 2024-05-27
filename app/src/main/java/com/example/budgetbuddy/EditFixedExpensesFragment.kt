@@ -1,6 +1,6 @@
 package com.example.budgetbuddy
 
-import android.content.ContentValues
+
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
@@ -231,22 +231,23 @@ class EditFixedExpensesFragment : Fragment() {
             val dateBegin= binding.dateOfPayment1.text.toString()
 
 
-            val args = Bundle()
-            args.putString("documentId", documentId)
-            args.putString("name", nameV)
-            args.putDouble("amount", amount)
-            args.putString("repeatFrequency", selectedRepeat)
-            args.putString("category",selectedCategoryV)
-            args.putString("beginDate",dateBegin )
-            args.putString("nextDate",nextDate)
-            args.putInt("amountOfTransfers", binding.numberOfTransfersEdit1.text.toString().toInt())
-            args.putString("endDayOfTransfers", dateEnd)
-            args.putInt("amountOfTransfersTemp", amountOfTransfersTemp!!)
-            args.putString("whenStopFixedExpense", selectedEndPayment )
-            val calendarEditEndOFFixedExpensesFragment = CalendarEditEndOfPaymentFragment.newInstance()
-            calendarEditEndOFFixedExpensesFragment.arguments = args
+            val calendarFragmentEnd = CalendarEditEndOfPayment.newInstance()
+            val arg = Bundle()
+            arg.putString("documentId", documentId)
+            arg.putString("name", nameV)
+            arg.putDouble("amount", amount)
+            arg.putString("repeatFrequency", selectedRepeat)
+            arg.putString("category",selectedCategoryV)
+            arg.putString("beginDate",dateBegin )
+            arg.putString("nextDate",nextDate)
+            arg.putInt("amountOfTransfers", binding.numberOfTransfersEdit1.text.toString().toInt())
+            arg.putString("endDayOfTransfers", dateEnd)
+            arg.putInt("amountOfTransfersTemp", amountOfTransfersTemp!!)
+            arg.putString("whenStopFixedExpense", selectedEndPayment )
+
+            calendarFragmentEnd.arguments = arg
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, calendarEditEndOFFixedExpensesFragment)
+            transaction.replace(R.id.fragment_container, calendarFragmentEnd)
             transaction.addToBackStack(null)
             transaction.commit()
         }

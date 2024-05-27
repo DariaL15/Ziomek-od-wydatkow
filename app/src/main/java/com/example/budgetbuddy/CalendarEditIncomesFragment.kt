@@ -112,9 +112,7 @@ class CalendarEditIncomesFragment : Fragment() {
 
 
     companion object {
-        fun newInstance(
-
-        ) =
+        fun newInstance() =
             CalendarEditIncomesFragment().apply {
                 arguments = Bundle().apply {
                 }

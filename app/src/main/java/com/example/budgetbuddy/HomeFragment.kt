@@ -12,6 +12,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.widget.Button
 import android.graphics.Color.*
+import androidx.compose.animation.core.updateTransition
 
 import com.example.budgetbuddy.databinding.FragmentHomeBinding
 import com.google.firebase.Firebase
@@ -183,17 +184,14 @@ class HomeFragment : Fragment() {
             }
         )
 
+        updateExpense()
+/*
         val expensesV = view.findViewById<TextView>(R.id.expenses)
-        firebaseRepository.getExpensesVal(
-            onSuccess = {expenses ->
-                val formattedSavings = String.format("%.2f", expenses).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
-                expensesV.text = formattedSavings
+        firebaseRepository.getExpenseFromMonth(selectedYear, selectedMonth){  budget ->
+            val formattedBudget = String.format("%.2f", budget).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
+            expensesV.text = formattedBudget
+        }*/
 
-            },
-            onFailure = {
-                expensesV.text = "0.00"
-            }
-        )
 
         val paymentReminderDialog = PaymentReminderDialogFragment()
             paymentReminderDialog.show(childFragmentManager, "PaymentReminderDialog")
@@ -203,6 +201,12 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    private fun updateExpense(){
+        firebaseRepository.getExpenseFromMonth(selectedYear, selectedMonth){  budget ->
+            val formattedBudget = String.format("%.2f", budget).replace(Regex("(\\d)(?=(\\d{3})+(?!\\d))"), "$1 ")
+            binding.expenses.text = formattedBudget
+        }
+    }
     private fun loadSavedDate() {
         val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         selectedYear = prefs.getInt(PREF_SELECTED_YEAR, Calendar.getInstance().get(Calendar.YEAR))
@@ -222,6 +226,7 @@ class HomeFragment : Fragment() {
         val categories = listOf("car", "house", "clothes","shopping", "transport", "sport", "health", "entertainment", "relax", "restaurant", "gift", "education")
         val updatedBudgetSet = MutableList(categories.size) { 0f }
 
+        updateExpense()
         var completedRequests = 0
         val totalRequests = categories.size
 
@@ -233,12 +238,8 @@ class HomeFragment : Fragment() {
                 if (completedRequests == totalRequests) {
                     updateDonutChart(updatedBudgetSet)
                 }
-            }, onFailure = {
-                completedRequests++
-                if (completedRequests == totalRequests) {
-                    updateDonutChart(updatedBudgetSet)
-                }
-            })
+            }
+            )
         }
     }
 
@@ -305,7 +306,6 @@ class HomeFragment : Fragment() {
         ).visibility=View.GONE
 
         datePickerDialog.datePicker.maxDate=cal.timeInMillis
-
     }
 
     private fun makeDateString(month: Int, year: Int): String {

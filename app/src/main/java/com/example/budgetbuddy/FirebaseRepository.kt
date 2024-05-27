@@ -77,6 +77,7 @@ class FirebaseRepository (private val context: Context) {
         }
     }
 
+
     fun getName(onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
         if (userId != null) {
             val userRef = db.collection(userId).document("user")
@@ -209,7 +210,7 @@ class FirebaseRepository (private val context: Context) {
                 callback(totalAmountTemp)
             }
     }
-
+/*
     fun getTotalExpenseFromCategoryMonth(
         category: String,
         year: Int, month: Int,
@@ -239,13 +240,12 @@ class FirebaseRepository (private val context: Context) {
             }
     }
 
-
+*/
     fun getExpenseMonth(
         category: String,
         year: Int,
         month: Int,
         onSuccess: (Double) -> Unit,
-        onFailure: (Exception) -> Unit
     ) {
         var totalAmountTemp = 0.0
         val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -269,11 +269,6 @@ class FirebaseRepository (private val context: Context) {
                     }
                     onSuccess(totalAmountTemp)
                 }
-                .addOnFailureListener {
-                    onFailure(Exception("Błąd pobierania budżetu"))
-                }
-        } else {
-            onFailure(Exception("Użytkownik niezalogowany"))
         }
     }
 
@@ -289,7 +284,7 @@ class FirebaseRepository (private val context: Context) {
 
         for (category in categories) {
             getTotalExpenseFromCategory(category, date1, date2) { totalExpense ->
-                totalAmount += totalExpense
+                totalAmount += totalExpense.toFloat()
                 totalCount++
 
                 if (totalCount == categories.size) {
@@ -300,7 +295,27 @@ class FirebaseRepository (private val context: Context) {
         }
     }
 
+    fun getExpenseFromMonth(  year: Int,  month: Int, callback: (Double) -> Unit) {
+        var totalAmount = 0.0
+        var totalCount = 0
 
+        val categories = listOf(
+            "car", "house", "clothes", "shopping", "transport", "sport",
+            "health", "entertainment", "relax", "restaurant", "gift", "education"
+        )
+
+        for (category in categories) {
+            getExpenseMonth(category, year, month) { totalExpense ->
+                totalAmount += totalExpense.toFloat()
+                totalCount++
+
+                if (totalCount == categories.size) {
+                    Log.d("TotalExpense", "Całkowita kwota wydatków: $totalAmount")
+                    callback(totalAmount)
+                }
+            }
+        }
+    }
     fun getIncomesFromDates(date1: Date, date2: Date, callback: (Double) -> Unit) {
         var totalAmount = 0.0
         var totalCount = 0
