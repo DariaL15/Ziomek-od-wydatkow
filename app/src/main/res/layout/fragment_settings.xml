@@ -51,6 +51,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:scaleType="centerCrop"
+                    android:src="@drawable/osoba"
                     android:paddingRight="1dp"
                     android:paddingBottom="1dp"
                     android:backgroundTint="@color/m_green"

@@ -243,19 +243,16 @@ class EditIncomesFragment : Fragment() {
             val currentAmount = arguments?.getDouble("amount", 0.0)
             val updateAmount = binding.amount31.text.toString().toDoubleOrNull()
             val updatedBudget : Double
-            val updatedExpenses: Double
             if (currentAmount!! > updateAmount!!){
-                updatedBudget = currentBudget + (currentAmount - updateAmount)
-                updatedExpenses = currentExpenses - (currentAmount - updateAmount)
+                updatedBudget = currentBudget - (currentAmount - updateAmount)
             }
             else{
-                updatedBudget = currentBudget - ( updateAmount - currentAmount)
-                updatedExpenses = currentExpenses + ( updateAmount -currentAmount )
+                updatedBudget = currentBudget + ( updateAmount - currentAmount)
             }
             budgetRef.update(
                 mapOf(
                     "budgetV" to updatedBudget,
-                    "expensesV" to updatedExpenses
+                    "expensesV" to currentExpenses
                 )
             ). addOnSuccessListener {
                 Log.w(ContentValues.TAG, "Budżet został zaktualizowany")

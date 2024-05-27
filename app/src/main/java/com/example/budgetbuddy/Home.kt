@@ -133,7 +133,7 @@ class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
             R.id.nav_analytics->supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, AnalyticsFragment()).commit()
             R.id.nav_logout-> {
-                logout()
+              logout()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 Toast.makeText(this, "Użytkownik został wylogowany", Toast.LENGTH_SHORT).show()
