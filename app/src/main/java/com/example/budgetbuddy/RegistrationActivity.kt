@@ -19,7 +19,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -78,6 +81,7 @@ class RegistrationActivity : AppCompatActivity() {
             val imie = binding.imie.text.toString()
             val nazwisko = binding.nazwisko.text.toString()
 
+            if (isNetworkAvailable(this)) {
             if (email1.isNotEmpty() && password1.isNotEmpty() && password2.isNotEmpty() && imie.isNotEmpty() && nazwisko.isNotEmpty()) {
                 if (password1 == password2) {
                     firebaseAuth.createUserWithEmailAndPassword(email1, password1).addOnCompleteListener { registrationTask ->
@@ -136,6 +140,10 @@ class RegistrationActivity : AppCompatActivity() {
                 }
             } else {
                 Toast.makeText(this, "Wypełnij wszytskie pola", Toast.LENGTH_SHORT).show()
+            }}
+
+            else {
+                Toast.makeText(this, "Brak połączenia z internetem. Sprawdź swoje połączenie i spróbuj ponownie.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -170,6 +178,34 @@ class RegistrationActivity : AppCompatActivity() {
 
                 Toast.makeText(this, "Uprawnienie nie zostało przyznane", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork
+            if (network == null) {
+                return false
+            }
+            val activeNetwork = connectivityManager.getNetworkCapabilities(network)
+            if (activeNetwork == null) {
+
+                return false
+            }
+
+            val hasInternetCapability = activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            val hasValidatedCapability = activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+            val hasNotMeteredCapability = activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
+
+
+            return hasInternetCapability && hasValidatedCapability
+        } else {
+            @Suppress("DEPRECATION")
+            val networkInfo = connectivityManager.activeNetworkInfo
+            val isConnected = networkInfo?.isConnected ?: false
+
+            return isConnected
         }
     }
 

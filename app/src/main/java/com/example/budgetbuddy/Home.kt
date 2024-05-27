@@ -136,7 +136,7 @@ class Home : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
                 logout()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
-                Toast.makeText(this, "Użytkownuk został wylogowany", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Użytkownik został wylogowany", Toast.LENGTH_SHORT).show()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
