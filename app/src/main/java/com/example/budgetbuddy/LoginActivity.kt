@@ -40,13 +40,13 @@ class LoginActivity : AppCompatActivity() {
                     }
                     else
                     {
-                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Nie udało się zalogować. Zły e-mail lub hasło. Spróbuj ponownie.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
             else
             {
-                Toast.makeText(this, "Empty files are not allowed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
             }
         }
 
