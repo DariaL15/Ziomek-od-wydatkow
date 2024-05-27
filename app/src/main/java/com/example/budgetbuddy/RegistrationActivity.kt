@@ -122,7 +122,7 @@ class RegistrationActivity : AppCompatActivity() {
                                     "email" to email1
                                 )
 
-                                db.collection("users").document(userId).set(userMap)
+                                db.collection(userId).document("user").set(userMap)
                                     .addOnSuccessListener {
                                         Toast.makeText(this, "Konto zostało utworzone", Toast.LENGTH_SHORT).show()
                                         val intent = Intent(this, BudgeActivity::class.java)
