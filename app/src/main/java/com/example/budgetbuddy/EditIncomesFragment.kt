@@ -55,7 +55,7 @@ class EditIncomesFragment : Fragment() {
         val categorySpinner = binding.categorySpinner21
         val categoryTranslations = mapOf(
             "choose" to "Wybierz",
-            "car" to "Samochód",
+            "car" to "Transport",
             "house" to "Dom",
             "clothes" to "Ubrania",
             "shopping" to "Zakupy",

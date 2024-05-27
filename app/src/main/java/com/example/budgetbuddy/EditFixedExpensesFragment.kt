@@ -124,7 +124,7 @@ class EditFixedExpensesFragment : Fragment() {
         val categorySpinner = binding.selectCategoryFixedExpensesSpinner1
         val categoryTranslations = mapOf(
             "choose" to "Wybierz",
-            "car" to "Samochód",
+            "car" to "Transport",
             "house" to "Dom",
             "clothes" to "Ubrania",
             "shopping" to "Zakupy",
